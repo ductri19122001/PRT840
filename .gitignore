@@ -4,4 +4,6 @@
 !outputs/
 !outputs/**
 !.gitignore
+!notebook.md
+!Readme.md
 !README.md
