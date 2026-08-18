@@ -23,6 +23,9 @@ METADATA_COLUMNS = [
     "capture_date",
     "label",
     "detailedlabel",
+    "local_orig",
+    "local_resp",
+    "tunnel_parents",
 ]
 
 NUMERICAL_FEATURES = [
@@ -148,7 +151,8 @@ def print_samples_per_capture_date(dataframe: pd.DataFrame) -> None:
 
 
 def build_metadata_dataframe(dataframe: pd.DataFrame) -> pd.DataFrame:
-    metadata = dataframe.loc[:, METADATA_COLUMNS].copy()
+    available_metadata_columns = [column for column in METADATA_COLUMNS if column in dataframe.columns]
+    metadata = dataframe.loc[:, available_metadata_columns].copy()
     metadata.insert(0, "flow_row_id", metadata.index)
     return metadata
 
@@ -161,8 +165,6 @@ def build_modelling_dataframe(dataframe: pd.DataFrame) -> pd.DataFrame:
     if missing_labels:
         raise ValueError(f"Unexpected label values remain after mapping: {missing_labels}")
 
-    filtered_df[CATEGORICAL_FEATURES] = filtered_df[CATEGORICAL_FEATURES].fillna("MISSING")
-
     modelling_columns = NUMERICAL_FEATURES + CATEGORICAL_FEATURES + ["label"]
     modelling_df = filtered_df.loc[:, modelling_columns].copy()
     modelling_df.insert(0, "flow_row_id", filtered_df.index)
@@ -172,8 +174,8 @@ def build_modelling_dataframe(dataframe: pd.DataFrame) -> pd.DataFrame:
     print(excluded_columns)
     print("\nLeakage note:")
     print(
-        "No scaler, imputer, or encoder is fit here. Numeric missing values are preserved, "
-        "and categorical missing values are replaced with the explicit category 'MISSING'."
+        "No scaler, imputer, or encoder is fit here. Numeric and categorical missing values "
+        "are preserved so all learned preprocessing can be fit on training data only."
     )
 
     return modelling_df

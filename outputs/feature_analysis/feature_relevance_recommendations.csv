@@ -1,0 +1,15 @@
+feature,type,missing_percentage,relevance_evidence,recommendation
+id.orig_p,numerical,0.0,effect_size=1.122; dominant_value_ratio=0.051,KEEP
+id.resp_p,numerical,0.0,effect_size=0.984; dominant_value_ratio=0.565,KEEP
+duration,numerical,7.4811,"effect_size=0.064; dominant_value_ratio=0.075; low standalone separation, but retain for multivariate modelling",KEEP
+orig_bytes,numerical,7.4811,"effect_size=0.001; dominant_value_ratio=0.569; low standalone separation, but retain for multivariate modelling",KEEP
+resp_bytes,numerical,7.4811,effect_size=0.119; dominant_value_ratio=0.805,KEEP
+missed_bytes,numerical,0.0,"effect_size=0.022; dominant_value_ratio=0.994; low standalone separation, but retain for multivariate modelling",KEEP
+orig_pkts,numerical,0.0,"effect_size=0.013; dominant_value_ratio=0.686; low standalone separation, but retain for multivariate modelling",KEEP
+orig_ip_bytes,numerical,0.0,"effect_size=0.004; dominant_value_ratio=0.374; low standalone separation, but retain for multivariate modelling",KEEP
+resp_pkts,numerical,0.0,"effect_size=0.028; dominant_value_ratio=0.573; low standalone separation, but retain for multivariate modelling",KEEP
+resp_ip_bytes,numerical,0.0,effect_size=0.110; dominant_value_ratio=0.560,KEEP
+proto,categorical,0.0,unique_categories=3; dominant_value_ratio=0.604; top association: icmp -> Benign (0.0% malicious),KEEP
+service,categorical,90.8368,unique_categories=16; dominant_value_ratio=0.908; top association: dhcp -> Benign (0.0% malicious); high missingness,REVIEW
+conn_state,categorical,0.0,unique_categories=12; dominant_value_ratio=0.561; top association: SHR -> Benign (0.0% malicious),KEEP
+history,categorical,3.2204,unique_categories=833; dominant_value_ratio=0.561; top association: D -> Benign (0.0% malicious),KEEP
