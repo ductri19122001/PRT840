@@ -1,0 +1,15 @@
+metric,value
+train_accuracy,1.0
+train_f1_score,1.0
+test_accuracy,0.9914695569014983
+test_precision,0.9889299967955254
+test_recall,0.9915585932936091
+test_f1_score,0.9902425506468503
+test_false_positive_rate,0.008599425196315826
+test_roc_auc,0.9914795840486466
+true_negatives,43809.0
+false_positives,380.0
+false_negatives,289.0
+true_positives,33947.0
+train_samples,61340.0
+test_samples,78425.0

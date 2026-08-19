@@ -14,16 +14,16 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
-from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeClassifier
 
 
 INPUT_FILE = Path("outputs/clean_network_flows.csv")
+METADATA_FILE = Path("outputs/cti_mapping_metadata.csv")
 FEATURE_RECOMMENDATIONS_FILE = Path("outputs/feature_analysis/feature_relevance_recommendations.csv")
-METRICS_OUTPUT_FILE = Path("outputs/decision_tree_baseline_metrics.csv")
-PREDICTIONS_OUTPUT_FILE = Path("outputs/decision_tree_baseline_predictions.csv")
+METRICS_OUTPUT_FILE = Path("outputs/decision_tree_chronological_metrics.csv")
+PREDICTIONS_OUTPUT_FILE = Path("outputs/decision_tree_chronological_predictions.csv")
 
 DEFAULT_NUMERICAL_FEATURES = [
     "id.orig_p",
@@ -40,6 +40,20 @@ DEFAULT_NUMERICAL_FEATURES = [
 DEFAULT_CATEGORICAL_FEATURES = ["proto", "service", "conn_state", "history"]
 TARGET_COLUMN = "label"
 ROW_ID_COLUMN = "flow_row_id"
+CAPTURE_DATE_COLUMN = "capture_date"
+
+TRAIN_DATES = [
+    "2023-02-20",
+    "2023-02-21",
+]
+
+TEST_DATES = [
+    "2023-02-22",
+    "2023-02-23",
+    "2023-02-24",
+    "2023-02-25",
+    "2023-02-26",
+]
 
 
 def load_approved_features() -> tuple[list[str], list[str]]:
@@ -84,7 +98,7 @@ def build_pipeline(numerical_features: list[str], categorical_features: list[str
 def compute_metrics(y_true: pd.Series, y_pred: pd.Series, y_prob: pd.Series) -> dict[str, object]:
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     false_positive_rate = fp / (fp + tn) if (fp + tn) else 0.0
-    metrics = {
+    return {
         "accuracy": accuracy_score(y_true, y_pred),
         "precision": precision_score(y_true, y_pred, zero_division=0),
         "recall": recall_score(y_true, y_pred, zero_division=0),
@@ -97,45 +111,92 @@ def compute_metrics(y_true: pd.Series, y_pred: pd.Series, y_prob: pd.Series) -> 
         "true_positives": int(tp),
         "classification_report": classification_report(y_true, y_pred, digits=4),
     }
-    return metrics
 
 
-def main() -> None:
-    dataframe = pd.read_csv(INPUT_FILE)
-    numerical_features, categorical_features = load_approved_features()
-    final_features = numerical_features + categorical_features
+def verify_unique_row_ids(dataframe: pd.DataFrame, source_name: str) -> None:
+    if dataframe[ROW_ID_COLUMN].duplicated().any():
+        duplicate_count = int(dataframe[ROW_ID_COLUMN].duplicated().sum())
+        raise ValueError(f"{source_name} contains {duplicate_count} duplicated {ROW_ID_COLUMN} values.")
 
-    X = dataframe.loc[:, final_features].copy()
-    y = dataframe[TARGET_COLUMN].astype(int)
-    row_ids = dataframe[ROW_ID_COLUMN].copy()
 
-    X_train, X_test, y_train, y_test, row_ids_train, row_ids_test = train_test_split(
-        X,
-        y,
-        row_ids,
-        test_size=0.2,
-        stratify=y,
-        random_state=42,
+def load_modeling_dataframe_with_capture_dates() -> pd.DataFrame:
+    modeling_dataframe = pd.read_csv(INPUT_FILE)
+    metadata_dataframe = pd.read_csv(METADATA_FILE, usecols=[ROW_ID_COLUMN, CAPTURE_DATE_COLUMN])
+
+    verify_unique_row_ids(modeling_dataframe, str(INPUT_FILE))
+    verify_unique_row_ids(metadata_dataframe, str(METADATA_FILE))
+
+    merged_dataframe = modeling_dataframe.merge(
+        metadata_dataframe,
+        on=ROW_ID_COLUMN,
+        how="left",
+        validate="one_to_one",
     )
 
-    pipeline = build_pipeline(numerical_features, categorical_features)
-    pipeline.fit(X_train, y_train)
+    if len(merged_dataframe) != len(modeling_dataframe):
+        raise ValueError("Joining capture_date changed the number of modelling records.")
+    if merged_dataframe[CAPTURE_DATE_COLUMN].isna().any():
+        missing_count = int(merged_dataframe[CAPTURE_DATE_COLUMN].isna().sum())
+        raise ValueError(f"Join left {missing_count} modelling records without capture_date.")
 
-    y_train_pred = pipeline.predict(X_train)
-    y_test_pred = pipeline.predict(X_test)
+    return merged_dataframe
 
-    classifier = pipeline.named_steps["classifier"]
-    if hasattr(classifier, "predict_proba"):
-        y_train_prob = pipeline.predict_proba(X_train)[:, 1]
-        y_test_prob = pipeline.predict_proba(X_test)[:, 1]
-    else:
-        y_train_prob = pd.Series(y_train_pred, index=y_train.index, dtype="float64")
-        y_test_prob = pd.Series(y_test_pred, index=y_test.index, dtype="float64")
 
-    train_accuracy = accuracy_score(y_train, y_train_pred)
-    train_f1 = f1_score(y_train, y_train_pred, zero_division=0)
-    test_metrics = compute_metrics(y_test, y_test_pred, y_test_prob)
+def print_capture_date_distribution(dataframe: pd.DataFrame) -> None:
+    distribution = (
+        dataframe.assign(
+            class_name=dataframe[TARGET_COLUMN].map({0: "Benign", 1: "Malicious"}).fillna("Unknown")
+        )
+        .groupby([CAPTURE_DATE_COLUMN, "class_name"])
+        .size()
+        .unstack(fill_value=0)
+        .sort_index()
+    )
 
+    for class_name in ["Benign", "Malicious"]:
+        if class_name not in distribution.columns:
+            distribution[class_name] = 0
+    distribution = distribution[["Benign", "Malicious"]]
+    distribution["Total"] = distribution["Benign"] + distribution["Malicious"]
+
+    print("\nBenign/Malicious distribution for every capture_date:")
+    print(distribution.to_string())
+
+
+def validate_chronological_split(dataframe: pd.DataFrame) -> None:
+    available_dates = set(dataframe[CAPTURE_DATE_COLUMN].astype(str).unique())
+    missing_train_dates = [date for date in TRAIN_DATES if date not in available_dates]
+    missing_test_dates = [date for date in TEST_DATES if date not in available_dates]
+
+    if not TRAIN_DATES or not TEST_DATES:
+        raise ValueError("TRAIN_DATES and TEST_DATES must both be non-empty.")
+    if missing_train_dates:
+        raise ValueError(f"TRAIN_DATES contain dates not present in the dataset: {missing_train_dates}")
+    if missing_test_dates:
+        raise ValueError(f"TEST_DATES contain dates not present in the dataset: {missing_test_dates}")
+
+    overlap = sorted(set(TRAIN_DATES) & set(TEST_DATES))
+    if overlap:
+        raise ValueError(f"TRAIN_DATES and TEST_DATES overlap: {overlap}")
+
+
+def print_label_distribution(split_name: str, labels: pd.Series) -> None:
+    distribution = (
+        labels.map({0: "Benign", 1: "Malicious"})
+        .value_counts()
+        .reindex(["Benign", "Malicious"], fill_value=0)
+    )
+    print(f"\n{split_name} class distribution:")
+    print(distribution.to_string())
+
+
+def save_metrics(
+    train_accuracy: float,
+    train_f1: float,
+    test_metrics: dict[str, object],
+    train_samples: int,
+    test_samples: int,
+) -> None:
     metrics_rows = [
         {"metric": "train_accuracy", "value": train_accuracy},
         {"metric": "train_f1_score", "value": train_f1},
@@ -149,34 +210,93 @@ def main() -> None:
         {"metric": "false_positives", "value": test_metrics["false_positives"]},
         {"metric": "false_negatives", "value": test_metrics["false_negatives"]},
         {"metric": "true_positives", "value": test_metrics["true_positives"]},
-        {"metric": "train_samples", "value": len(X_train)},
-        {"metric": "test_samples", "value": len(X_test)},
+        {"metric": "train_samples", "value": train_samples},
+        {"metric": "test_samples", "value": test_samples},
     ]
     pd.DataFrame(metrics_rows).to_csv(METRICS_OUTPUT_FILE, index=False)
 
+
+def save_predictions(
+    row_ids: pd.Series,
+    y_true: pd.Series,
+    y_pred: pd.Series,
+    y_prob: pd.Series,
+) -> None:
     predictions = pd.DataFrame(
         {
-            "flow_row_id": row_ids_test.to_numpy(),
-            "true_label": y_test.to_numpy(),
-            "predicted_label": y_test_pred,
-            "predicted_probability": y_test_prob,
+            "flow_row_id": row_ids.to_numpy(),
+            "true_label": y_true.to_numpy(),
+            "predicted_label": y_pred,
+            "predicted_probability": y_prob,
         }
     ).sort_values("flow_row_id")
     predictions.to_csv(PREDICTIONS_OUTPUT_FILE, index=False)
 
-    train_distribution = y_train.value_counts().sort_index()
-    test_distribution = y_test.value_counts().sort_index()
 
-    print("Decision Tree binary baseline")
+def main() -> None:
+    dataframe = load_modeling_dataframe_with_capture_dates()
+    numerical_features, categorical_features = load_approved_features()
+    final_features = numerical_features + categorical_features
+
+    validate_chronological_split(dataframe)
+    print("Decision Tree chronological binary baseline")
     print(f"Input dataset: {INPUT_FILE}")
-    print(f"Train samples: {len(X_train)}")
-    print(f"Test samples: {len(X_test)}")
-    print("\nTrain class distribution:")
-    print(train_distribution.to_string())
-    print("\nTest class distribution:")
-    print(test_distribution.to_string())
-    print("\nFinal feature list used:")
-    print(final_features)
+    print(f"Metadata dataset: {METADATA_FILE}")
+    print(f"Final feature list used: {final_features}")
+    print_capture_date_distribution(dataframe)
+    print(f"\nTrain dates: {TRAIN_DATES}")
+    print(f"Test dates: {TEST_DATES}")
+
+    train_mask = dataframe[CAPTURE_DATE_COLUMN].isin(TRAIN_DATES)
+    test_mask = dataframe[CAPTURE_DATE_COLUMN].isin(TEST_DATES)
+
+    train_dataframe = dataframe.loc[train_mask].copy()
+    test_dataframe = dataframe.loc[test_mask].copy()
+
+    X_train = train_dataframe.loc[:, final_features].copy()
+    X_test = test_dataframe.loc[:, final_features].copy()
+    y_train = train_dataframe[TARGET_COLUMN].astype(int)
+    y_test = test_dataframe[TARGET_COLUMN].astype(int)
+    row_ids_test = test_dataframe[ROW_ID_COLUMN].copy()
+
+    print(f"\nTrain sample count: {len(X_train)}")
+    print(f"Test sample count: {len(X_test)}")
+    print_label_distribution("Train", y_train)
+    print_label_distribution("Test", y_test)
+
+    if y_test.nunique() < 2:
+        raise ValueError("Chronological test set contains only one class. Adjust TEST_DATES.")
+
+    pipeline = build_pipeline(numerical_features, categorical_features)
+    pipeline.fit(X_train, y_train)
+
+    y_train_pred = pipeline.predict(X_train)
+    y_test_pred = pipeline.predict(X_test)
+
+    classifier = pipeline.named_steps["classifier"]
+    if hasattr(classifier, "predict_proba"):
+        y_test_prob = pipeline.predict_proba(X_test)[:, 1]
+    else:
+        y_test_prob = pd.Series(y_test_pred, index=y_test.index, dtype="float64")
+
+    train_accuracy = accuracy_score(y_train, y_train_pred)
+    train_f1 = f1_score(y_train, y_train_pred, zero_division=0)
+    test_metrics = compute_metrics(y_test, y_test_pred, y_test_prob)
+
+    save_metrics(
+        train_accuracy=train_accuracy,
+        train_f1=train_f1,
+        test_metrics=test_metrics,
+        train_samples=len(X_train),
+        test_samples=len(X_test),
+    )
+    save_predictions(
+        row_ids=row_ids_test,
+        y_true=y_test,
+        y_pred=y_test_pred,
+        y_prob=y_test_prob,
+    )
+
     print("\nEvaluation metrics:")
     print(f"Train Accuracy: {train_accuracy:.4f}")
     print(f"Train F1-score: {train_f1:.4f}")
