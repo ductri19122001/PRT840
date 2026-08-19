@@ -7,3 +7,6 @@
 !notebook.md
 !Readme.md
 !README.md
+!notebooks/
+!notebooks/**
+notebooks/.ipynb_checkpoints/
