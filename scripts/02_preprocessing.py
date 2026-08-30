@@ -5,13 +5,13 @@ from pathlib import Path
 import pandas as pd
 
 
-DATASET_ROOT = Path("Experiment-VM-Microsoft-Windows7full-3")
-OUTPUT_DIR = Path("outputs")
+BASE_DIR = Path(__file__).resolve().parent.parent
+DATASET_ROOT = BASE_DIR / "CTU-SME-11" / "Experiment-VM-Microsoft-Windows7full-2"
+OUTPUT_DIR = BASE_DIR / "outputs"
 TARGET_FILENAME = "conn.log.labeled"
 
 MODELLING_OUTPUT_FILE = OUTPUT_DIR / "clean_network_flows.csv"
 CTI_METADATA_OUTPUT_FILE = OUTPUT_DIR / "cti_mapping_metadata.csv"
-
 
 METADATA_COLUMNS = [
     "ts",
@@ -26,7 +26,6 @@ METADATA_COLUMNS = [
     "detailedlabel",
 ]
 
-
 NUMERICAL_FEATURES = [
     "id.orig_p",
     "id.resp_p",
@@ -40,14 +39,12 @@ NUMERICAL_FEATURES = [
     "resp_ip_bytes",
 ]
 
-
 CATEGORICAL_FEATURES = [
     "proto",
     "service",
     "conn_state",
     "history",
 ]
-
 
 FEATURES_TO_EXCLUDE = [
     "detailedlabel",
@@ -61,12 +58,10 @@ FEATURES_TO_EXCLUDE = [
     "tunnel_parents",
 ]
 
-
 LABEL_MAPPING = {
     "Benign": 0,
     "Malicious": 1,
 }
-
 
 MISSING_CHECK_COLUMNS = [
     "duration",
@@ -77,32 +72,22 @@ MISSING_CHECK_COLUMNS = [
 
 def find_conn_logs(root: Path) -> list[Path]:
     files = sorted(root.rglob(TARGET_FILENAME))
-
     if not files:
-        raise FileNotFoundError(
-            f"No {TARGET_FILENAME!r} files found under {root}"
-        )
-
+        raise FileNotFoundError(f"No {TARGET_FILENAME!r} files found under {root}")
     return files
 
 
 def parse_zeek_fields(file_path: Path) -> list[str]:
     fields: list[str] | None = None
 
-    with file_path.open(
-        "r",
-        encoding="utf-8",
-        errors="replace",
-    ) as handle:
+    with file_path.open("r", encoding="utf-8", errors="replace") as handle:
         for line in handle:
             if line.startswith("#fields"):
                 fields = line.rstrip("\r\n").split("\t")[1:]
                 break
 
     if not fields:
-        raise ValueError(
-            f"Missing #fields header in {file_path}"
-        )
+        raise ValueError(f"Missing #fields header in {file_path}")
 
     return fields
 
@@ -127,395 +112,145 @@ def load_conn_log(file_path: Path) -> pd.DataFrame:
     return dataframe
 
 
-def convert_numerical_features(
-    dataframe: pd.DataFrame,
-) -> pd.DataFrame:
+def convert_numerical_features(dataframe: pd.DataFrame) -> pd.DataFrame:
     dataframe = dataframe.copy()
 
     for column in NUMERICAL_FEATURES:
         if column not in dataframe.columns:
-            raise KeyError(
-                f"Required numerical feature {column!r} "
-                "is missing from the dataset."
-            )
-
-        dataframe[column] = pd.to_numeric(
-            dataframe[column],
-            errors="coerce",
-        )
+            raise KeyError(f"Required numerical feature {column!r} is missing from the dataset.")
+        dataframe[column] = pd.to_numeric(dataframe[column], errors="coerce")
 
     return dataframe
 
 
-def prepare_categorical_features(
-    dataframe: pd.DataFrame,
-) -> pd.DataFrame:
+def prepare_categorical_features(dataframe: pd.DataFrame) -> pd.DataFrame:
     dataframe = dataframe.copy()
 
     for column in CATEGORICAL_FEATURES:
         if column not in dataframe.columns:
-            raise KeyError(
-                f"Required categorical feature {column!r} "
-                "is missing from the dataset."
-            )
-
-        dataframe[column] = (
-            dataframe[column]
-            .fillna("missing")
-            .astype(str)
-        )
+            raise KeyError(f"Required categorical feature {column!r} is missing from the dataset.")
+        dataframe[column] = dataframe[column].fillna("missing").astype(str)
 
     return dataframe
 
 
-def print_missing_distribution_by_label_and_state(
-    dataframe: pd.DataFrame,
-) -> None:
-    print(
-        "\nMissing-value distribution "
-        "for selected numerical features:"
-    )
+def print_missing_distribution_by_label_and_state(dataframe: pd.DataFrame) -> None:
+    print("\nMissing-value distribution for selected numerical features:")
 
     for column in MISSING_CHECK_COLUMNS:
         distribution = (
-            dataframe.assign(
-                is_missing=dataframe[column].isna()
-            )
-            .groupby(
-                ["label", "conn_state", "is_missing"],
-                dropna=False,
-            )
+            dataframe.assign(is_missing=dataframe[column].isna())
+            .groupby(["label", "conn_state", "is_missing"], dropna=False)
             .size()
             .rename("count")
             .reset_index()
-            .sort_values(
-                ["label", "conn_state", "is_missing"]
-            )
+            .sort_values(["label", "conn_state", "is_missing"])
         )
-
-        print(
-            f"\nMissing-value distribution "
-            f"for {column} by label and conn_state:"
-        )
+        print(f"\nMissing-value distribution for {column} by label and conn_state:")
         print(distribution.to_string(index=False))
 
 
-def print_samples_per_capture_date(
-    dataframe: pd.DataFrame,
-) -> None:
+def print_samples_per_capture_date(dataframe: pd.DataFrame) -> None:
     distribution = (
-        dataframe.groupby(
-            ["capture_date", "label"],
-            dropna=False,
-        )
+        dataframe.groupby(["capture_date", "label"], dropna=False)
         .size()
         .rename("count")
         .reset_index()
-        .sort_values(
-            ["capture_date", "label"]
-        )
+        .sort_values(["capture_date", "label"])
     )
 
-    print(
-        "\nBenign and malicious samples "
-        "per capture_date:"
-    )
+    print("\nBenign and malicious samples per capture_date:")
     print(distribution.to_string(index=False))
 
 
-def build_metadata_dataframe(
-    dataframe: pd.DataFrame,
-) -> pd.DataFrame:
-    available_columns = [
-        column
-        for column in METADATA_COLUMNS
-        if column in dataframe.columns
-    ]
-
-    metadata = dataframe.loc[
-        :, available_columns
-    ].copy()
-
-    return metadata
+def build_metadata_dataframe(dataframe: pd.DataFrame) -> pd.DataFrame:
+    available_columns = [column for column in METADATA_COLUMNS if column in dataframe.columns]
+    return dataframe.loc[:, available_columns].copy()
 
 
-def build_modelling_dataframe(
-    dataframe: pd.DataFrame,
-) -> pd.DataFrame:
-    # Binary baseline only:
-    # retain clearly labelled Benign and Malicious traffic.
-    filtered_df = dataframe.loc[
-        dataframe["label"].isin(
-            LABEL_MAPPING.keys()
-        )
-    ].copy()
+def build_modelling_dataframe(dataframe: pd.DataFrame) -> pd.DataFrame:
+    filtered_df = dataframe.loc[dataframe["label"].isin(LABEL_MAPPING.keys())].copy()
+    filtered_df["label"] = filtered_df["label"].map(LABEL_MAPPING).astype("Int64")
 
-    filtered_df["label"] = (
-        filtered_df["label"]
-        .map(LABEL_MAPPING)
-        .astype("Int64")
-    )
+    if int(filtered_df["label"].isna().sum()):
+        raise ValueError("Unexpected label values remain after mapping.")
 
-    missing_labels = int(
-        filtered_df["label"].isna().sum()
-    )
+    filtered_df = convert_numerical_features(filtered_df)
+    filtered_df = prepare_categorical_features(filtered_df)
 
-    if missing_labels:
-        raise ValueError(
-            "Unexpected label values remain "
-            f"after mapping: {missing_labels}"
-        )
-
-    # Convert candidate numerical ML features.
-    filtered_df = convert_numerical_features(
-        filtered_df
-    )
-
-    # Treat missing categorical values as
-    # an explicit category, matching the
-    # teammate preprocessing approach.
-    filtered_df = prepare_categorical_features(
-        filtered_df
-    )
-
-    modelling_columns = (
-        NUMERICAL_FEATURES
-        + CATEGORICAL_FEATURES
-        + ["label"]
-    )
-
-    modelling_df = filtered_df.loc[
-        :, modelling_columns
-    ].copy()
-
-    return modelling_df
+    modelling_columns = NUMERICAL_FEATURES + CATEGORICAL_FEATURES + ["label"]
+    return filtered_df.loc[:, modelling_columns].copy()
 
 
-def validate_alignment(
-    modelling_df: pd.DataFrame,
-    metadata_df: pd.DataFrame,
-) -> None:
+def validate_alignment(modelling_df: pd.DataFrame, metadata_df: pd.DataFrame) -> None:
     if len(modelling_df) != len(metadata_df):
-        raise ValueError(
-            "Modelling and metadata dataframes "
-            "have different row counts."
-        )
-
+        raise ValueError("Modelling and metadata dataframes have different row counts.")
     if modelling_df["flow_row_id"].duplicated().any():
-        raise ValueError(
-            "Duplicate flow_row_id values found "
-            "in modelling dataframe."
-        )
-
+        raise ValueError("Duplicate flow_row_id values found in modelling dataframe.")
     if metadata_df["flow_row_id"].duplicated().any():
-        raise ValueError(
-            "Duplicate flow_row_id values found "
-            "in metadata dataframe."
-        )
+        raise ValueError("Duplicate flow_row_id values found in metadata dataframe.")
 
 
-def save_outputs(
-    modelling_df: pd.DataFrame,
-    metadata_df: pd.DataFrame,
-) -> None:
-    OUTPUT_DIR.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    modelling_df.to_csv(
-        MODELLING_OUTPUT_FILE,
-        index=False,
-    )
-
-    metadata_df.to_csv(
-        CTI_METADATA_OUTPUT_FILE,
-        index=False,
-    )
+def save_outputs(modelling_df: pd.DataFrame, metadata_df: pd.DataFrame) -> None:
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    modelling_df.to_csv(MODELLING_OUTPUT_FILE, index=False)
+    metadata_df.to_csv(CTI_METADATA_OUTPUT_FILE, index=False)
 
 
 def main() -> None:
-    conn_logs = find_conn_logs(
-        DATASET_ROOT
-    )
-
-    print(
-        f"Files discovered: {len(conn_logs)}"
-    )
-
+    conn_logs = find_conn_logs(DATASET_ROOT)
+    print(f"Files discovered: {len(conn_logs)}")
     for file_path in conn_logs:
         print(f"  - {file_path}")
 
-    dataframes = [
-        load_conn_log(file_path)
-        for file_path in conn_logs
-    ]
+    dataframes = [load_conn_log(file_path) for file_path in conn_logs]
+    combined_df = pd.concat(dataframes, ignore_index=True)
 
-    combined_df = pd.concat(
-        dataframes,
-        ignore_index=True,
-    )
+    print(f"\nCombined rows before filtering: {len(combined_df)}")
+    print(f"Combined columns before filtering: {combined_df.shape[1]}")
 
-    print(
-        f"\nCombined rows before filtering: "
-        f"{len(combined_df)}"
-    )
+    diagnostic_df = convert_numerical_features(combined_df)
+    print_missing_distribution_by_label_and_state(diagnostic_df)
 
-    print(
-        f"Combined columns before filtering: "
-        f"{combined_df.shape[1]}"
-    )
+    binary_rows = combined_df.loc[combined_df["label"].isin(LABEL_MAPPING.keys())].copy()
+    print_samples_per_capture_date(binary_rows)
 
-    # Convert numerical columns before
-    # missing-value diagnostics.
-    diagnostic_df = convert_numerical_features(
-        combined_df
-    )
+    unknown_count = int((combined_df["label"] == "Unknown").sum())
+    binary_df = combined_df.loc[combined_df["label"].isin(LABEL_MAPPING.keys())].copy()
+    binary_df = binary_df.reset_index(drop=True)
+    binary_df.insert(0, "flow_row_id", range(len(binary_df)))
 
-    print_missing_distribution_by_label_and_state(
-        diagnostic_df
-    )
+    metadata_df = build_metadata_dataframe(binary_df)
+    metadata_df.insert(0, "flow_row_id", binary_df["flow_row_id"])
 
-    binary_rows = combined_df.loc[
-        combined_df["label"].isin(
-            LABEL_MAPPING.keys()
-        )
-    ].copy()
+    modelling_df = build_modelling_dataframe(binary_df)
+    modelling_df.insert(0, "flow_row_id", binary_df["flow_row_id"])
 
-    print_samples_per_capture_date(
-        binary_rows
-    )
-
-    unknown_count = int(
-        (combined_df["label"] == "Unknown").sum()
-    )
-
-    # Preserve only Benign/Malicious rows
-    # for both modelling and CTI metadata,
-    # maintaining identical ordering.
-    binary_df = combined_df.loc[
-        combined_df["label"].isin(
-            LABEL_MAPPING.keys()
-        )
-    ].copy()
-
-    binary_df = binary_df.reset_index(
-        drop=True
-    )
-
-    # Stable ID shared by modelling and CTI data.
-    binary_df.insert(
-        0,
-        "flow_row_id",
-        range(len(binary_df)),
-    )
-
-    metadata_df = build_metadata_dataframe(
-        binary_df
-    )
-
-    metadata_df.insert(
-        0,
-        "flow_row_id",
-        binary_df["flow_row_id"],
-    )
-
-    modelling_df = build_modelling_dataframe(
-        binary_df
-    )
-
-    modelling_df.insert(
-        0,
-        "flow_row_id",
-        binary_df["flow_row_id"],
-    )
-
-    excluded_columns = [
-        column
-        for column in FEATURES_TO_EXCLUDE
-        if column in combined_df.columns
-    ]
-
-    print(
-        "\nExcluded from baseline ML features:"
-    )
+    excluded_columns = [column for column in FEATURES_TO_EXCLUDE if column in combined_df.columns]
+    print("\nExcluded from baseline ML features:")
     print(excluded_columns)
-
+    print("\nPreprocessing / leakage note:")
     print(
-        "\nPreprocessing / leakage note:"
-    )
-
-    print(
-        "Raw Zeek missing markers '-' and "
-        "'(empty)' are treated as missing. "
-        "Numerical features are converted using "
-        "pd.to_numeric(errors='coerce'). "
-        "Categorical missing values are represented "
-        "explicitly as 'missing'. "
-        "No numerical imputer, encoder, scaler, "
-        "or ML model is fitted in this script. "
-        "Training-only learned preprocessing must "
-        "be performed later inside the model pipeline."
+        "Raw Zeek missing markers '-' and '(empty)' are treated as missing. "
+        "Numerical features are converted using pd.to_numeric(errors='coerce'). "
+        "Categorical missing values are represented explicitly as 'missing'. "
+        "No numerical imputer, encoder, scaler, or ML model is fitted in this script. "
+        "Training-only learned preprocessing must be performed later inside the model pipeline."
     )
 
-    validate_alignment(
-        modelling_df,
-        metadata_df,
-    )
+    validate_alignment(modelling_df, metadata_df)
 
-    print(
-        f"\nUnknown rows removed from binary baseline: "
-        f"{unknown_count}"
-    )
+    print(f"\nUnknown rows removed from binary baseline: {unknown_count}")
+    print(f"Rows retained for modelling: {len(modelling_df)}")
+    print(f"Rows retained for CTI metadata mapping: {len(metadata_df)}")
+    print("\nModelling dataframe columns:")
+    print(list(modelling_df.columns))
+    print("\nCTI metadata dataframe columns:")
+    print(list(metadata_df.columns))
 
-    print(
-        f"Rows retained for modelling: "
-        f"{len(modelling_df)}"
-    )
-
-    print(
-        "Rows retained for CTI metadata mapping: "
-        f"{len(metadata_df)}"
-    )
-
-    print(
-        "\nModelling dataframe columns:"
-    )
-    print(
-        list(modelling_df.columns)
-    )
-
-    print(
-        "\nCTI metadata dataframe columns:"
-    )
-    print(
-        list(metadata_df.columns)
-    )
-
-    print(
-        "\nNumerical ML features:"
-    )
-    print(NUMERICAL_FEATURES)
-
-    print(
-        "\nCategorical ML features:"
-    )
-    print(CATEGORICAL_FEATURES)
-
-    save_outputs(
-        modelling_df,
-        metadata_df,
-    )
-
-    print(
-        f"\nSaved modelling dataframe to: "
-        f"{MODELLING_OUTPUT_FILE}"
-    )
-
-    print(
-        f"Saved CTI metadata dataframe to: "
-        f"{CTI_METADATA_OUTPUT_FILE}"
-    )
+    save_outputs(modelling_df, metadata_df)
+    print(f"\nSaved modelling dataframe to: {MODELLING_OUTPUT_FILE}")
+    print(f"Saved CTI metadata dataframe to: {CTI_METADATA_OUTPUT_FILE}")
 
 
 if __name__ == "__main__":

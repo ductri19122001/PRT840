@@ -1,15 +1,15 @@
 feature,type,missing_percentage,relevance_evidence,recommendation
-id.orig_p,numerical,0.0,effect_size=1.122; dominant_value_ratio=0.051,KEEP
-id.resp_p,numerical,0.0,effect_size=0.984; dominant_value_ratio=0.565,KEEP
-duration,numerical,7.4811,"effect_size=0.064; dominant_value_ratio=0.075; low standalone separation, but retain for multivariate modelling",KEEP
-orig_bytes,numerical,7.4811,"effect_size=0.001; dominant_value_ratio=0.569; low standalone separation, but retain for multivariate modelling",KEEP
-resp_bytes,numerical,7.4811,effect_size=0.119; dominant_value_ratio=0.805,KEEP
-missed_bytes,numerical,0.0,"effect_size=0.022; dominant_value_ratio=0.994; low standalone separation, but retain for multivariate modelling",KEEP
-orig_pkts,numerical,0.0,"effect_size=0.013; dominant_value_ratio=0.686; low standalone separation, but retain for multivariate modelling",KEEP
-orig_ip_bytes,numerical,0.0,"effect_size=0.004; dominant_value_ratio=0.374; low standalone separation, but retain for multivariate modelling",KEEP
-resp_pkts,numerical,0.0,"effect_size=0.028; dominant_value_ratio=0.573; low standalone separation, but retain for multivariate modelling",KEEP
-resp_ip_bytes,numerical,0.0,effect_size=0.110; dominant_value_ratio=0.560,KEEP
-proto,categorical,0.0,unique_categories=3; dominant_value_ratio=0.604; top association: icmp -> Benign (0.0% malicious),KEEP
-service,categorical,0.0,unique_categories=17; dominant_value_ratio=0.908; top association: dhcp -> Benign (0.0% malicious),KEEP
-conn_state,categorical,0.0,unique_categories=12; dominant_value_ratio=0.561; top association: SHR -> Benign (0.0% malicious),KEEP
-history,categorical,0.0,unique_categories=834; dominant_value_ratio=0.561; top association: D -> Benign (0.0% malicious),KEEP
+id.orig_p,numerical,0.0,effect_size=0.988; dominant_value_ratio=0.089; retain fixed VM3 baseline feature set for comparability,KEEP
+id.resp_p,numerical,0.0,effect_size=1.000; dominant_value_ratio=0.198; retain fixed VM3 baseline feature set for comparability,KEEP
+duration,numerical,11.624,effect_size=0.035; dominant_value_ratio=0.116; retain fixed VM3 baseline feature set for comparability,KEEP
+orig_bytes,numerical,11.624,effect_size=0.061; dominant_value_ratio=0.153; retain fixed VM3 baseline feature set for comparability,KEEP
+resp_bytes,numerical,11.624,effect_size=0.174; dominant_value_ratio=0.561; retain fixed VM3 baseline feature set for comparability,KEEP
+missed_bytes,numerical,0.0,effect_size=0.019; dominant_value_ratio=0.992; retain fixed VM3 baseline feature set for comparability,KEEP
+orig_pkts,numerical,0.0,effect_size=0.151; dominant_value_ratio=0.292; retain fixed VM3 baseline feature set for comparability,KEEP
+orig_ip_bytes,numerical,0.0,effect_size=0.060; dominant_value_ratio=0.197; retain fixed VM3 baseline feature set for comparability,KEEP
+resp_pkts,numerical,0.0,effect_size=0.176; dominant_value_ratio=0.606; retain fixed VM3 baseline feature set for comparability,KEEP
+resp_ip_bytes,numerical,0.0,effect_size=0.166; dominant_value_ratio=0.606; retain fixed VM3 baseline feature set for comparability,KEEP
+proto,categorical,0.0,unique_categories=3; dominant_value_ratio=0.753; retain fixed VM3 baseline feature set for comparability; top association: tcp -> Malicious (58.2% malicious),KEEP
+service,categorical,0.0,unique_categories=20; dominant_value_ratio=0.754; retain fixed VM3 baseline feature set for comparability; top association: http -> Malicious (89.0% malicious),KEEP
+conn_state,categorical,0.0,unique_categories=12; dominant_value_ratio=0.566; retain fixed VM3 baseline feature set for comparability; top association: RSTO -> Malicious (84.3% malicious),KEEP
+history,categorical,0.0,unique_categories=655; dominant_value_ratio=0.497; retain fixed VM3 baseline feature set for comparability; top association: ShADTTR -> Malicious (100.0% malicious),KEEP

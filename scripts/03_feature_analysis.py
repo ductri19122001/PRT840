@@ -6,8 +6,9 @@ import numpy as np
 import pandas as pd
 
 
-INPUT_FILE = Path("outputs/clean_network_flows.csv")
-OUTPUT_DIR = Path("outputs/feature_analysis")
+BASE_DIR = Path(__file__).resolve().parent.parent
+INPUT_FILE = BASE_DIR / "outputs" / "clean_network_flows.csv"
+OUTPUT_DIR = BASE_DIR / "outputs" / "feature_analysis"
 
 NUMERICAL_FEATURES = [
     "id.orig_p",
@@ -60,21 +61,6 @@ def summarize_numerical_feature(dataframe: pd.DataFrame, feature: str) -> dict[s
     dominant_value_ratio = float(series.value_counts(normalize=True, dropna=False).iloc[0]) if len(series) else 0.0
     unique_non_null = int(series.nunique(dropna=True))
 
-    recommendation = "KEEP"
-    evidence_parts = [f"effect_size={effect_size:.3f}", f"dominant_value_ratio={dominant_value_ratio:.3f}"]
-
-    if unique_non_null <= 1:
-        recommendation = "DROP"
-        evidence_parts.append("constant feature")
-    elif dominant_value_ratio >= 0.995 or overall_std == 0 or pd.isna(overall_std):
-        recommendation = "REVIEW"
-        evidence_parts.append("near-constant behaviour")
-    elif missing_percentage >= 60 and effect_size < 0.2:
-        recommendation = "REVIEW"
-        evidence_parts.append("high missingness with weak class separation")
-    elif effect_size < 0.1:
-        evidence_parts.append("low standalone separation, but retain for multivariate modelling")
-
     summary: dict[str, object] = {
         "feature": feature,
         "type": "numerical",
@@ -107,8 +93,12 @@ def summarize_numerical_feature(dataframe: pd.DataFrame, feature: str) -> dict[s
         "malicious_max": round(float(malicious.max(skipna=True)), 6),
         "mean_gap": round(mean_gap, 6),
         "standardized_mean_gap": round(effect_size, 6),
-        "relevance_evidence": "; ".join(evidence_parts),
-        "recommendation": recommendation,
+        "relevance_evidence": (
+            f"effect_size={effect_size:.3f}; "
+            f"dominant_value_ratio={dominant_value_ratio:.3f}; "
+            "retain fixed VM3 baseline feature set for comparability"
+        ),
+        "recommendation": "KEEP",
     }
     return summary
 
@@ -133,7 +123,7 @@ def summarize_categorical_feature(dataframe: pd.DataFrame, feature: str) -> tupl
 
         if association_gap > strongest_gap:
             strongest_gap = association_gap
-            strongest_category = category
+            strongest_category = str(category)
 
         rows.append(
             {
@@ -157,15 +147,8 @@ def summarize_categorical_feature(dataframe: pd.DataFrame, feature: str) -> tupl
     evidence_parts = [
         f"unique_categories={unique_categories}",
         f"dominant_value_ratio={dominant_value_ratio:.3f}",
+        "retain fixed VM3 baseline feature set for comparability",
     ]
-    recommendation = "KEEP"
-
-    if unique_categories <= 1:
-        recommendation = "DROP"
-        evidence_parts.append("constant categorical feature")
-    elif dominant_value_ratio >= 0.995:
-        recommendation = "REVIEW"
-        evidence_parts.append("near-constant categorical feature")
 
     if strongest_category is not None:
         strongest_row = top_category_frame.loc[top_category_frame["category"] == strongest_category].iloc[0]
@@ -176,10 +159,6 @@ def summarize_categorical_feature(dataframe: pd.DataFrame, feature: str) -> tupl
             f"({strongest_row['malicious_percentage_within_category']:.1f}% malicious)"
         )
 
-    if missing_percentage >= 60:
-        recommendation = "REVIEW"
-        evidence_parts.append("high missingness")
-
     summary = {
         "feature": feature,
         "type": "categorical",
@@ -188,7 +167,7 @@ def summarize_categorical_feature(dataframe: pd.DataFrame, feature: str) -> tupl
         "dominant_value_ratio": round(dominant_value_ratio, 6),
         "top_categories": ", ".join(str(category) for category in top_categories[:5]),
         "relevance_evidence": "; ".join(evidence_parts),
-        "recommendation": recommendation,
+        "recommendation": "KEEP",
     }
     return summary, top_category_frame
 
@@ -222,9 +201,9 @@ def print_terminal_summary(
     print(f"Rows analysed: {len(dataframe)}")
     print("\nClass distribution:")
     print(label_counts.to_string(index=False))
-    print("\nNumerical feature recommendations:")
+    print("\nNumerical feature summary:")
     print(numerical_summary.loc[:, ["feature", "missing_percentage", "standardized_mean_gap", "recommendation"]].to_string(index=False))
-    print("\nCategorical feature recommendations:")
+    print("\nCategorical feature summary:")
     print(categorical_summary.loc[:, ["feature", "missing_percentage", "unique_categories", "recommendation"]].to_string(index=False))
     print("\nConcise feature relevance table:")
     print(recommendations.to_string(index=False))
@@ -249,11 +228,10 @@ def main() -> None:
     recommendations = build_recommendation_table(numerical_rows, categorical_rows)
 
     numerical_summary.to_csv(OUTPUT_DIR / "numerical_feature_summary.csv", index=False)
-    categorical_summary.merge(
-        categorical_detail,
-        on="feature",
-        how="left",
-    ).to_csv(OUTPUT_DIR / "categorical_feature_summary.csv", index=False)
+    categorical_summary.merge(categorical_detail, on="feature", how="left").to_csv(
+        OUTPUT_DIR / "categorical_feature_summary.csv",
+        index=False,
+    )
     recommendations.to_csv(OUTPUT_DIR / "feature_relevance_recommendations.csv", index=False)
 
     print_terminal_summary(dataframe, numerical_summary, categorical_summary, recommendations)
