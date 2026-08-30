@@ -1,0 +1,15 @@
+Metric                             VM3         VM2      Comparison                                                
+Benign Training Samples          42,555       49,525                                                       
+Benign Calibration Samples       9,119        10,612                                                      
+Benign Test Samples              9,120        10,613                                                       
+Malicious Test Samples           78,971       9,704                                                        
+Calibrated Threshold             0.0465       0.01485                                                        
+Recall                           0.0355%      0.0103%    VM3 higher                                               
+Precision                        20.44%       0.826%     VM3 higher                                                
+F1-Score                         0.0708%      0.0204%    VM3 higher                                               
+False Positive Rate (FPR)        1.195%       1.131%     Similar                                                   
+ROC-AUC                          0.7319       0.8497     VM2 higher                                            
+Average Precision                0.9132       0.6972     *Not directly comparable due to different class ratios
+Balanced Accuracy                49.42%       49.44%                                                     
+Specificity                      98.80%       98.87%                                               
+True Positives (TP)           28 / 78,971    1 / 9,704    Extremely low for both                                    
