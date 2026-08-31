@@ -12,4 +12,26 @@ ROC-AUC                          0.7319       0.8497     VM2 higher
 Average Precision                0.9132       0.6972     *Not directly comparable due to different class ratios
 Balanced Accuracy                49.42%       49.44%                                                     
 Specificity                      98.80%       98.87%                                               
-True Positives (TP)           28 / 78,971    1 / 9,704    Extremely low for both                                    
+True Positives (TP)           28 / 78,971    1 / 9,704    Extremely low for both      
+
+
+
+
+| Metric                    | VM3 Internal Test | VM2 External Validation | Interpretation                                        |
+| ------------------------- | ----------------: | ----------------------: | ----------------------------------------------------- |
+| Training Source           |               VM3 |                     VM3 | Same trained model                                    |
+| Calibration Source        |        VM3 Benign |              VM3 Benign | Same frozen threshold                                 |
+| Benign Test Samples       |             9,120 |                  70,750 | —                                                     |
+| Malicious Test Samples    |            78,971 |                   9,704 | —                                                     |
+| Calibrated Threshold      |           0.04653 |                 0.04653 | Same VM3-derived threshold                            |
+| **Recall**                |       **0.0355%** |             **0.0103%** | Extremely low for both                                |
+| **Precision**             |        **20.44%** |             **0.0864%** | Lower on external VM2                                 |
+| **F1-Score**              |       **0.0708%** |             **0.0206%** | Extremely low for both                                |
+| False Positive Rate (FPR) |             1.20% |                   1.64% | Higher on external VM2                                |
+| **ROC-AUC**               |            0.7319 |              **0.9443** | Stronger ranking ability on VM2                       |
+| Average Precision         |            0.9132 |                  0.5104 | Not directly comparable due to different class ratios |
+| Balanced Accuracy         |            49.42% |                  49.19% | Approximately random at the selected threshold        |
+| Specificity               |            98.80% |                  98.36% | High for both                                         |
+| True Positives (TP)       |       28 / 78,971 |               1 / 9,704 | Extremely low detection                               |
+| False Positives (FP)      |               109 |                   1,157 | Increased on external VM2                             |
+
