@@ -37,10 +37,10 @@ except ModuleNotFoundError:
 INPUT_FILE = Path("outputs/clean_network_flows.csv")
 METADATA_FILE = Path("outputs/cti_mapping_metadata.csv")
 FEATURE_RECOMMENDATIONS_FILE = Path("outputs/feature_analysis/feature_relevance_recommendations.csv")
-METRICS_OUTPUT_FILE = Path("outputs/decision_tree_80_20_metrics.csv")
-PREDICTIONS_OUTPUT_FILE = Path("outputs/decision_tree_80_20_predictions.csv")
-FEATURE_IMPORTANCE_OUTPUT_FILE = Path("outputs/decision_tree_feature_importance.csv")
-ATTACK_TYPE_OUTPUT_FILE = Path("outputs/decision_tree_80_20_attack_type_results.csv")
+METRICS_OUTPUT_FILE = Path("outputs/decision_tree_80_20_no_history_metrics.csv")
+PREDICTIONS_OUTPUT_FILE = Path("outputs/decision_tree_80_20_no_history_predictions.csv")
+FEATURE_IMPORTANCE_OUTPUT_FILE = Path("outputs/decision_tree_80_20_no_history_feature_importance.csv")
+ATTACK_TYPE_OUTPUT_FILE = Path("outputs/decision_tree_80_20_no_history_attack_type_results.csv")
 DETAILED_LABEL_COLUMN = "detailedlabel"
 
 DEFAULT_NUMERICAL_FEATURES = [
@@ -55,7 +55,7 @@ DEFAULT_NUMERICAL_FEATURES = [
     "resp_pkts",
     "resp_ip_bytes",
 ]
-DEFAULT_CATEGORICAL_FEATURES = ["proto", "service", "conn_state", "history"]
+DEFAULT_CATEGORICAL_FEATURES = ["proto", "service", "conn_state"]
 TARGET_COLUMN = "label"
 ROW_ID_COLUMN = "flow_row_id"
 CAPTURE_DATE_COLUMN = "capture_date"
