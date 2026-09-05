@@ -1,0 +1,14 @@
+feature,importance
+proto,0.5245443931576799
+id.resp_p,0.47302300037201356
+service,0.0013602245356814217
+id.orig_p,0.0005948050146945264
+duration,0.00029921640787454446
+orig_ip_bytes,0.00014495814858680743
+resp_bytes,3.203353157311569e-05
+orig_pkts,1.3688318959959391e-06
+orig_bytes,0.0
+missed_bytes,0.0
+resp_pkts,0.0
+resp_ip_bytes,0.0
+conn_state,0.0

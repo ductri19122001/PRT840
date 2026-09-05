@@ -1,0 +1,4 @@
+attack_type,test_samples,detected,missed,recall,recall_percent
+From_malicious-To_malicious-Malware_C2-Redline_stealer,1938,1938,0,1.0,100.0
+From_malicious-To_malicious-Malware_C2-AgentTesla-TLS,2,2,0,1.0,100.0
+From_malicious-To_benign-Malware_Encryption-Lockbit_2.0-SMB2,1,0,1,0.0,0.0
