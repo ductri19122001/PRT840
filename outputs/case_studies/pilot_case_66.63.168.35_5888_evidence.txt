@@ -1,0 +1,64 @@
+PILOT CASE — INTERNAL VALIDATION EVIDENCE — NOT LLM INPUT
+Prepared 2026-09-15. Existing scripts, datasets and outputs were read only. No model training, retraining, inference, recalibration, dataset generation or LLM invocation was performed. Only this file and its companion prompt were created.
+
+1. Scope and exact selection
+
+This is VM3 internal evaluation in D:\CTU\CTU-SME-11. No VM2 standalone prediction or VM3 -> VM2 external-validation prediction was substituted.
+Primary: VM3 flow_row_id 11430, UID CK7TDD2gKLQq3cnlw6, 192.168.1.107:49517 -> 66.63.168.35:5888/TCP, ts=1676980028.973338 (2023-02-21 11:47:08.973338 UTC).
+Adjacent context: VM3 flow_row_id 11429, UID C33ZvP2FOs1944mz4, 192.168.1.107:49516 -> 66.63.168.35:5888/TCP, ts=1676980028.477294 (2023-02-21 11:47:08.477294 UTC).
+Selection: earliest adjacent pair in the existing endpoint-matching consolidated cases, with 11430 providing a directly verifiable saved IF detection. Selection did not require inferring behaviour from family labels. The original consolidation itself used label/outcome-based sampling, so this pilot is illustrative, not an unbiased sample.
+
+Source: outputs/case_studies/case_study_flows.csv physical lines 41-42 (header line 1). Endpoint-matching consolidated IDs are 11429, 11430, 11465, 11476, 11604, 12632, 13500, 97021, 97191, 105320. This is an inventory of the existing selected cases, not an exhaustive count of endpoint flows. Later cases are excluded from the prompt.
+
+2. Model provenance and evaluation information — INTERNAL ONLY
+
+11430: saved VM3 DT predicted_label=1, predicted_probability=1.0, evaluation_protocol=stratified_80_20. Saved VM3 IF predicted_label=1, anomaly_score=0.06440461503978501, calibrated_threshold=0.04653248926340765, evaluation_protocol=common_random_holdout_primary.
+11429: saved VM3 DT predicted_label=1, predicted_probability=1.0, evaluation_protocol=stratified_80_20. Saved VM3 IF predicted_label=0, anomaly_score=-0.028457287326531466, same threshold/protocol.
+The primary score exceeds the saved threshold by approximately 0.01787213. These are selection evidence, not per-feature causal explanations of the models. No tree path, local explanation or model re-execution was produced.
+
+IF rows verified directly in outputs/isolation_forest_calibrated_predictions.csv by flow_row_id. Current script 05 defines anomaly_score=-model.decision_function(X), predicts 1 iff score > threshold, and uses the 0.99 quantile of benign calibration scores. Its benign-only fit/calibration/test fractions are 70/15/15; all malicious rows are included in the final test. random_state=42. Its protocol string does not imply the DT uses that split.
+DT values are preserved in the consolidated CSV only for this inspection: outputs/decision_tree_stratified_predictions.csv and the referenced VM3 visualization producer are absent in the current working tree. Historical provenance cannot be fully reverified. Do not substitute chronological DT results or claim that a current DT run was reproduced.
+
+Ground truth, deliberately excluded from prompt: both selected rows have true_label=1, metadata label=Malicious, case_label=RemcosRAT, detailedlabel=From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT. Consolidated category A for 11430 denotes DT correct + IF correct; category B for 11429 denotes DT correct + IF missed. None of these fields, categories, model scores, probabilities, predictions or correctness statements was copied into the prompt. In particular, the dataset's exfiltration description was not treated as observed payload evidence.
+
+3. Raw Zeek verification and time boundary
+
+Directory: D:\CTU\CTU-SME-11\Experiment-VM-Microsoft-Windows7full-3\2023-02-21\zeek
+Actual filenames have .log.labeled suffix for conn, dns, http, ssl, files, weird and x509; capture_loss.log has no such suffix. Prompt uses neutral log basenames. Labels were removed by field name when inspecting timeline records.
+conn.log.labeled lines 3803-3804 and ssl.log.labeled lines 294-295 match the selected UIDs, timestamps, endpoint tuples and saved flow measurements. See companion prompt sections A-B for numeric evidence and concise timeline.
+Window: 1676979728.477294 through 1676980082.582264, inclusive; UTC 11:42:08.477294 through 11:48:02.582264 on 2023-02-21. Cutoff is the later calculated end of the two selected connections. Timestamp sorting is required: conn file order is not chronological by start time.
+Window search included conn, dns, http, ssl, files, weird and capture_loss, using source/destination host, selected UIDs and timestamps. Found 35 related conn rows, 22 local multicast DNS rows, 2 local HTTP rows, 2 corresponding XML file rows, 5 TLS rows, 1 weird row and 1 capture-loss record. The timeline is a concise selection, not a dump of all local background traffic.
+Two further target connections completed within the window: CHEEap1O6K5dp7E1R and CAXoAP1Y488rB4kpXj, conn lines 3801-3802, ssl lines 296-297. Included as observed context without assigning model outcomes. They must not be confused with additional selected model cases.
+Same-source TLS UID Cq69ObNzhmwXYe2Jf starts before the cutoff but ends after it; only its in-window TLS record is supplied, not final connection totals or termination.
+Full-day exact target-IP/selected-UID text searches returned zero matches in dns, http, files and x509 logs. Absence claims in the prompt are restricted to the evidence window. Certificate joins cannot be made because selected TLS fingerprints are unset. No PCAP decryption or endpoint telemetry inspection was performed.
+ssl log #open is 2023-03-22-10-32-53; this is log-processing metadata, not the flow timestamp. Microsecond event timestamps were preserved from ts strings; calculated end times use start + duration.
+
+4. Independent CTI — attribution retained internally
+
+Lookup date: 2026-09-15. Searches used the literal IP and IP:port with generic malware context, not the hidden family name.
+Usable retrospective exact endpoint match: MalwareBazaar sample 08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371, Hatching Triage C2 extraction section.
+Reference: https://bazaar.abuse.ch/sample/08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371/
+Sample first_seen=2023-02-21 09:02:16 UTC; last_seen=2023-02-21 10:28:58 UTC. Endpoint activity dates/publication time unknown. Source explicitly attributes RemcosRAT/remcos; other vendor naming differs. Attribution stays internal. Earlier sample sightings do not prove endpoint availability then, contemporaneous publication, or host sample identity. Prompt uses only the neutral endpoint match and dating limitations.
+Underlying report https://tria.ge/reports/230221-kz15eaga9x/ could not be fetched; do not count it as independently verified corroboration. Another search hit for sample b121d9b4950ef1d71a99bbd8a0f93e71a150ec01f7986b1eebc1c557e9810819 could not be opened and is not used.
+No standalone usable port-only CTI match found. IANA lookup returned no assignment rows; this is not threat intelligence or evidence of maliciousness:
+https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=5888
+Neither a current reputation claim nor a historical blocklist membership assertion is made. This pilot is retrospective CTI-assisted reasoning; it is not a verified simulation of what an analyst could have known at the 2023 cutoff.
+
+5. ATT&CK decisions
+
+Created one tentative mapping: T1571, Non-Standard Port. Supporting observations, reference and low-confidence reasoning are in prompt section D. Mapping derives from observed TLS/TCP 5888, not family attribution. A service baseline or application identification is still needed to validate a protocol/port mismatch and hostile use.
+https://attack.mitre.org/techniques/T1571/ (consulted 2026-09-15; current reference, not a frozen 2023 ATT&CK version).
+Rejected T1573 / cryptography subtechniques: ordinary TLS does not establish encryption beyond the protocol's inherent protections. https://attack.mitre.org/techniques/T1573/
+No exfiltration, ingress transfer, persistence, credential theft, discovery or lateral-movement technique was assigned from byte direction, local traffic, sandbox behaviours or hidden labels. Independent sample behaviours were not imported as observations on VM3.
+
+6. Provenance hashes and isolation of prompt
+
+SHA256 before writing:
+outputs/isolation_forest_calibrated_predictions.csv
+32addb0f557e2716b6ac2ab23cc1c77a3b636643cfb5d02bf9a5d15bceef76c5
+outputs/case_studies/case_study_flows.csv
+aef6b896cc7fe5f7bdc138992ea4012870cbba5405aea54cd94f60b2f90596e8
+outputs/cti_mapping_metadata.csv
+46a9ce88dc6f0826e149f4cb86696dd1bf35387f3c21a530b1cea4074470e2fc
+
+The companion prompt was composed using explicit observed-field selection, not the existing case_study_llm_input.json, which contains evaluation and family information. It includes only observed network data, a bounded timeline, neutral independent CTI with temporal limitations, a tentative ATT&CK reference and the requested concluding questions. Source URLs are references only; linked CTI pages themselves contain attribution and should not be automatically appended to a family-blinded LLM input.
