@@ -16,7 +16,13 @@ Source: 66.63.168.35_5888_llm_prompt.txt
   alone does not establish malicious use.
 - Limitations: Application content and the responsible process
   are unknown. Successful exfiltration is not established.
-- Raw-log line references: Independent verification pending.
+- Two selected connections verified against conn.log.labeled,
+  lines 3803–3804: endpoints, ports, durations, byte counts,
+  RSTR states and missed_bytes=0 match the prompt.
+- Corresponding TLS records verified against ssl.log.labeled,
+  lines 294–295: TLSv13, TLS_AES_128_GCM_SHA256,
+  secp256r1 and established=T match the prompt.
+- Remaining timeline entries have not yet been independently checked.
 
 ## LLM review
 
