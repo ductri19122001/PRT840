@@ -1,0 +1,22 @@
+Pilot Case Study - Blind Zero-Shot LLM Run
+
+Ollama version: 0.34.2
+Model: llama3.1:8b
+Method: Zero-shot blind analysis
+
+Exact prompt:
+remcosrat_ollama_prompt_blind.txt
+
+Raw response:
+remcosrat_llama31_8b_response_raw.txt
+
+Generation settings:
+No custom generation parameters were explicitly specified.
+Ollama/model default settings were used.
+
+Ground-truth malware family provided to LLM: No
+Dataset malicious/benign label provided to LLM: No
+Correct/missed detection result provided to LLM: No
+
+Raw LLM response manually edited: No
+Human validation required: Yes
