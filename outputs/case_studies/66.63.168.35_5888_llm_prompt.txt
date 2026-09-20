@@ -1,0 +1,61 @@
+A. Observed network evidence
+
+One pilot case: VM3 host 192.168.1.107 communicating with 66.63.168.35 over TCP destination port 5888. All times are UTC. Network evidence window: 2023-02-21 11:42:08.477294 through 11:48:02.582264. The latter is the observation cutoff; consider possible next events only after it. This is retrospective analysis using the explicitly dated CTI below.
+
+Primary connection:
+- UID CK7TDD2gKLQq3cnlw6; source 192.168.1.107:49517 -> 66.63.168.35:5888.
+- Start 2023-02-21 11:47:08.973338 (Unix ts 1676980028.973338); duration 53.608926 seconds.
+- Zeek proto=tcp, service=ssl, conn_state=RSTR, history=ShADTdtaTTtr.
+- orig_bytes=1015979, resp_bytes=2453; orig_pkts=1520, resp_pkts=880; orig_ip_bytes=2089862, resp_ip_bytes=40394; missed_bytes=0.
+
+Adjacent connection to the same endpoint:
+- UID C33ZvP2FOs1944mz4; source 192.168.1.107:49516 -> 66.63.168.35:5888.
+- Start 2023-02-21 11:47:08.477294 (Unix ts 1676980028.477294); duration 54.096191 seconds.
+- Zeek proto=tcp, service=ssl, conn_state=RSTR, history=ShADTdtaTr.
+- orig_bytes=4334, resp_bytes=651; orig_pkts=118, resp_pkts=118; orig_ip_bytes=13412, resp_ip_bytes=6046; missed_bytes=0.
+
+RSTR means the responder reset an established connection. Byte totals describe direction and volume; they do not identify content or establish data theft. IP-byte counters differ from payload-byte counters and must not be added together. No process identity or decrypted application content is available in this evidence.
+Field reference: https://docs.zeek.org/en/current/scripts/base/protocols/conn/main.zeek.html
+
+B. Zeek timeline
+
+Source directory: VM3 capture dated 2023-02-21, zeek/. References below identify log basenames and physical line numbers. Record timestamps, rather than log-file creation times or row order, determine chronology. End times are calculated as connection start plus duration, not independent event records.
+
+- 11:43:18.496315-11:43:18.600463: dns.log lines 4241-4262 record local multicast queries for nwin3 to 224.0.0.252:5355, UID CplnaG1Uwo1gDWcJw5; answers are unset. This does not resolve the target IP.
+- 11:44:14.447570 and 11:44:14.448175: http.log lines 188-189 record GET /description.xml to 192.168.1.132:80, HTTP 200, response body 937 bytes each. UIDs CtWDNn39TGmyXellNa and CC5tOv1sHRAKulGV55.
+- 11:44:14.452844 and 11:44:14.465288: files.log lines 192-193 associate those HTTP responses with application/xml objects F1qlZW2eRj4uIyqsVl and FUcT3l4iuU4ajNnji3, 937 seen bytes each. These are separate local-host transactions; no causal link to the target endpoint is established.
+- 11:45:25.353064: ssl.log line 293 records TLSv13 to 162.159.136.234:443 with server_name=gateway-us-east1-d.discord.gg, UID Cq69ObNzhmwXYe2Jf. This is same-source context only; its later connection totals are excluded because that connection extends beyond the cutoff.
+- 11:47:08.477294: adjacent target connection begins (conn.log line 3803).
+- 11:47:08.500836: its ssl.log line 294 records TLSv13, TLS_AES_128_GCM_SHA256, curve secp256r1, established=T, resumed=F.
+- 11:47:08.973338: primary target connection begins (conn.log line 3804).
+- 11:47:09.006267: its ssl.log line 295 records the same TLS version, cipher, curve and establishment status.
+- For both selected TLS records, server_name, next_protocol, certificate-chain fingerprints and validation_status are unset. Unset fields are missing observations, not evidence of a self-signed certificate or intentional SNI suppression.
+- 11:47:10.948921: capture_loss.log line 56 reports 107 gaps, 4373 ACKs and percent_lost=2.446833 over ts_delta=900.046716 seconds. This is a sensor-wide estimate, not a measured loss percentage for either selected flow.
+- 11:47:26.185596: another same-source connection, port 49518, UID CHEEap1O6K5dp7E1R (conn.log line 3801). TLS established at 11:47:26.209383 (ssl.log line 296). Duration 5.906233 seconds, orig_bytes=24987, resp_bytes=486734, conn_state=SF, missed_bytes=0. Calculated end 11:47:32.091829. weird.log line 23 records window_recision at 11:47:26.876670; this diagnostic alone does not establish intent.
+- 11:47:50.247933: another same-source connection, port 49521, UID CAXoAP1Y488rB4kpXj (conn.log line 3802). TLS established at 11:47:50.280556 (ssl.log line 297). Duration 1.894273 seconds, orig_bytes=24987, resp_bytes=486735, conn_state=SF, missed_bytes=1460. Calculated end 11:47:52.142206. Both additional TLS records report TLSv13 and TLS_AES_128_GCM_SHA256. Content is unknown.
+- 11:48:02.573485 and 11:48:02.582264: calculated ends of the adjacent and primary connections, respectively; their connection records report responder resets.
+
+Within the window, no DNS answer associating a domain with 66.63.168.35, target HTTP transaction, or file record linked to either selected UID was found. No certificate fingerprint is available to join these TLS sessions to x509 records. This means evidence is unavailable, not that those activities could never have occurred. Local multicast and local-host traffic are contextual observations, not established attack steps. No events after the cutoff are supplied.
+
+C. Available CTI evidence
+
+Exact endpoint match: 66.63.168.35:5888. MalwareBazaar's Hatching Triage configuration section identifies this endpoint as extracted C2 for sample SHA256 08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371.
+Source: https://bazaar.abuse.ch/sample/08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371/
+Sample first_seen: 2023-02-21 09:02:16 UTC; sample last_seen: 2023-02-21 10:28:58 UTC. These precede the connections but are not endpoint activity dates. Endpoint first_seen/last_seen and extraction publication time are unknown. Retrieved 2026-09-15; retrospective corroboration only. Historical analyst availability and execution of this sample on this host are unproven. No family attribution is supplied.
+
+D. Evidence-supported MITRE ATT&CK reference
+
+T1571 — Non-Standard Port (tentative candidate only).
+Reference: https://attack.mitre.org/techniques/T1571/
+Observed support: conn and ssl records agree on established TLS sessions over TCP/5888, including both selected UIDs. This unusual TLS port is compatible with the technique's protocol/port mismatch concept.
+Confidence: low for adversarial technique attribution. TLS can legitimately operate on alternative ports; the application protocol, local service baseline, intent to bypass controls and command semantics are unknown. Do not treat this candidate as confirmed command and control. No further technique mapping is established by the supplied observations.
+
+Based only on the evidence provided above:
+
+1. What are the most plausible next events in this attack sequence?
+2. What additional evidence would be required to confirm or reject these possibilities?
+3. What immediate incident-response actions should the defender take?
+
+Clearly separate observed facts from hypotheses.
+Do not assume a malware family unless supported by the supplied evidence.
+Do not invent missing evidence.

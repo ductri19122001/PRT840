@@ -1,0 +1,76 @@
+CASE STUDY CONSOLIDATION - SAVED EVIDENCE ONLY
+No training, inference, MITRE mapping, attack chains, Ollama calls or response generation performed.
+VM3 DT: stratified 80/20. VM3 IF: benign-only 70/15/15; all malicious records tested.
+VM2 standalone DT/IF and VM3 -> VM2 external IF retain independent identities.
+The VM2 DT/external IF pair combines VM2 standalone DT with frozen VM3 IF; it is not a cross-VM DT experiment.
+Source consistency checks do not independently reproduce model fitting or establish historical run provenance.
+Selection policy: {"benign_false_positives_per_experiment": 3, "deduplication": "one case per dataset/flow_row_id; preserve all selection reasons", "descriptive_cases": "all AgentTesla and LockBit flows", "if_only_cases_per_attack_pair_outcome": 2, "joint_cases_per_attack_pair_category": 3, "ordering": "dataset then integer flow_row_id", "representativeness": "illustrative deterministic examples, not a random or exhaustive sample", "summary_denominator": "all saved evaluated records of each attack/benign group, not selected representatives", "tie_break": "lowest integer flow_row_id", "unavailable": "JSON null / CSV blank with explicit availability and reason; never substitute predictions"}
+Selected unique cases: {"AgentTesla": 19, "Benign": 10, "LockBit": 2, "RedLineStealer": 5, "RemcosRAT": 15}
+Unavailable applicable predictions: {"vm2_dt": 24, "vm2_external_if": 0, "vm2_if": 4, "vm3_dt": 7, "vm3_if": 0}
+Missing observed fields: {"features.duration": 1, "features.orig_bytes": 1, "features.resp_bytes": 1}
+DT anomaly_score/threshold and IF predicted_probability are not applicable and remain null/blank.
+Models for the other dataset are marked different_dataset, even if numeric flow IDs coincide.
+No fitted model artifacts, calibration score vectors or training membership files are introduced.
+JOINT CATEGORY COVERAGE (zero eligible means unavailable, not synthesized):
+{"attack": "RemcosRAT", "category": "A", "dataset": "VM3", "eligible": 5, "pair": "vm3_dt_if", "selected": 3}
+{"attack": "RemcosRAT", "category": "B", "dataset": "VM3", "eligible": 15782, "pair": "vm3_dt_if", "selected": 3}
+{"attack": "RemcosRAT", "category": "C", "dataset": "VM3", "eligible": 3, "pair": "vm3_dt_if", "selected": 3}
+{"attack": "RemcosRAT", "category": "D", "dataset": "VM3", "eligible": 2, "pair": "vm3_dt_if", "selected": 2}
+{"attack": "RedLineStealer", "category": "A", "dataset": "VM2", "eligible": 0, "pair": "vm2_standalone_dt_if", "selected": 0}
+{"attack": "RedLineStealer", "category": "B", "dataset": "VM2", "eligible": 1938, "pair": "vm2_standalone_dt_if", "selected": 3}
+{"attack": "RedLineStealer", "category": "C", "dataset": "VM2", "eligible": 0, "pair": "vm2_standalone_dt_if", "selected": 0}
+{"attack": "RedLineStealer", "category": "D", "dataset": "VM2", "eligible": 0, "pair": "vm2_standalone_dt_if", "selected": 0}
+{"attack": "RedLineStealer", "category": "A", "dataset": "VM2", "eligible": 0, "pair": "vm2_dt_external_if", "selected": 0}
+{"attack": "RedLineStealer", "category": "B", "dataset": "VM2", "eligible": 1938, "pair": "vm2_dt_external_if", "selected": 3}
+{"attack": "RedLineStealer", "category": "C", "dataset": "VM2", "eligible": 0, "pair": "vm2_dt_external_if", "selected": 0}
+{"attack": "RedLineStealer", "category": "D", "dataset": "VM2", "eligible": 0, "pair": "vm2_dt_external_if", "selected": 0}
+VALIDATIONS:
+PASS: VM3: unique cleaned/metadata IDs and identical populations
+PASS: VM3: required features and metadata columns
+PASS: VM3: binary labels agree with metadata
+PASS: VM2: unique cleaned/metadata IDs and identical populations
+PASS: VM2: required features and metadata columns
+PASS: VM2: binary labels agree with metadata
+PASS: vm3_dt: metrics protocol and random_state
+PASS: vm3_dt: unique IDs, labels, metadata, provenance and prediction rules
+PASS: vm3_dt: population and confusion matrix match saved metrics
+PASS: vm3_if: metrics protocol and random_state
+PASS: vm3_if: unique IDs, labels, metadata, provenance and prediction rules
+PASS: vm3_if: population and confusion matrix match saved metrics
+PASS: vm3_if: every malicious flow evaluated
+PASS: vm2_dt: metrics protocol and random_state
+PASS: vm2_dt: unique IDs, labels, metadata, provenance and prediction rules
+PASS: vm2_dt: population and confusion matrix match saved metrics
+PASS: vm2_if: metrics protocol and random_state
+PASS: vm2_if: unique IDs, labels, metadata, provenance and prediction rules
+PASS: vm2_if: population and confusion matrix match saved metrics
+PASS: vm2_if: every malicious flow evaluated
+PASS: vm2_external_if: unique IDs, labels, metadata, provenance and prediction rules
+PASS: vm2_external_if: population and confusion matrix match saved metrics
+PASS: vm2_external_if: every malicious flow evaluated
+PASS: External IF covers all VM2 records
+PASS: External IF threshold equals VM3 calibrated threshold
+PASS: Primary attacks exist
+PASS: Selected dataset/flow identities are unique
+PASS: A-D categories require both exact experiment predictions
+PASS: Unavailable predictions remain null; available evidence retains full identity
+PASS: Every selected benign case is a saved false positive
+PASS: Summary denominators reconcile
+PASS: All input CSV hashes unchanged
+PASS: Scripts 01-06 unchanged in both projects
+PASS: Evidence JSON serializes without NaN/Infinity
+INPUT SHA256:
+11d7c34c805ac88507db6422b72db3169baea7e93a82eccb54b0986e066ca6b3  D:\CTU\CTU-SME-11\outputs\clean_network_flows.csv
+46a9ce88dc6f0826e149f4cb86696dd1bf35387f3c21a530b1cea4074470e2fc  D:\CTU\CTU-SME-11\outputs\cti_mapping_metadata.csv
+7809afdb1274c82c456f62402d30bc1167fe040de6a07417ee13be5169486f09  D:\CTU\CTU-SME-11\outputs\decision_tree_stratified_metrics.csv
+01ab07e4020d87542c4d276077f2dc82ab6e009d31c9d056a5e626a91679bc51  D:\CTU\CTU-SME-11\outputs\decision_tree_stratified_predictions.csv
+651aab5745c71783bb3241104e5c0a343a4272b2b61f61e1c80f8e70eb7fc1bd  D:\CTU\CTU-SME-11\outputs\isolation_forest_calibrated_metrics.csv
+32addb0f557e2716b6ac2ab23cc1c77a3b636643cfb5d02bf9a5d15bceef76c5  D:\CTU\CTU-SME-11\outputs\isolation_forest_calibrated_predictions.csv
+9cd8bdc1d5cbb4b7de21f1f80b465c02dbed5591edb854183d369a2f50f75cd4  D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_metrics.csv
+c920bfe79381e7c44f6d16b14faf276bf9a4c0012ea182a4cde0b66a7fb1f32a  D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_vm2_predictions.csv
+58e4678c32cde3aa9a393d11c0a0d5dfda62cae74d391afcda79ed3e3523e7af  D:\CTU\CTU-SME-11_Windows7full-2\outputs\clean_network_flows.csv
+b8e1b6ed26878376cecbaba8f5a6b8d39eef2f4a50a25219efd91d895120bd19  D:\CTU\CTU-SME-11_Windows7full-2\outputs\cti_mapping_metadata.csv
+14f683829dd8e8d723148d6eeb44418f82577393f9b62de473d8247a99fbd685  D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_metrics.csv
+e54650bf45bf7c750cfc408112bd613d1215b582e0fd7737ec2459ab2265f5a3  D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_predictions.csv
+8f85fea190bb2c8f44759a35c653048b5dfa3bbd8edc5784775227800657ead5  D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_metrics.csv
+1fb9099fbbfadafd8288fe8dc810bad697af534aa80a0dc7a5c5d84e98959356  D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_predictions.csv

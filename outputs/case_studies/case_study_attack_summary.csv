@@ -1,0 +1,17 @@
+dataset,case_label,experiment_id,evaluation_scope,evaluation_protocol,training_dataset,dataset_records,evaluated_records,unavailable_records,predicted_malicious_records,detected_attack_records,missed_attack_records,false_positive_records,detection_rate_evaluated,false_positive_rate_evaluated,selected_cases,selected_cases_evaluated,descriptive_only,prediction_source
+VM3,RemcosRAT,vm3_dt,VM3_internal,stratified_80_20,VM3,78965,15792,63173,15787,15787,5,,0.9996833839918946,,15,11,False,D:\CTU\CTU-SME-11\outputs\decision_tree_stratified_predictions.csv
+VM3,RemcosRAT,vm3_if,VM3_internal,common_random_holdout_primary,VM3,78965,78965,0,23,23,78942,,0.0002912682834167036,,15,15,False,D:\CTU\CTU-SME-11\outputs\isolation_forest_calibrated_predictions.csv
+VM3,Benign,vm3_dt,VM3_internal,stratified_80_20,VM3,60794,12159,48635,0,,,0,,0.0,3,0,False,D:\CTU\CTU-SME-11\outputs\decision_tree_stratified_predictions.csv
+VM3,Benign,vm3_if,VM3_internal,common_random_holdout_primary,VM3,60794,9120,51674,109,,,109,,0.011951754385964913,3,3,False,D:\CTU\CTU-SME-11\outputs\isolation_forest_calibrated_predictions.csv
+VM2,RedLineStealer,vm2_dt,VM2_standalone,stratified_80_20,VM2,9683,1938,7745,1938,1938,0,,1.0,,5,3,False,D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_predictions.csv
+VM2,RedLineStealer,vm2_if,VM2_standalone,common_random_holdout_primary,VM2,9683,9683,0,0,0,9683,,0.0,,5,5,False,D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_predictions.csv
+VM2,RedLineStealer,vm2_external_if,VM2_external,vm3_to_vm2_external_frozen_if,VM3,9683,9683,0,0,0,9683,,0.0,,5,5,False,D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_vm2_predictions.csv
+VM2,AgentTesla,vm2_dt,VM2_standalone,stratified_80_20,VM2,19,2,17,2,2,0,,1.0,,19,2,True,D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_predictions.csv
+VM2,AgentTesla,vm2_if,VM2_standalone,common_random_holdout_primary,VM2,19,19,0,0,0,19,,0.0,,19,19,True,D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_predictions.csv
+VM2,AgentTesla,vm2_external_if,VM2_external,vm3_to_vm2_external_frozen_if,VM3,19,19,0,0,0,19,,0.0,,19,19,True,D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_vm2_predictions.csv
+VM2,LockBit,vm2_dt,VM2_standalone,stratified_80_20,VM2,2,1,1,0,0,1,,0.0,,2,1,True,D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_predictions.csv
+VM2,LockBit,vm2_if,VM2_standalone,common_random_holdout_primary,VM2,2,2,0,1,1,1,,0.5,,2,2,True,D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_predictions.csv
+VM2,LockBit,vm2_external_if,VM2_external,vm3_to_vm2_external_frozen_if,VM3,2,2,0,1,1,1,,0.5,,2,2,True,D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_vm2_predictions.csv
+VM2,Benign,vm2_dt,VM2_standalone,stratified_80_20,VM2,70750,14150,56600,1,,,1,,7.06713780918728e-05,7,3,False,D:\CTU\CTU-SME-11_Windows7full-2\outputs\decision_tree_stratified_predictions.csv
+VM2,Benign,vm2_if,VM2_standalone,common_random_holdout_primary,VM2,70750,10613,60137,120,,,120,,0.011306887779138792,7,3,False,D:\CTU\CTU-SME-11_Windows7full-2\outputs\isolation_forest_calibrated_predictions.csv
+VM2,Benign,vm2_external_if,VM2_external,vm3_to_vm2_external_frozen_if,VM3,70750,70750,0,1157,,,1157,,0.016353356890459365,7,7,False,D:\CTU\CTU-SME-11\outputs\isolation_forest_cross_vm_validation_vm2_predictions.csv
