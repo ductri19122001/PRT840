@@ -52,8 +52,7 @@ Confidence: low for adversarial technique attribution. TLS can legitimately oper
 
 Based only on the evidence provided above:
 
-1. What are the most plausible next events in this attack sequence?
-2. What additional evidence would be required to confirm or reject these possibilities?
+1. What subsequent activity is plausible if this activity is malicious? Include alternative explanations and the evidence needed to distinguish them.2. What additional evidence would be required to confirm or reject these possibilities?
 3. What immediate incident-response actions should the defender take?
 
 Clearly separate observed facts from hypotheses.
