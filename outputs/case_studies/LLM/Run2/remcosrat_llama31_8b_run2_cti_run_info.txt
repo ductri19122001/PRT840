@@ -1,0 +1,33 @@
+Pilot Case Study - Run 2 with Retrospective CTI
+
+Run date: 2026-09-20
+Method: Zero-shot blind analysis with retrospective endpoint CTI
+
+Ollama version: 0.34.2
+Model: llama3.1:8b
+
+Generation settings:
+No custom generation parameters were explicitly specified.
+Ollama/model default settings were used.
+
+Prompt:
+remcosrat_ollama_prompt_blind_with_retrospective_cti.txt
+
+Raw response:
+remcosrat_llama31_8b_run2_cti_response_raw.txt
+
+Experimental control:
+Traffic evidence: Same as Run 1
+Model: Same as Run 1
+Instructions: Same as Run 1
+Generation settings: Same as Run 1
+
+Run 2 modification:
+Bayezid's sourced endpoint CTI for 66.63.168.35:5888 was added as retrospective evidence.
+
+Ground-truth malware-family label provided to LLM: No
+Dataset malicious/benign label provided to LLM: No
+Correct/missed detection result provided to LLM: No
+
+Raw LLM response manually edited: No
+Human validation required: Yes
