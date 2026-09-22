@@ -11,3 +11,5 @@
 .venv/
 scripts/__pycache__/
 Experiment-VM-Microsoft-Windows7full-3/
+!cti-enrichment/
+!cti-enrichment/**
