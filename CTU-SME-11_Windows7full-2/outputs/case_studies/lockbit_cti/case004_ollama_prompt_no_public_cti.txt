@@ -1,0 +1,187 @@
+You are assisting a human network-forensics analyst.
+
+Use only the observed evidence and curated MITRE ATT&CK reference supplied below.
+Ground-truth attack labels, malware-family labels, and model correct/missed outcomes are intentionally withheld. Do not attempt to reconstruct them from the case identifier.
+
+Do not treat a dataset label, private IP address, port number, SMB-related service metadata,
+connection duration, byte count, or flow count as proof that a technique succeeded.
+
+Connection states matter:
+- SF indicates a connection that was established and closed normally.
+- RSTR indicates that the responder sent a reset after the connection had been established.
+Neither state alone establishes malicious activity.
+
+The destination address is an RFC1918 private address. No usable public CTI attribution is
+available for that private endpoint. Do not infer malware attribution from the absence of CTI,
+from SMB traffic, or from the port numbers.
+
+Do not invent ATT&CK identifiers. If the supplied evidence is insufficient, say so.
+
+Return valid JSON with these keys:
+1. observed_facts: facts directly supported by the supplied fields;
+2. candidate_attack_mappings: technique_id, technique_name, tactic, supporting_evidence,
+   contradictory_or_missing_evidence, confidence (low/medium/high), and status
+   (supported/possible/not_supported);
+3. plausible_next_events: possibilities only, each with preconditions and telemetry to monitor;
+4. response_actions: immediate, short-term and evidence-preservation actions;
+5. unanswered_questions;
+6. human_validation_required.
+
+Keep observed facts separate from inference.
+
+Do not claim ransomware activity, lateral movement, remote execution, credential theft,
+command-and-control, data exfiltration, malware execution, host compromise, or any later
+attack stage unless the provided evidence directly supports it.
+
+INPUT
+{
+  "observed_case_summary": {
+    "case_id": "CTU-SME-11-VM2-case-004",
+    "case_filter": "selected_internal_network_case",
+    "label_filter": "not_provided_to_llm",
+    "dataset_ground_truth": "withheld_for_blind_analysis",
+    "model_correctness": "withheld_for_blind_analysis",
+
+    "observed_source_ip": "192.168.1.106",
+    "observed_destination_ip": "192.168.1.108",
+
+    "selected_network_context_flows": 486,
+
+    "first_seen_utc": "2023-02-24T00:12:54.156299114+00:00",
+    "last_seen_utc": "2023-02-24T23:52:17.878294945+00:00",
+
+    "destination_ports": [
+      139,
+      445
+    ],
+
+    "connection_states": {
+      "RSTO": 306,
+      "SF": 177,
+      "RSTR": 3
+    },
+
+    "observed_services": [
+      "gssapi",
+      "krb,smb,gssapi",
+      "smb,gssapi",
+      "smb,gssapi,krb,dce_rpc",
+      "smb,gssapi,ntlm"
+    ],
+
+    "total_orig_bytes": 1646452,
+    "total_resp_bytes": 1311438,
+
+    "interpretation_boundary": "Observed internal network evidence only. No malware-family attribution, ransomware activity, lateral movement, remote execution, credential theft, host compromise, or ATT&CK technique is inferred from these observations alone."
+  },
+
+  "selected_flow_examples": [
+    {
+      "flow_row_id": 43683,
+      "timestamp": 1677201202.759657,
+      "uid": "Cccr9N1ciWfpftpCY4",
+      "id.orig_h": "192.168.1.106",
+      "id.orig_p": 62938,
+      "id.resp_h": "192.168.1.108",
+      "id.resp_p": 139,
+      "proto": "tcp",
+      "service": "smb,gssapi,ntlm",
+      "conn_state": "SF",
+      "duration": 11.877562,
+      "orig_bytes": 989,
+      "resp_bytes": 1301,
+      "orig_pkts": 13,
+      "resp_pkts": 11,
+      "history": "ShDdAFf",
+      "observed_labels": "withheld_for_blind_analysis"
+    },
+    {
+      "flow_row_id": 48824,
+      "timestamp": 1677224926.054485,
+      "uid": "C3zCrp2avjFVmgEtNb",
+      "id.orig_h": "192.168.1.106",
+      "id.orig_p": 62938,
+      "id.resp_h": "192.168.1.108",
+      "id.resp_p": 445,
+      "proto": "tcp",
+      "service": "smb,gssapi,krb,dce_rpc",
+      "conn_state": "RSTR",
+      "duration": 1383.298999,
+      "orig_bytes": 578236,
+      "resp_bytes": 791217,
+      "orig_pkts": 2404,
+      "resp_pkts": 2402,
+      "history": "ShADdatr",
+      "observed_labels": "withheld_for_blind_analysis"
+    }
+  ],
+
+  "cti_result": {
+    "status": "NO_USABLE_PUBLIC_CTI_INDICATOR",
+
+    "observables": [
+      "192.168.1.108",
+      "192.168.1.108:139",
+      "192.168.1.108:445"
+    ],
+
+    "reason": "The destination is an RFC1918 private IPv4 address used inside the dataset network. It is not a globally attributable public indicator suitable for independent public CTI lookup.",
+
+    "limitations": [
+      "No public malware-family attribution can be inferred from the private IP address.",
+      "Public intelligence concerning unrelated systems using the same RFC1918 address would not be relevant.",
+      "SMB, GSSAPI, Kerberos, NTLM, or DCE/RPC service metadata alone does not establish malicious activity.",
+      "Ports 139 and 445 alone do not establish lateral movement, remote execution, ransomware activity, or host compromise.",
+      "The absence of usable public CTI must not be interpreted as evidence that the traffic is benign.",
+      "Dataset ground-truth malware-family labels remain withheld."
+    ]
+  },
+
+  "curated_attack_reference": {
+    "source": "MITRE ATT&CK Enterprise",
+
+    "notice": "This is a small curated reference for candidate generation. Analysts must verify current official ATT&CK material before reporting a final mapping.",
+
+    "techniques": [
+      {
+        "technique_id": "T1021.002",
+        "name": "Remote Services: SMB/Windows Admin Shares",
+        "tactic": "Lateral Movement",
+        "summary": "SMB and Windows administrative shares may be used to move between systems or access remote resources.",
+        "evidence_required": "Evidence must support remote SMB use consistent with lateral movement, such as administrative-share access, authentication context, remote file access, remote execution, or correlated host telemetry. SMB traffic alone is insufficient."
+      },
+
+      {
+        "technique_id": "T1550.002",
+        "name": "Use Alternate Authentication Material: Pass the Hash",
+        "tactic": "Defense Evasion, Lateral Movement",
+        "summary": "Adversaries may use password hashes to authenticate without possessing the plaintext password.",
+        "evidence_required": "Authentication or endpoint evidence demonstrating use of a password hash or equivalent alternate authentication material. NTLM-related network metadata alone is insufficient."
+      },
+
+      {
+        "technique_id": "T1569.002",
+        "name": "System Services: Service Execution",
+        "tactic": "Execution",
+        "summary": "Adversaries may abuse system services to execute commands or payloads.",
+        "evidence_required": "Evidence of remote or local service creation, modification, or execution. SMB or DCE/RPC traffic alone is insufficient."
+      },
+
+      {
+        "technique_id": "T1021",
+        "name": "Remote Services",
+        "tactic": "Lateral Movement",
+        "summary": "Remote services may be used to access or control systems remotely.",
+        "evidence_required": "Evidence of remote-service use consistent with lateral movement or remote access. A network connection alone is insufficient."
+      },
+
+      {
+        "technique_id": "T1486",
+        "name": "Data Encrypted for Impact",
+        "tactic": "Impact",
+        "summary": "Adversaries may encrypt data on target systems to interrupt availability.",
+        "evidence_required": "Host, filesystem, file-operation, process, or other evidence demonstrating data encryption for impact. SMB traffic and byte counts alone are insufficient."
+      }
+    ]
+  }
+}

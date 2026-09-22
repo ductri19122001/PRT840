@@ -1,0 +1,22 @@
+{
+  "case_id": "VM2-case-002",
+  "evidence_scope": "observable_based_network_evidence",
+  "target_indicator": "4.234.116.12:2567",
+  "indicator_type": "ip_port",
+  "capture_date": "2023-02-21",
+  "flow_count": 2755,
+  "unique_source_ips": 1,
+  "unique_destination_ips": 1,
+  "connection_states": {
+    "RSTO": 2350,
+    "S0": 396,
+    "S1": 5,
+    "OTH": 4
+  },
+  "first_seen_utc": "2023-02-21 06:50:05.443686962+00:00",
+  "last_seen_utc": "2023-02-22 00:01:10.463027+00:00",
+  "total_orig_bytes": 885750.0,
+  "total_resp_bytes": 0.0,
+  "ground_truth_included": false,
+  "interpretation_boundary": "Observed Zeek network evidence only. No malware attribution, CTI match, ATT&CK mapping, or attack-stage inference is made by this script."
+}

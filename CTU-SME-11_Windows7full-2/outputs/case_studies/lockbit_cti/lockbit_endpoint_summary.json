@@ -1,0 +1,31 @@
+{
+  "case_id": "VM2-case-004",
+  "evidence_scope": "observed_internal_network_evidence_only",
+  "selection_basis": {
+    "source_ip": "192.168.1.106",
+    "destination_ip": "192.168.1.108",
+    "destination_ports": [
+      139,
+      445
+    ],
+    "note": "Flows were selected using internal network observables only. Dataset malware-family labels were not used for selection or attribution."
+  },
+  "flows_found": 486,
+  "first_seen_utc": "2023-02-24T00:12:54.156299114+00:00",
+  "last_seen_utc": "2023-02-24T23:52:17.878294945+00:00",
+  "connection_states": {
+    "RSTO": 306,
+    "SF": 177,
+    "RSTR": 3
+  },
+  "services": [
+    "gssapi",
+    "krb,smb,gssapi",
+    "smb,gssapi",
+    "smb,gssapi,krb,dce_rpc",
+    "smb,gssapi,ntlm"
+  ],
+  "orig_bytes": 1646452.0,
+  "resp_bytes": 1311438.0,
+  "interpretation_boundary": "Observed internal network activity alone does not establish ransomware activity, lateral movement, credential theft, remote execution, malware-family attribution, or successful host compromise."
+}

@@ -1,0 +1,52 @@
+Case: CTU-SME-11-VM2-case-003
+Run date: 2026-09-22
+
+Run type:
+Zero-shot blind network-forensics analysis with retrospective endpoint CTI.
+
+Model:
+llama3.1:8b
+
+Ollama version:
+0.34.2
+
+Generation settings:
+No custom generation parameters were supplied.
+Ollama/model default settings were used.
+
+Prompt:
+case003_ollama_prompt_with_retrospective_cti.txt
+
+Raw response:
+case003_llama31_8b_response_raw.txt
+
+Observed endpoint:
+192.168.1.106 -> 176.223.208.23:443
+
+Evidence:
+19 observed Zeek network flows.
+Retrospective VirusTotal CTI was supplied separately as contextual evidence.
+
+Blind-analysis controls:
+Dataset ground-truth attack labels were withheld.
+Dataset malware-family labels were withheld.
+Decision Tree and Isolation Forest correct/missed outcomes were withheld.
+
+CTI:
+VirusTotal showed a historical suspicious-file relationship for 176.223.208.23.
+The related VBS file was flagged by 4/59 vendors.
+The reviewed CTI did not independently establish an AgentTesla malware-family attribution.
+No port-specific CTI relationship for TCP/443 was established.
+
+Raw response manually edited:
+No.
+
+Human validation required:
+Yes.
+
+Initial human-validation notes:
+1. T1071.001 was classified as possible with medium confidence primarily from destination port 443, despite no supplied HTTP/HTTPS application-layer evidence. This is an over-inference and requires analyst review.
+2. The T1105 explanation incorrectly stated that the evidence did not demonstrate a historical relationship between the remote IP and a suspicious file, although such a retrospective VirusTotal relationship was explicitly supplied.
+3. T1048.003 was present in the curated ATT&CK reference but omitted from the returned candidate mappings.
+4. Several monitoring recommendations were poorly phrased and did not identify concrete telemetry.
+5. The response was wrapped in a Markdown code fence and followed by explanatory prose, so it did not strictly comply with the request to return only valid JSON.

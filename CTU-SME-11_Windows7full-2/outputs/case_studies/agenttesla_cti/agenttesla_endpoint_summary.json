@@ -1,0 +1,29 @@
+{
+  "case_id": "VM2-case-003",
+  "evidence_scope": "observed_network_evidence_only",
+  "selection_basis": {
+    "source_ip": "192.168.1.106",
+    "destination_ip": "176.223.208.23",
+    "destination_port": 443,
+    "note": "Flows were selected using the observed network endpoint only. Dataset ground-truth malware-family labels were not used to select or attribute these flows."
+  },
+  "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+  "flows_found": 19,
+  "first_seen_utc": "2023-02-23T08:54:29.425751925+00:00",
+  "last_seen_utc": "2023-02-23T08:55:46.895365953+00:00",
+  "unique_source_ips": 1,
+  "unique_destination_ips": 1,
+  "protocols": [
+    "tcp"
+  ],
+  "services": [
+    "ssl"
+  ],
+  "connection_states": {
+    "SF": 13,
+    "S0": 6
+  },
+  "orig_bytes": 3849.0,
+  "resp_bytes": 177865.0,
+  "interpretation_boundary": "These are observed Zeek network-flow facts only. The evidence export does not independently establish a malware family, successful command-and-control activity, compromise, credential theft, exfiltration, or any MITRE ATT&CK technique."
+}

@@ -1,0 +1,45 @@
+Case: CTU-SME-11-VM2-case-002
+Run date: 2026-09-22
+
+Run type:
+Zero-shot blind network-forensics analysis with retrospective endpoint CTI.
+
+Model:
+llama3.1:8b
+
+Ollama version:
+0.34.2
+
+Generation settings:
+No custom generation parameters were supplied.
+Ollama/model default settings were used.
+
+Prompt:
+case002_ollama_prompt_with_retrospective_cti.txt
+
+Raw response:
+case002_llama31_8b_response_raw.txt
+
+Evidence:
+Observed Zeek network-flow evidence for 4.234.116.12:2567.
+Retrospective VirusTotal CTI was supplied separately as contextual evidence.
+
+Blind-analysis controls:
+Dataset ground-truth attack labels were withheld.
+Dataset malware-family labels were withheld.
+Decision Tree and Isolation Forest correct/missed outcomes were withheld.
+The RedLine/RedLineStealer terminology present in the prompt originated only from external VirusTotal security-vendor classifications.
+
+CTI limitation:
+The reviewed VirusTotal evidence established a historical file-to-IP relationship for 4.234.116.12.
+No port-specific CTI evidence independently established a relationship for TCP port 2567.
+
+Raw response manually edited:
+No.
+
+Human validation required:
+Yes.
+
+Initial human-validation note:
+The response did not comply with the requested valid-JSON output format.
+The T1071.001 Web Protocols mapping was marked Supported with Medium confidence despite the supplied observed network evidence containing no HTTP/HTTPS request, response, URI, Host, or payload evidence. This mapping therefore requires rejection or correction during human validation.

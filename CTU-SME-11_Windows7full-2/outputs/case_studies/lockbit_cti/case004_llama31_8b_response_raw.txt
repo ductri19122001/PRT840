@@ -1,0 +1,104 @@
+Here is the output in the requested format:
+
+```
+{
+  "observed_facts": [
+    {
+      "fact": "Two flows observed between 192.168.1.106 and 192.168.1.108.",
+      "evidence": "observed_source_ip": "192.168.1.106", "observed_destination_ip": "192.168.1.108"
+    },
+    {
+      "fact": "One flow with connection state SF, one with RSTR.",
+      "evidence": "connection_states": {"SF": 177, "RSTR": 3}
+    },
+    {
+      "fact": "Services observed: gssapi, smb,gssapi, smb,gssapi,krb,dce_rpc, smb,gssapi,ntlm.",
+      "evidence": "observed_services": ["gssapi", "krb,smb,gssapi", "smb,gssapi", "smb,gssapi,krb,dce_rpc",
+"smb,gssapi,ntlm"]
+    },
+    {
+      "fact": "Total bytes sent from source: 1646452, total bytes received: 1311438.",
+      "evidence": "total_orig_bytes": 1646452, "total_resp_bytes": 1311438
+    }
+  ],
+  "candidate_attack_mappings": [
+    {
+      "technique_id": "T1021.002",
+      "technique_name": "Remote Services: SMB/Windows Admin Shares",
+      "tactic": "Lateral Movement",
+      "supporting_evidence": "SMB and Windows administrative shares may be used to move between systems or access
+remote resources.",
+      "contradictory_or_missing_evidence": "SMB traffic alone is insufficient.",
+      "confidence": "low",
+      "status": "possible"
+    },
+    {
+      "technique_id": "T1550.002",
+      "technique_name": "Use Alternate Authentication Material: Pass the Hash",
+      "tactic": "Defense Evasion, Lateral Movement",
+      "supporting_evidence": "Authentication or endpoint evidence demonstrating use of a password hash or
+equivalent alternate authentication material.",
+      "contradictory_or_missing_evidence": "NTLM-related network metadata alone is insufficient.",
+      "confidence": "low",
+      "status": "possible"
+    },
+    {
+      "technique_id": "T1569.002",
+      "technique_name": "System Services: Service Execution",
+      "tactic": "Execution",
+      "supporting_evidence": "Evidence of remote or local service creation, modification, or execution.",
+      "contradictory_or_missing_evidence": "SMB or DCE/RPC traffic alone is insufficient.",
+      "confidence": "low",
+      "status": "possible"
+    },
+    {
+      "technique_id": "T1021",
+      "technique_name": "Remote Services",
+      "tactic": "Lateral Movement",
+      "supporting_evidence": "Evidence of remote-service use consistent with lateral movement or remote access.",
+      "contradictory_or_missing_evidence": "A network connection alone is insufficient.",
+      "confidence": "low",
+      "status": "possible"
+    },
+    {
+      "technique_id": "T1486",
+      "technique_name": "Data Encrypted for Impact",
+      "tactic": "Impact",
+      "supporting_evidence": "Host, filesystem, file-operation, process, or other evidence demonstrating data
+encryption for impact.",
+      "contradictory_or_missing_evidence": "SMB traffic and byte counts alone are insufficient.",
+      "confidence": "low",
+      "status": "possible"
+    }
+  ],
+  "plausible_next_events": [
+    {
+      "description": "NTLM authentication observed.",
+      "preconditions": "NTLM-related network metadata and authentication or endpoint evidence.",
+      "telemetry": "Monitor NTLM authentication attempts and corresponding endpoint activity."
+    },
+    {
+      "description": "SMB traffic observed with gssapi and smb services.",
+      "preconditions": "SMB traffic and gssapi/smb services observed.",
+      "telemetry": "Monitor SMB traffic and gssapi/smb services for further evidence of lateral movement or remote
+execution."
+    }
+  ],
+  "response_actions": [
+    {
+      "action": "Monitor NTLM authentication attempts and corresponding endpoint activity.",
+      "type": "short-term"
+    },
+    {
+      "action": "Investigate SMB traffic and gssapi/smb services for further evidence of lateral movement or
+remote execution.",
+      "type": "short-term"
+    }
+  ],
+  "unanswered_questions": [
+    "What is the purpose of the observed SMB traffic?",
+    "Is the observed NTLM authentication related to legitimate or malicious activity?"
+  ],
+  "human_validation_required": true
+}
+```
