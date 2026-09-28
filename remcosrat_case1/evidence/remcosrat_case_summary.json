@@ -1,0 +1,64 @@
+{
+  "case_id": "CTU-SME-11-VM3-remcosrat",
+  "generated_utc": "2026-09-15T08:42:53.106139+00:00",
+  "case_filter": "RemcosRAT",
+  "label_filter": "malicious",
+  "seed_ip": null,
+  "input_logs": [
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-20/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-21/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-22/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-23/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-24/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-25/zeek/conn.log.labeled",
+    "Experiment-VM-Microsoft-Windows7full-3/2023-02-26/zeek/conn.log.labeled"
+  ],
+  "selected_flows": 33747,
+  "first_seen_utc": "2023-02-22T00:00:00.088679075+00:00",
+  "last_seen_utc": "2023-02-22T23:59:51.355072975+00:00",
+  "unique_source_ips": 1,
+  "unique_destination_ips": 2,
+  "destination_ports": [
+    80,
+    5888
+  ],
+  "connection_states": {
+    "REJ": 33630,
+    "S0": 106,
+    "RSTR": 8,
+    "SF": 1,
+    "SH": 1,
+    "OTH": 1
+  },
+  "directional_bytes_by_state": {
+    "OTH": {
+      "orig_bytes": 0,
+      "resp_bytes": 0
+    },
+    "REJ": {
+      "orig_bytes": 0,
+      "resp_bytes": 0
+    },
+    "RSTR": {
+      "orig_bytes": 190672103,
+      "resp_bytes": 435984
+    },
+    "S0": {
+      "orig_bytes": 0,
+      "resp_bytes": 0
+    },
+    "SF": {
+      "orig_bytes": 71,
+      "resp_bytes": 1213
+    },
+    "SH": {
+      "orig_bytes": 0,
+      "resp_bytes": 0
+    }
+  },
+  "detailed_labels": {
+    "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT": 33744,
+    "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP": 3
+  },
+  "interpretation_boundary": "Observed dataset evidence only; no MITRE ATT&CK technique or future attack stage has been inferred by this script."
+}
