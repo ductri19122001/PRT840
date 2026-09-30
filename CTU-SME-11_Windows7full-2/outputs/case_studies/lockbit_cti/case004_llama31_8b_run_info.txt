@@ -1,0 +1,61 @@
+Case: CTU-SME-11-VM2-case-004
+Run date: 2026-09-22
+
+Run type:
+Zero-shot blind network-forensics analysis with no usable public CTI indicator.
+
+Model:
+llama3.1:8b
+
+Ollama version:
+0.34.2
+
+Generation settings:
+No custom generation parameters were supplied.
+Ollama/model default settings were used.
+
+Prompt:
+case004_ollama_prompt_no_public_cti.txt
+
+Raw response:
+case004_llama31_8b_response_raw.txt
+
+Observed network context:
+192.168.1.106 -> 192.168.1.108
+TCP ports 139 and 445
+486 endpoint-context flows were extracted from the raw Zeek capture.
+
+CTI:
+NO_USABLE_PUBLIC_CTI_INDICATOR.
+
+The destination address is an RFC1918 private IPv4 address.
+No independent public malware-family attribution was supplied to the LLM.
+
+Blind-analysis controls:
+Dataset ground-truth attack labels were withheld.
+Dataset malware-family labels were withheld.
+Decision Tree and Isolation Forest correct/missed outcomes were withheld.
+No ransomware or LockBit attribution was supplied to the LLM.
+
+Raw response manually edited:
+No.
+
+Human validation required:
+Yes.
+
+Initial human-validation notes:
+1. The response stated that two flows were observed, although the supplied case summary contained 486 endpoint-context flows. The two records in selected_flow_examples were examples, not the complete observed population.
+
+2. The response incorrectly summarized the connection states using the two example flows and omitted the broader context containing RSTO 306, SF 177 and RSTR 3.
+
+3. T1021.002 SMB/Windows Admin Shares was classified as possible with low confidence. SMB-related traffic was observed, but no administrative-share access, remote file access, remote execution or correlated endpoint evidence was supplied.
+
+4. T1550.002 Pass the Hash was classified as possible despite the absence of evidence demonstrating use of password hashes or alternate authentication material. NTLM-related service metadata alone is insufficient.
+
+5. T1569.002 Service Execution was classified as possible despite no supplied evidence of service creation, modification or execution.
+
+6. T1486 Data Encrypted for Impact was classified as possible despite no supplied host, filesystem, process or file-operation evidence demonstrating encryption for impact.
+
+7. The plausible-next-events section stated "NTLM authentication observed." The supplied evidence contained NTLM-related service metadata but did not independently establish a specific NTLM authentication event.
+
+8. The response was wrapped in a Markdown code fence and preceded by explanatory prose, so it did not strictly comply with the request to return only valid JSON.

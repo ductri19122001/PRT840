@@ -1,0 +1,148 @@
+You are assisting a human network-forensics analyst.
+
+Use only the observed evidence and curated MITRE ATT&CK reference supplied below.
+Ground-truth attack labels, malware-family labels, and model correct/missed outcomes are intentionally withheld. Do not attempt to reconstruct them from the case identifier.
+Do not treat a dataset label, malware name, IP address, port number, high flow count, or retrospective CTI relationship as proof that a technique succeeded.
+Connection states matter: S0 means a connection attempt was seen but no reply was observed. RSTO indicates that the connection was established and then reset by the originator. Do not interpret a connection state by itself as proof of malicious activity or successful command-and-control.
+Do not invent ATT&CK identifiers. If the supplied evidence is insufficient, say so.
+
+Return valid JSON with these keys:
+1. observed_facts: facts directly supported by the supplied fields;
+2. candidate_attack_mappings: technique_id, technique_name, tactic, supporting_evidence,
+   contradictory_or_missing_evidence, confidence (low/medium/high), and status
+   (supported/possible/not_supported);
+3. plausible_next_events: possibilities only, each with preconditions and telemetry to monitor;
+4. response_actions: immediate, short-term and evidence-preservation actions;
+5. unanswered_questions;
+6. human_validation_required.
+
+Keep observed facts separate from inference. Do not claim that data exfiltration, C2,
+tool transfer, reconnaissance, lateral movement, credential theft, host compromise,
+or any later attack stage occurred unless the provided evidence directly supports it.
+
+Treat retrospective CTI as contextual evidence only. A historical relationship between
+an external IP and a malware-associated file does not independently prove the identity,
+contents, or purpose of an individual network flow. Do not propagate an IP-level CTI
+relationship to a specific port unless port-specific CTI evidence is supplied.
+
+INPUT
+{
+  "observed_case_summary": {
+    "case_id": "CTU-SME-11-VM2-case-002",
+    "case_filter": "selected_network_case",
+    "label_filter": "not_provided_to_llm",
+    "dataset_ground_truth": "withheld_for_blind_analysis",
+    "model_correctness": "withheld_for_blind_analysis",
+    "capture_date": "2023-02-21_to_2023-02-22",
+    "selected_flows": 2755,
+    "first_seen_utc": "2023-02-21T06:50:05.443686962+00:00",
+    "last_seen_utc": "2023-02-22T00:01:10.463027+00:00",
+    "unique_source_ips": 1,
+    "unique_destination_ips": 1,
+    "destination_ports": [
+      2567
+    ],
+    "connection_states": {
+      "RSTO": 2350,
+      "S0": 396,
+      "S1": 5,
+      "OTH": 4
+    },
+    "total_orig_bytes": 885750,
+    "total_resp_bytes": 0,
+    "interpretation_boundary": "Observed Zeek network evidence only. No malware attribution, successful command-and-control activity, host compromise, ATT&CK technique, or future attack stage is inferred from these network observations alone."
+  },
+
+  "observed_aggregated_edges": [
+    {
+      "id.orig_h": "192.168.1.106",
+      "id.resp_h": "4.234.116.12",
+      "flows": 2755,
+      "orig_bytes": 885750,
+      "resp_bytes": 0,
+      "first_seen": "2023-02-21 06:50:05.443686962+00:00",
+      "last_seen": "2023-02-22 00:01:10.463027+00:00",
+      "destination_ports": "2567",
+      "protocols": "tcp",
+      "states": "RSTO 2350, S0 396, S1 5, OTH 4",
+      "observed_labels": "withheld_for_blind_analysis"
+    }
+  ],
+
+  "retrospective_endpoint_cti": {
+    "evidence_scope": "retrospective_context_only",
+    "indicator": "4.234.116.12",
+    "indicator_type": "ip",
+    "status": "MATCH_RETROSPECTIVE_PUBLIC_CTI",
+    "source": {
+      "provider": "VirusTotal",
+      "source_url": "https://www.virustotal.com/gui/ip-address/4.234.116.12",
+      "relationship": "VirusTotal Relations lists a file communicating with 4.234.116.12.",
+      "related_file_name": "Netflix Checker New Api.zip",
+      "related_file_sha256": "83f7de31cf4fa2e65cf9a40143e45272515c7ddaaa47c4957034e636c5f6c0764",
+      "related_file_analysis_date": "2023-02-17",
+      "related_file_detection": "45 of 64 security vendors flagged the related file as malicious.",
+      "external_attribution": "Multiple VirusTotal security vendors classify the related file using RedLine or RedLineStealer naming."
+    },
+    "port_specific_cti": {
+      "indicator": "4.234.116.12:2567",
+      "status": "NO_PORT_SPECIFIC_CTI_MATCH",
+      "finding": "The reviewed VirusTotal evidence establishes a historical relationship at the IP level but does not independently establish that TCP port 2567 was associated with the related file or malware activity."
+    },
+    "limitations": [
+      "Treat this CTI as retrospective contextual evidence only.",
+      "The malware-family naming comes from external VirusTotal security-vendor classifications and not from the withheld dataset ground-truth label.",
+      "A historical file-to-IP relationship does not prove that the observed dataset flows contain traffic from the related file or malware family.",
+      "The reviewed CTI does not independently establish that TCP port 2567 was used by the related file.",
+      "The CTI does not by itself prove successful command-and-control activity, data exfiltration, credential theft, or host compromise.",
+      "The CTI must not be treated as independent validation of the withheld dataset ground-truth label."
+    ]
+  },
+
+  "curated_attack_reference": {
+    "source": "MITRE ATT&CK Enterprise",
+    "notice": "This is a small curated reference for candidate generation. Analysts must verify the current official ATT&CK pages before reporting a mapping.",
+    "techniques": [
+      {
+        "technique_id": "T1071.001",
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "Command and Control",
+        "summary": "Web protocols may be used for command-and-control communication.",
+        "evidence_required": "HTTP or HTTPS behaviour consistent with command-and-control, supported by protocol, request, response, URI, host, or payload context. An IP address, arbitrary TCP port, or retrospective malware association alone is insufficient.",
+        "source_url": "https://attack.mitre.org/techniques/T1071/001/"
+      },
+      {
+        "technique_id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "tactic": "Command and Control",
+        "summary": "Files or tools are transferred into a compromised environment.",
+        "evidence_required": "Evidence that a file or tool was downloaded or transferred into the environment. A historical relationship between a remote IP and a malware-associated file is insufficient by itself.",
+        "source_url": "https://attack.mitre.org/techniques/T1105/"
+      },
+      {
+        "technique_id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "tactic": "Exfiltration",
+        "summary": "Data is exfiltrated through an existing command-and-control channel.",
+        "evidence_required": "Evidence of an established command-and-control channel and actual outbound data transfer attributable to exfiltration. Outbound bytes or retrospective CTI alone are insufficient.",
+        "source_url": "https://attack.mitre.org/techniques/T1041/"
+      },
+      {
+        "technique_id": "T1048.003",
+        "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+        "tactic": "Exfiltration",
+        "summary": "Data is exfiltrated over an unencrypted protocol other than an existing command-and-control channel.",
+        "evidence_required": "Protocol-level evidence that data was transferred as exfiltration over an unencrypted non-C2 protocol. Outbound byte counts alone are insufficient.",
+        "source_url": "https://attack.mitre.org/techniques/T1048/003/"
+      },
+      {
+        "technique_id": "T1046",
+        "name": "Network Service Discovery",
+        "tactic": "Discovery",
+        "summary": "An adversary attempts to identify services running on remote hosts.",
+        "evidence_required": "A probing pattern across hosts or services consistent with discovery. Repeated connections to one remote endpoint are insufficient by themselves.",
+        "source_url": "https://attack.mitre.org/techniques/T1046/"
+      }
+    ]
+  }
+}

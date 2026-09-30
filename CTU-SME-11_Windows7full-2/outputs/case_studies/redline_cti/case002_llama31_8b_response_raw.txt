@@ -1,0 +1,52 @@
+Based on the provided input, I'll generate a report with the requested keys.
+
+**observed_facts**
+
+* Observed network evidence from Zeek
+* 1 unique source IP, 1 unique destination IP
+* Destination port 2567
+* Connection states: RSTO (2350), S0 (396), S1 (5), OTH (4)
+* Total orig bytes: 885750, total resp bytes: 0
+* First seen: 2023-02-21 06:50:05.443686962+00:00, last seen: 2023-02-22 00:01:10.463027+00:00
+
+**candidate_attack_mappings**
+
+| technique_id | technique_name | tactic | supporting_evidence | contradictory_or_missing_evidence | confidence |
+status |
+| --- | --- | --- | --- | --- | --- | --- |
+| T1071.001 | Application Layer Protocol: Web Protocols | Command and Control | HTTP or HTTPS behavior consistent
+with command-and-control |  | Medium | Supported |
+| T1105 | Ingress Tool Transfer | Command and Control | Evidence of file or tool transfer into the environment |
+Historical relationship between remote IP and malware-associated file is insufficient | Low | Not Supported |
+| T1041 | Exfiltration Over C2 Channel | Exfiltration | Evidence of established command-and-control channel and
+actual outbound data transfer | Outbound bytes or retrospective CTI alone are insufficient | Low | Not Supported |
+| T1048.003 | Exfiltration Over Unencrypted Non-C2 Protocol | Exfiltration | Protocol-level evidence of data
+transfer as exfiltration over unencrypted non-C2 protocol | Outbound byte counts alone are insufficient | Low |
+Not Supported |
+| T1046 | Network Service Discovery | Discovery | Probing pattern across hosts or services consistent with
+discovery | Repeated connections to one remote endpoint are insufficient by themselves | Low | Not Supported |
+
+**plausible_next_events**
+
+1. **Tool transfer**: Preconditions: File or tool transfer into the environment. Telemetry to monitor: Evidence of
+file or tool transfer into the environment.
+2. **Command and control**: Preconditions: Established command-and-control channel. Telemetry to monitor: Actual
+outbound data transfer attributable to command and control.
+3. **Data exfiltration**: Preconditions: Established command-and-control channel and actual outbound data transfer
+attributable to exfiltration. Telemetry to monitor: Outbound data transfer attributable to exfiltration.
+
+**response_actions**
+
+1. **Immediate**: Monitor connection states and flow behavior for suspicious patterns.
+2. **Short-term**: Investigate the destination port 2567 and its association with the observed flows.
+3. **Evidence preservation**: Preserve the observed network evidence for further analysis.
+
+**unanswered_questions**
+
+1. What is the purpose of the observed flows?
+2. Is the destination port 2567 associated with any malicious activity?
+3. Are there any other potential attack stages involved?
+
+**human_validation_required**
+
+Yes, human validation is required to confirm the observed facts and candidate attack mappings.

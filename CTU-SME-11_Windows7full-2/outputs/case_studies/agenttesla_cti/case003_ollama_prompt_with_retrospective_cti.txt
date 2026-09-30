@@ -1,0 +1,183 @@
+You are assisting a human network-forensics analyst.
+
+Use only the observed evidence and curated MITRE ATT&CK reference supplied below.
+Ground-truth attack labels, malware-family labels, and model correct/missed outcomes are intentionally withheld. Do not attempt to reconstruct them from the case identifier.
+
+Do not treat a dataset label, malware name, IP address, port number, high flow count,
+TLS/SSL service metadata, or retrospective CTI relationship as proof that a technique succeeded.
+
+Connection states matter: SF indicates a connection that was established and closed normally,
+while S0 indicates a connection attempt for which no reply was observed. Neither state alone
+establishes malicious activity.
+
+Do not invent ATT&CK identifiers. If the supplied evidence is insufficient, say so.
+
+Return valid JSON with these keys:
+1. observed_facts: facts directly supported by the supplied fields;
+2. candidate_attack_mappings: technique_id, technique_name, tactic, supporting_evidence,
+   contradictory_or_missing_evidence, confidence (low/medium/high), and status
+   (supported/possible/not_supported);
+3. plausible_next_events: possibilities only, each with preconditions and telemetry to monitor;
+4. response_actions: immediate, short-term and evidence-preservation actions;
+5. unanswered_questions;
+6. human_validation_required.
+
+Keep observed facts separate from inference.
+
+Do not claim command-and-control, credential theft, data exfiltration, tool transfer,
+reconnaissance, lateral movement, malware execution, host compromise, or any later attack
+stage unless the provided evidence directly supports it.
+
+Treat retrospective CTI as contextual evidence only. A historical relationship between an
+external IP and a suspicious file does not independently prove that the file generated the
+observed network traffic.
+
+Do not infer a malware family from the withheld dataset labels.
+
+INPUT
+{
+  "observed_case_summary": {
+    "case_id": "CTU-SME-11-VM2-case-003",
+    "case_filter": "selected_network_case",
+    "label_filter": "not_provided_to_llm",
+    "dataset_ground_truth": "withheld_for_blind_analysis",
+    "model_correctness": "withheld_for_blind_analysis",
+
+    "selected_flows": 19,
+
+    "first_seen_utc": "2023-02-23T08:54:29.425751925+00:00",
+    "last_seen_utc": "2023-02-23T08:55:46.895365953+00:00",
+
+    "unique_source_ips": 1,
+    "unique_destination_ips": 1,
+
+    "destination_ports": [
+      443
+    ],
+
+    "connection_states": {
+      "SF": 13,
+      "S0": 6
+    },
+
+    "total_orig_bytes": 3849,
+    "total_resp_bytes": 177865,
+
+    "interpretation_boundary": "Observed Zeek network evidence only. No malware-family attribution, command-and-control activity, credential theft, exfiltration, host compromise, or ATT&CK technique is inferred from these observations alone."
+  },
+
+  "observed_aggregated_edges": [
+    {
+      "id.orig_h": "192.168.1.106",
+      "id.resp_h": "176.223.208.23",
+      "flows": 19,
+      "orig_bytes": 3849,
+      "resp_bytes": 177865,
+      "destination_ports": "443",
+      "protocols": "tcp",
+      "first_seen": "2023-02-23 08:54:29.425751925+00:00",
+      "last_seen": "2023-02-23 08:55:46.895365953+00:00",
+      "states": "SF 13, S0 6",
+      "observed_labels": "withheld_for_blind_analysis"
+    }
+  ],
+
+  "retrospective_endpoint_cti": {
+    "evidence_scope": "retrospective_context_only",
+
+    "indicator": "176.223.208.23",
+    "indicator_type": "ip",
+
+    "status": "MATCH_RETROSPECTIVE_SUSPICIOUS_FILE_RELATIONSHIP",
+
+    "source": {
+      "provider": "VirusTotal",
+      "relationship": "VirusTotal Relations lists a file communicating with 176.223.208.23.",
+
+      "related_file_name": "RICHIESTA URGENTE DI PREVENTIVO 13223.vbs",
+
+      "related_file_sha256": "b34edbbf37ac73b86d5d7971824e03305de02ca7a276694f2852d55a0483a2fb",
+
+      "related_file_analysis_date": "2023-02-21",
+
+      "related_file_detection": "4 of 59 security vendors flagged the related file.",
+
+      "visible_vendor_detections": [
+        "Avast/AVG: VBS:Obfuscated-GZ [Cryp]",
+        "ESET-NOD32: VBS/Agent.QRV",
+        "Kaspersky: HEUR:Trojan.VBS.SAgent.gen"
+      ],
+
+      "malware_family_attribution": "No independent AgentTesla malware-family attribution was established by the reviewed CTI evidence."
+    },
+
+    "ip_vendor_status": {
+      "detections": "0/89",
+      "interpretation": "The reviewed VirusTotal IP page did not show the IP itself as malicious according to the displayed security-vendor results."
+    },
+
+    "port_specific_cti": {
+      "indicator": "176.223.208.23:443",
+      "status": "NO_PORT_SPECIFIC_CTI_MATCH",
+      "finding": "The reviewed public CTI establishes a historical suspicious-file relationship at the IP level but does not independently establish that TCP port 443 was used by the related file."
+    },
+
+    "limitations": [
+      "Treat this CTI as retrospective contextual evidence only.",
+      "The historical file-to-IP relationship does not prove that the related VBS file generated the observed dataset traffic.",
+      "The reviewed CTI does not independently establish an AgentTesla malware-family attribution.",
+      "The reviewed CTI does not independently establish a relationship specifically involving TCP port 443.",
+      "Port 443 alone does not prove HTTPS command-and-control activity.",
+      "The CTI does not prove successful command-and-control, credential theft, data exfiltration, malware execution, or host compromise.",
+      "This CTI must not be treated as validation of the withheld dataset ground-truth label."
+    ]
+  },
+
+  "curated_attack_reference": {
+    "source": "MITRE ATT&CK Enterprise",
+
+    "notice": "This is a small curated reference for candidate generation. Analysts must verify current official ATT&CK material before reporting a final mapping.",
+
+    "techniques": [
+      {
+        "technique_id": "T1071.001",
+        "name": "Application Layer Protocol: Web Protocols",
+        "tactic": "Command and Control",
+        "summary": "Web protocols may be used for command-and-control communication.",
+        "evidence_required": "HTTP or HTTPS behaviour consistent with command-and-control supported by request, response, URI, host, TLS, payload, or other application-layer context. TCP port 443 alone is insufficient."
+      },
+
+      {
+        "technique_id": "T1105",
+        "name": "Ingress Tool Transfer",
+        "tactic": "Command and Control",
+        "summary": "Files or tools are transferred into a compromised environment.",
+        "evidence_required": "Evidence that a file or tool was actually transferred into the environment. A historical relationship between the remote IP and a suspicious file is insufficient."
+      },
+
+      {
+        "technique_id": "T1041",
+        "name": "Exfiltration Over C2 Channel",
+        "tactic": "Exfiltration",
+        "summary": "Data is exfiltrated through an existing command-and-control channel.",
+        "evidence_required": "Evidence of an established C2 channel and actual outbound data transfer attributable to exfiltration. Byte counts alone are insufficient."
+      },
+
+      {
+        "technique_id": "T1048.003",
+        "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+        "tactic": "Exfiltration",
+        "summary": "Data is exfiltrated over an unencrypted protocol other than the existing C2 channel.",
+        "evidence_required": "Protocol-level evidence demonstrating exfiltration over an unencrypted non-C2 protocol. Byte counts alone are insufficient."
+      },
+
+      {
+        "technique_id": "T1046",
+        "name": "Network Service Discovery",
+        "tactic": "Discovery",
+        "summary": "An adversary attempts to identify services running on remote hosts.",
+        "evidence_required": "A probing pattern across hosts or services consistent with discovery. Connections to one remote endpoint are insufficient by themselves."
+      }
+    ]
+  }
+}
