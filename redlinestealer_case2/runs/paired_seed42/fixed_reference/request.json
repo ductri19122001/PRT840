@@ -1,0 +1,268 @@
+{
+  "model": "llama3.1:8b",
+  "prompt": "You assist a human network-forensics analyst. Use only the supplied evidence and official ATT&CK reference excerpts. Return one valid JSON object, no Markdown.\nCopy observed_facts_to_copy exactly into observed_facts. Assess every supplied technique exactly once, in supplied order, using its exact ID and name. Do not add other techniques. Cite evidence IDs E01-E06 or C01-C02. Reference definitions are not evidence that the behaviour occurred. Separate supporting observations from the missing behavioural requirements. Keep explanations concise.\nsupported requires direct case evidence of the technique's defining attacker behaviour. possible is an explicitly unconfirmed hypothesis with both a specific case observation and missing behavioural evidence. not_supported means the supplied evidence does not establish the defining behaviour; it does not mean it was disproved.\nHTTP service labels support a protocol observation only. They do not establish C2, commands, responses or exfiltration. Counts, timing, byte totals, one IP/port, and retrospective malware CTI do not by themselves establish attacker intent, scanning, beaconing, host compromise or any attack stage. Missing byte values are not zero. Use C01 only as historical context and respect the no-port-match limit C02. Dataset labels and detector outcomes are withheld.\nGive at most two conditional next events, with the additional evidence needed and telemetry to monitor. Do not report a completed Cyber Kill Chain when the observed stages are unconfirmed. Give three practical response actions: immediate triage, short-term corroboration, and evidence preservation, with the trigger or prerequisite for each. These are proposed analyst actions, not executed containment. Do not recommend running suspicious files. State the major unanswered questions. Human validation is required.\n\nINPUT\n{\"case_evidence\":{\"case_id\":\"CTU-SME-11-VM2-case-002\",\"evidence\":[{\"id\":\"E01\",\"kind\":\"network_observation\",\"value\":{\"selected_flows\":2755,\"source_ip\":\"192.168.1.106\",\"destination_ip\":\"4.234.116.12\",\"destination_port\":2567,\"protocol\":\"tcp\"}},{\"id\":\"E02\",\"kind\":\"network_observation\",\"value\":{\"first_seen_utc\":\"2023-02-21 06:50:05.443686962+00:00\",\"last_seen_utc\":\"2023-02-22 00:01:10.463027+00:00\"}},{\"id\":\"E03\",\"kind\":\"network_observation\",\"value\":{\"RSTO\":2350,\"S1\":5,\"S0\":396,\"OTH\":4}},{\"id\":\"E04\",\"kind\":\"network_observation\",\"value\":{\"total_orig_bytes\":885750,\"total_resp_bytes\":0,\"orig_bytes_missing_rows\":134,\"resp_bytes_missing_rows\":134,\"total_orig_packets\":48257,\"total_resp_packets\":4709},\"boundary\":\"Byte totals sum available values only; 134 rows in each byte column are missing and have not been imputed as zero.\"},{\"id\":\"E05\",\"kind\":\"network_observation\",\"value\":{\"http\":2358,\"-\":397},\"boundary\":\"Zeek service labels only. HTTP request/response fields, URIs, hosts and payload are not supplied. An http label does not establish command-and-control or exfiltration.\"},{\"id\":\"E06\",\"kind\":\"evidence_availability\",\"value\":\"Only these endpoint-selected conn.log-derived records and the team CTI register are supplied. No process, executable, credential-access, file-transfer, HTTP application content or wider host/service probing evidence is supplied. Absence from this input does not establish absence from the capture.\"},{\"id\":\"C01\",\"kind\":\"retrospective_cti_context\",\"value\":{\"provider\":\"VirusTotal\",\"source_url\":\"https://www.virustotal.com/gui/ip-address/4.234.116.12\",\"relationship\":\"VirusTotal Relations lists a file communicating with 4.234.116.12.\",\"related_file_name\":\"Netflix Checker New Api.zip\",\"related_file_sha256\":\"83f7de31cf4fa2e65cf9a40143e45272515c7ddaaa47c4957034e636c5f6c0764\",\"related_file_analysis_date\":\"2023-02-17\",\"related_file_detection\":\"45 of 64 security vendors flagged the related file as malicious.\",\"external_attribution\":\"Multiple VirusTotal security vendors classify the related file using RedLine or RedLineStealer naming.\"},\"retrieved_utc_date\":\"2026-09-22\",\"boundary\":\"Team-recorded historical file-to-IP association, not an independently reverified live CTI result. The 2023-02-17 date is the related-file analysis date in the source prompt, not a proven date of publication or observed connection. Family labels are external CTI context, not dataset ground truth.\"},{\"id\":\"C02\",\"kind\":\"retrospective_cti_limit\",\"value\":{\"indicator\":\"4.234.116.12:2567\",\"status\":\"NO_PORT_SPECIFIC_CTI_MATCH\",\"finding\":\"The reviewed VirusTotal evidence establishes a historical relationship at the IP level but does not independently establish that TCP port 2567 was associated with the related file or malware activity.\"},\"boundary\":\"Do not infer that the related file used port 2567, that these flows are RedLineStealer traffic, or that the host is compromised.\"}],\"observed_facts_to_copy\":{\"selected_flows\":2755,\"connection_states\":{\"RSTO\":2350,\"S1\":5,\"S0\":396,\"OTH\":4},\"service_labels\":{\"http\":2358,\"-\":397},\"total_orig_bytes\":885750,\"total_resp_bytes\":0,\"orig_bytes_missing_rows\":134,\"resp_bytes_missing_rows\":134},\"controls\":{\"dataset_labels\":\"withheld\",\"detector_outcomes\":\"withheld\",\"external_cti_family_names\":\"context only\"},\"interpretation_rules\":[\"S0 indicates a connection attempt with no reply seen; RSTO means the originator reset an established connection. Neither proves malicious intent or successful C2.\",\"Zero resp_bytes is the sum of available responder payload-byte values. It does not mean no responder packets or that missing values are zero: use E04.\",\"Repeated traffic to one endpoint is not, by itself, evidence of scanning, beaconing, an attack stage, successful C2 or exfiltration.\",\"The reference describes what adversaries may do; it is not observed case evidence.\"]},\"attack_reference\":[{\"technique_id\":\"T1071.001\",\"name\":\"Web Protocols\",\"tactics\":[\"command-and-control\"],\"description\":\"Adversaries may communicate using application layer protocols associated with web traffic to avoid detection/network filtering by blending in with existing traffic. Commands to the remote system, and often the results of those commands, will be embedded within the protocol traffic between the client and server. Protocols such as HTTP/S and WebSocket that carry web traffic may be very common in environments. HTTP/S packets have many fields and headers in which data can be concealed. An adversary may abuse these protocols to communicate with systems under their control within a victim network while also mimicking normal, expected traffic.\",\"description_truncated\":false,\"source_url\":\"https://attack.mitre.org/techniques/T1071/001\"},{\"technique_id\":\"T1105\",\"name\":\"Ingress Tool Transfer\",\"tactics\":[\"command-and-control\"],\"description\":\"Adversaries may transfer tools or other files from an external system into a compromised environment. Tools or files may be copied from an external adversary-controlled system to the victim network through the command and control channel or through alternate protocols such as ftp. Once present, adversaries may also transfer/spread tools between victim devices within a compromised environment (i.e. Lateral Tool Transfer). On Windows, adversaries may use various utilities to download tools, such as copy, finger, certutil, and PowerShell commands such as IEX(New-Object Net.WebClient).downloadString() and Invoke-WebRequest . On Linux and macOS systems, a variety of utilities also exist, such as curl, scp, sftp, tftp, rsync, finger, and wget. A number of these tools, such as wget, curl, and scp, also exist on ESXi. After downloading a file, a threat actor may attempt to verify its integrity by checking its hash value (e.g., via certutil -hashfile). Adversaries may also abuse installers and package managers, such as yum or winget, to download tools to victim hosts. Adversaries have also abused file application features, such as the Windows search-ms protocol handler, to deliver malicious files to victims through remote file searches invoked by User Execution (typically after interacting with Phishing lures). Files can also be transferred using various Web Services as well as native or otherwise present tools on the victim system.\",\"description_truncated\":true,\"source_url\":\"https://attack.mitre.org/techniques/T1105\"},{\"technique_id\":\"T1041\",\"name\":\"Exfiltration Over C2 Channel\",\"tactics\":[\"exfiltration\"],\"description\":\"Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications channel using the same protocol as command and control communications.\",\"description_truncated\":false,\"source_url\":\"https://attack.mitre.org/techniques/T1041\"},{\"technique_id\":\"T1048.003\",\"name\":\"Exfiltration Over Unencrypted Non-C2 Protocol\",\"tactics\":[\"exfiltration\"],\"description\":\"Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel. The data may also be sent to an alternate network location from the main command and control server. Adversaries may opt to obfuscate this data, without the use of encryption, within network protocols that are natively unencrypted (such as HTTP, FTP, or DNS). This may include custom or publicly available encoding/compression algorithms (such as base64) as well as embedding data within protocol headers and fields.\",\"description_truncated\":false,\"source_url\":\"https://attack.mitre.org/techniques/T1048/003\"},{\"technique_id\":\"T1046\",\"name\":\"Network Service Discovery\",\"tactics\":[\"discovery\"],\"description\":\"Adversaries may attempt to get a listing of services running on remote hosts and local network infrastructure devices, including those that may be vulnerable to remote software exploitation. Common methods to acquire this information include port, vulnerability, and/or wordlist scans using tools that are brought onto a system. Within cloud environments, adversaries may attempt to discover services running on other cloud hosts. Additionally, if the cloud environment is connected to a on-premises environment, adversaries may be able to identify services running on non-cloud systems as well. Within macOS environments, adversaries may use the native Bonjour application to discover services running on other macOS hosts within a network. The Bonjour mDNSResponder daemon automatically registers and advertises a host’s registered services on the network. For example, adversaries can use a mDNS query (such as dns-sd -B _ssh._tcp . ) to find other systems broadcasting the ssh service.\",\"description_truncated\":false,\"source_url\":\"https://attack.mitre.org/techniques/T1046\"}]}",
+  "format": {
+    "type": "object",
+    "properties": {
+      "observed_facts": {
+        "type": "object",
+        "properties": {
+          "selected_flows": {
+            "type": "integer"
+          },
+          "connection_states": {
+            "type": "object",
+            "properties": {
+              "RSTO": {
+                "type": "integer"
+              },
+              "S1": {
+                "type": "integer"
+              },
+              "S0": {
+                "type": "integer"
+              },
+              "OTH": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "RSTO",
+              "S1",
+              "S0",
+              "OTH"
+            ],
+            "additionalProperties": false
+          },
+          "service_labels": {
+            "type": "object",
+            "properties": {
+              "http": {
+                "type": "integer"
+              },
+              "-": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "http",
+              "-"
+            ],
+            "additionalProperties": false
+          },
+          "total_orig_bytes": {
+            "type": "integer"
+          },
+          "total_resp_bytes": {
+            "type": "integer"
+          },
+          "orig_bytes_missing_rows": {
+            "type": "integer"
+          },
+          "resp_bytes_missing_rows": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "selected_flows",
+          "connection_states",
+          "service_labels",
+          "total_orig_bytes",
+          "total_resp_bytes",
+          "orig_bytes_missing_rows",
+          "resp_bytes_missing_rows"
+        ],
+        "additionalProperties": false
+      },
+      "candidate_attack_mappings": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "technique_id": {
+              "type": "string"
+            },
+            "technique_name": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "supported",
+                "possible",
+                "not_supported"
+              ]
+            },
+            "confidence": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "supporting_observations": {
+              "type": "string"
+            },
+            "missing_behavioural_evidence": {
+              "type": "string"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E01",
+                  "E02",
+                  "E03",
+                  "E04",
+                  "E05",
+                  "E06",
+                  "C01",
+                  "C02"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "technique_id",
+            "technique_name",
+            "status",
+            "confidence",
+            "supporting_observations",
+            "missing_behavioural_evidence",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 5,
+        "maxItems": 5
+      },
+      "plausible_next_events": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "event": {
+              "type": "string"
+            },
+            "preconditions": {
+              "type": "string"
+            },
+            "telemetry_to_monitor": {
+              "type": "string"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E01",
+                  "E02",
+                  "E03",
+                  "E04",
+                  "E05",
+                  "E06",
+                  "C01",
+                  "C02"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "event",
+            "preconditions",
+            "telemetry_to_monitor",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "maxItems": 2
+      },
+      "response_actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "phase": {
+              "type": "string",
+              "enum": [
+                "immediate",
+                "short_term",
+                "evidence_preservation"
+              ]
+            },
+            "action": {
+              "type": "string"
+            },
+            "trigger_or_prerequisite": {
+              "type": "string"
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "E01",
+                  "E02",
+                  "E03",
+                  "E04",
+                  "E05",
+                  "E06",
+                  "C01",
+                  "C02"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "phase",
+            "action",
+            "trigger_or_prerequisite",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "minItems": 3,
+        "maxItems": 3
+      },
+      "unanswered_questions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "maxItems": 4
+      },
+      "human_validation_required": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "observed_facts",
+      "candidate_attack_mappings",
+      "plausible_next_events",
+      "response_actions",
+      "unanswered_questions",
+      "human_validation_required"
+    ],
+    "additionalProperties": false
+  },
+  "stream": false,
+  "keep_alive": "30m",
+  "options": {
+    "seed": 42,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2304,
+    "top_k": 40,
+    "top_p": 0.9,
+    "repeat_penalty": 1.0,
+    "num_batch": 64,
+    "num_thread": 8,
+    "num_gpu": 0
+  }
+}

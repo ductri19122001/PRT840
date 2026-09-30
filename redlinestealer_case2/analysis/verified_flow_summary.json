@@ -1,0 +1,25 @@
+{
+  "selected_flows": 2755,
+  "source_ip": "192.168.1.106",
+  "destination_ip": "4.234.116.12",
+  "destination_port": 2567,
+  "protocol": "tcp",
+  "first_seen_utc": "2023-02-21 06:50:05.443686962+00:00",
+  "last_seen_utc": "2023-02-22 00:01:10.463027+00:00",
+  "connection_states": {
+    "RSTO": 2350,
+    "S1": 5,
+    "S0": 396,
+    "OTH": 4
+  },
+  "service_labels": {
+    "http": 2358,
+    "-": 397
+  },
+  "total_orig_bytes": 885750,
+  "total_resp_bytes": 0,
+  "orig_bytes_missing_rows": 134,
+  "resp_bytes_missing_rows": 134,
+  "total_orig_packets": 48257,
+  "total_resp_packets": 4709
+}

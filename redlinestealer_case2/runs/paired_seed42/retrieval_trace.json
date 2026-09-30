@@ -1,0 +1,308 @@
+{
+  "algorithm": "BM25",
+  "k1": 1.5,
+  "b": 0.75,
+  "top_k": 5,
+  "query": "http https web protocols",
+  "query_source": "E05.http service label; predefined service-family expansion. HTTPS is a lookup synonym, not observed evidence.",
+  "indexed_fields": [
+    "name",
+    "tactics",
+    "description"
+  ],
+  "corpus_size": 697,
+  "eligible_size": 601,
+  "excluded_PRE_only_ids": [
+    "T1583",
+    "T1583.001",
+    "T1583.002",
+    "T1583.003",
+    "T1583.004",
+    "T1583.005",
+    "T1583.006",
+    "T1583.007",
+    "T1583.008",
+    "T1584",
+    "T1584.001",
+    "T1584.002",
+    "T1584.003",
+    "T1584.004",
+    "T1584.005",
+    "T1584.006",
+    "T1584.007",
+    "T1584.008",
+    "T1585",
+    "T1585.001",
+    "T1585.002",
+    "T1585.003",
+    "T1586",
+    "T1586.001",
+    "T1586.002",
+    "T1586.003",
+    "T1587",
+    "T1587.001",
+    "T1587.002",
+    "T1587.003",
+    "T1587.004",
+    "T1588",
+    "T1588.001",
+    "T1588.002",
+    "T1588.003",
+    "T1588.004",
+    "T1588.005",
+    "T1588.006",
+    "T1588.007",
+    "T1589",
+    "T1589.001",
+    "T1589.002",
+    "T1589.003",
+    "T1590",
+    "T1590.001",
+    "T1590.002",
+    "T1590.003",
+    "T1590.004",
+    "T1590.005",
+    "T1590.006",
+    "T1591",
+    "T1591.001",
+    "T1591.002",
+    "T1591.003",
+    "T1591.004",
+    "T1592",
+    "T1592.001",
+    "T1592.002",
+    "T1592.003",
+    "T1592.004",
+    "T1593",
+    "T1593.001",
+    "T1593.002",
+    "T1593.003",
+    "T1594",
+    "T1595",
+    "T1595.001",
+    "T1595.002",
+    "T1595.003",
+    "T1596",
+    "T1596.001",
+    "T1596.002",
+    "T1596.003",
+    "T1596.004",
+    "T1596.005",
+    "T1597",
+    "T1597.001",
+    "T1597.002",
+    "T1598",
+    "T1598.001",
+    "T1598.002",
+    "T1598.003",
+    "T1598.004",
+    "T1608",
+    "T1608.001",
+    "T1608.002",
+    "T1608.003",
+    "T1608.004",
+    "T1608.005",
+    "T1608.006",
+    "T1650",
+    "T1681",
+    "T1682",
+    "T1683",
+    "T1683.001",
+    "T1683.002"
+  ],
+  "ranking": [
+    {
+      "id": "T1071.001",
+      "name": "Web Protocols",
+      "score": 14.507181958824319,
+      "term_scores": {
+        "http": 5.332668444684321,
+        "protocols": 5.207599765342108,
+        "web": 3.9669137487978885
+      }
+    },
+    {
+      "id": "T1001.003",
+      "name": "Protocol or Service Impersonation",
+      "score": 11.859945616061765,
+      "term_scores": {
+        "http": 3.544238345566011,
+        "protocols": 4.587688135998428,
+        "web": 3.7280191344973272
+      }
+    },
+    {
+      "id": "T1048.001",
+      "name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol",
+      "score": 11.844386419191128,
+      "term_scores": {
+        "http": 3.471242321492526,
+        "https": 3.8360544108197683,
+        "protocols": 4.537089686878835
+      }
+    },
+    {
+      "id": "T1090.004",
+      "name": "Domain Fronting",
+      "score": 11.104966112264304,
+      "term_scores": {
+        "http": 5.91760761592012,
+        "https": 5.187358496344185
+      }
+    },
+    {
+      "id": "T1048",
+      "name": "Exfiltration Over Alternative Protocol",
+      "score": 10.906357268052933,
+      "term_scores": {
+        "http": 4.773808879814811,
+        "protocols": 3.8839101388630146,
+        "web": 2.2486382493751074
+      }
+    },
+    {
+      "id": "T1505.004",
+      "name": "IIS Components",
+      "score": 9.440439410525187,
+      "term_scores": {
+        "http": 5.5384168363041,
+        "web": 3.902022574221087
+      }
+    },
+    {
+      "id": "T1689",
+      "name": "Downgrade Attack",
+      "score": 9.28962039299578,
+      "term_scores": {
+        "http": 3.182812587624211,
+        "https": 3.5173119980626573,
+        "protocols": 2.5894958073089107
+      }
+    },
+    {
+      "id": "T1499.002",
+      "name": "Service Exhaustion Flood",
+      "score": 7.677416836674675,
+      "term_scores": {
+        "http": 4.309924604417289,
+        "web": 3.3674922322573866
+      }
+    },
+    {
+      "id": "T1071",
+      "name": "Application Layer Protocol",
+      "score": 7.598227169947692,
+      "term_scores": {
+        "protocols": 4.916678276526188,
+        "web": 2.681548893421504
+      }
+    },
+    {
+      "id": "T1048.003",
+      "name": "Exfiltration Over Unencrypted Non-C2 Protocol",
+      "score": 7.355899525009551,
+      "term_scores": {
+        "http": 4.055994240025461,
+        "protocols": 3.2999052849840904
+      }
+    },
+    {
+      "id": "T1218.005",
+      "name": "Mshta",
+      "score": 7.188849299523765,
+      "term_scores": {
+        "http": 3.414975311046711,
+        "https": 3.7738739884770536
+      }
+    },
+    {
+      "id": "T1110.001",
+      "name": "Password Guessing",
+      "score": 6.993748342067832,
+      "term_scores": {
+        "http": 3.8563064782451484,
+        "protocols": 3.1374418638226835
+      }
+    },
+    {
+      "id": "T1550.004",
+      "name": "Web Session Cookie",
+      "score": 6.954263565616195,
+      "term_scores": {
+        "protocols": 2.6806148926976796,
+        "web": 4.273648672918515
+      }
+    },
+    {
+      "id": "T1110.004",
+      "name": "Credential Stuffing",
+      "score": 6.827740901436575,
+      "term_scores": {
+        "http": 4.377082489074514,
+        "protocols": 2.4506584123620607
+      }
+    },
+    {
+      "id": "T1036.012",
+      "name": "Browser Fingerprint",
+      "score": 6.737543133446965,
+      "term_scores": {
+        "http": 4.055994240025461,
+        "web": 2.681548893421504
+      }
+    },
+    {
+      "id": "T1539",
+      "name": "Steal Web Session Cookie",
+      "score": 6.69463806333037,
+      "term_scores": {
+        "protocols": 2.357948332587491,
+        "web": 4.3366897307428784
+      }
+    },
+    {
+      "id": "T1048.002",
+      "name": "Exfiltration Over Asymmetric Encrypted Non-C2 Protocol",
+      "score": 6.6328911878531684,
+      "term_scores": {
+        "https": 3.820317995984567,
+        "protocols": 2.8125731918686014
+      }
+    },
+    {
+      "id": "T1216.001",
+      "name": "PubPrn",
+      "score": 6.6004089522723515,
+      "term_scores": {
+        "http": 3.13544389034765,
+        "https": 3.4649650619247017
+      }
+    },
+    {
+      "id": "T1567.004",
+      "name": "Exfiltration Over Webhook",
+      "score": 6.4096245094648685,
+      "term_scores": {
+        "http": 3.044814064241472,
+        "https": 3.3648104452233967
+      }
+    },
+    {
+      "id": "T1110.003",
+      "name": "Password Spraying",
+      "score": 6.325239935898079,
+      "term_scores": {
+        "http": 4.090273846281604,
+        "protocols": 2.2349660896164747
+      }
+    }
+  ],
+  "selected_ids": [
+    "T1071.001",
+    "T1001.003",
+    "T1048.001",
+    "T1090.004",
+    "T1048"
+  ],
+  "limitation": "Lexical relevance does not validate the technique, and one service facet may favour overlapping protocol techniques."
+}

@@ -1,0 +1,11 @@
+{
+  "started_utc": "2026-09-30T10:26:50.893999+00:00",
+  "finished_utc": "2026-09-30T10:29:21.728431+00:00",
+  "total_duration": 150821868508,
+  "load_duration": 3568494,
+  "prompt_eval_duration": 23257445000,
+  "eval_duration": 127297728000,
+  "prompt_eval_count": 2412,
+  "eval_count": 1002,
+  "done_reason": "stop"
+}

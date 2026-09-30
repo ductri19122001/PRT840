@@ -1,0 +1,17 @@
+{
+  "valid_json": true,
+  "schema_valid": true,
+  "errors": [],
+  "semantic_validation": "Pending independent human review; automated checks are structural and factual-copy checks only.",
+  "exact_observed_facts": true,
+  "exact_technique_coverage": true,
+  "exact_technique_names": true,
+  "three_action_phases": true,
+  "human_validation_required": true,
+  "done_reason": "stop",
+  "generation_complete": true,
+  "prompt_eval_count": 2300,
+  "eval_count": 865,
+  "context_budget_ok": true,
+  "automated_checks_passed": true
+}

@@ -1,0 +1,14 @@
+PASS actual fixed response passes structural and factual-copy checks
+PASS empty response rejected
+PASS missing byte values cannot be silently imputed as zero
+PASS unknown technique rejected
+PASS duplicated technique rejected
+PASS duplicated response phase rejected
+PASS length-limited output flagged
+PASS duplicate JSON keys rejected
+
+These checks do not validate the meaning of an ATT&CK claim or the usefulness of an action. The original fixed response passes these checks despite unsupported claims.
+PASS saved prepared pair matches all source checksums
+PASS reproduction prepares exactly the executed requests
+PASS existing prepared and executed outputs are protected against overwriting
+PASS official ATT&CK STIX checksum and all 697 normalised records match

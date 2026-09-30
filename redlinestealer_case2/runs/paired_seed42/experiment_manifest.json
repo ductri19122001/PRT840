@@ -1,0 +1,69 @@
+{
+  "prepared_utc": "2026-09-30T10:23:23.767756+00:00",
+  "model": "llama3.1:8b",
+  "options": {
+    "seed": 42,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2304,
+    "top_k": 40,
+    "top_p": 0.9,
+    "repeat_penalty": 1.0,
+    "num_batch": 64,
+    "num_thread": 8,
+    "num_gpu": 0
+  },
+  "seeds": [
+    42
+  ],
+  "replicates_per_condition": 1,
+  "execution_order": [
+    "fixed_reference",
+    "retrieved_reference"
+  ],
+  "reference_top_k": 5,
+  "common_evidence_sha256": "cc09d3d63424bd2a27e8cbf1d0bf8fb32b7e220f9e21ceb7bcbd1b78f58113ca",
+  "instructions_sha256": "bc8b8d8a8ee85591b2c2881cc21a189e61d1b1c76e58cc83dac4ff2f8f9a9762",
+  "schema_sha256": "5d462dafd10a23258278c98226823cb007caeca3b9854f13fc07a9433f6bb8e4",
+  "corpus": {
+    "attack_version": "19.2",
+    "domain": "enterprise-attack",
+    "stix_version": "2.1",
+    "commit": "6cda5ad8462c79e14fbb872f4e09059b18e0cfc4",
+    "source_url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/6cda5ad8462c79e14fbb872f4e09059b18e0cfc4/enterprise-attack/enterprise-attack-19.2.json",
+    "retrieved_utc_date": "2026-09-26",
+    "original_bundle_sha256": "dc1639caa5501d720e280cf1cbd8fbe009884a0c9b3e6e9ed9d0c25166c3d8f4",
+    "normalised_sha256": "1b159c8c8791f6b5e03a237f4ed463532a0c74a47779f5af1abe38023b103a6c",
+    "active_techniques": 697,
+    "filter": "Exclude revoked and x_mitre_deprecated objects",
+    "normalisation": "Strip HTML/Markdown and citation markers; retain names, IDs, tactics, platforms, descriptions, source URLs and active linked mitigations. Exclude software/group procedure relationships.",
+    "retrospective_warning": "This 2026 reference version is used to interpret 2023 traffic retrospectively."
+  },
+  "arms": {
+    "fixed_reference": {
+      "technique_ids": [
+        "T1071.001",
+        "T1105",
+        "T1041",
+        "T1048.003",
+        "T1046"
+      ],
+      "request_sha256": "add7b8bcbeeef593235296f5044328b1da47225467eadf284a3f7f4798ec7167",
+      "prompt_sha256": "a42bfae3843c504f9369f9eb60b7496e8630c54a205f1efbaefb699d7afb185a",
+      "reference_sha256": "1b894a18298054bcd0db273c1c0cc385fdf4383be999ae29e13be73d8ada9d20"
+    },
+    "retrieved_reference": {
+      "technique_ids": [
+        "T1071.001",
+        "T1001.003",
+        "T1048.001",
+        "T1090.004",
+        "T1048"
+      ],
+      "request_sha256": "7cf99ef55da3635a52f188812e103374309546c6a6dc094fb6afdf6900c96e76",
+      "prompt_sha256": "fa31a1538f5b01f5c30c254c3b95887a94a2d55b123c332edfca0b06f7d9a336",
+      "reference_sha256": "e9c7a7442e9fa5db70a2f34c71fdf84b5cbe3c41b8d76d222ec2027bd8080e82"
+    }
+  },
+  "comparison_boundary": "Only the selected reference records differ within this pair. Duc's original run used different evidence, prompt, settings and Ollama version and is a separate pilot. Single paired run; no accuracy, significance or repeatability estimate."
+}

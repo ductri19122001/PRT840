@@ -1,0 +1,126 @@
+{
+  "candidate_attack_mappings": [
+    {
+      "confidence": "high",
+      "evidence_ids": [
+        "E01"
+      ],
+      "missing_behavioural_evidence": "destination_port",
+      "status": "supported",
+      "supporting_observations": "destination_ip",
+      "technique_id": "T1071.001",
+      "technique_name": "Web Protocols"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E02"
+      ],
+      "missing_behavioural_evidence": "first_seen_utc",
+      "status": "possible",
+      "supporting_observations": "last_seen_utc",
+      "technique_id": "T1105",
+      "technique_name": "Ingress Tool Transfer"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E03"
+      ],
+      "missing_behavioural_evidence": "RSTO",
+      "status": "possible",
+      "supporting_observations": "S1",
+      "technique_id": "T1041",
+      "technique_name": "Exfiltration Over C2 Channel"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E04"
+      ],
+      "missing_behavioural_evidence": "total_orig_bytes",
+      "status": "possible",
+      "supporting_observations": "total_resp_bytes",
+      "technique_id": "T1048.003",
+      "technique_name": "Exfiltration Over Unencrypted Non-C2 Protocol"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E05"
+      ],
+      "missing_behavioural_evidence": "http",
+      "status": "possible",
+      "supporting_observations": "-",
+      "technique_id": "T1046",
+      "technique_name": "Network Service Discovery"
+    }
+  ],
+  "human_validation_required": true,
+  "observed_facts": {
+    "connection_states": {
+      "OTH": 4,
+      "RSTO": 2350,
+      "S0": 396,
+      "S1": 5
+    },
+    "orig_bytes_missing_rows": 134,
+    "resp_bytes_missing_rows": 134,
+    "selected_flows": 2755,
+    "service_labels": {
+      "-": 397,
+      "http": 2358
+    },
+    "total_orig_bytes": 885750,
+    "total_resp_bytes": 0
+  },
+  "plausible_next_events": [
+    {
+      "event": "Network Service Discovery",
+      "evidence_ids": [
+        "E05"
+      ],
+      "preconditions": "http",
+      "telemetry_to_monitor": "service_labels"
+    },
+    {
+      "event": "Exfiltration Over C2 Channel",
+      "evidence_ids": [
+        "E03"
+      ],
+      "preconditions": "RSTO",
+      "telemetry_to_monitor": "connection_states"
+    }
+  ],
+  "response_actions": [
+    {
+      "action": "Immediate Triage",
+      "evidence_ids": [
+        "E01"
+      ],
+      "phase": "immediate",
+      "trigger_or_prerequisite": "selected_flows"
+    },
+    {
+      "action": "Short-term Corroboration",
+      "evidence_ids": [
+        "E02"
+      ],
+      "phase": "short_term",
+      "trigger_or_prerequisite": "last_seen_utc"
+    },
+    {
+      "action": "Evidence Preservation",
+      "evidence_ids": [
+        "E04"
+      ],
+      "phase": "evidence_preservation",
+      "trigger_or_prerequisite": "total_orig_bytes"
+    }
+  ],
+  "unanswered_questions": [
+    "Is the related file using port 2567?",
+    "Is the related file RedLineStealer traffic?",
+    "Is the host compromised?"
+  ]
+}

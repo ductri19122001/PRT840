@@ -1,0 +1,125 @@
+{
+  "candidate_attack_mappings": [
+    {
+      "confidence": "high",
+      "evidence_ids": [
+        "E01"
+      ],
+      "missing_behavioural_evidence": "destination_port",
+      "status": "supported",
+      "supporting_observations": "destination_ip",
+      "technique_id": "T1071.001",
+      "technique_name": "Web Protocols"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E02"
+      ],
+      "missing_behavioural_evidence": "first_seen_utc",
+      "status": "possible",
+      "supporting_observations": "last_seen_utc",
+      "technique_id": "T1001.003",
+      "technique_name": "Protocol or Service Impersonation"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E03"
+      ],
+      "missing_behavioural_evidence": "RSTO",
+      "status": "possible",
+      "supporting_observations": "S1",
+      "technique_id": "T1048.001",
+      "technique_name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E04"
+      ],
+      "missing_behavioural_evidence": "total_orig_bytes",
+      "status": "possible",
+      "supporting_observations": "total_resp_bytes",
+      "technique_id": "T1048.001",
+      "technique_name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol"
+    },
+    {
+      "confidence": "low",
+      "evidence_ids": [
+        "E05"
+      ],
+      "missing_behavioural_evidence": "http",
+      "status": "possible",
+      "supporting_observations": "-",
+      "technique_id": "T1048.001",
+      "technique_name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol"
+    }
+  ],
+  "human_validation_required": true,
+  "observed_facts": {
+    "connection_states": {
+      "OTH": 4,
+      "RSTO": 2350,
+      "S0": 396,
+      "S1": 5
+    },
+    "orig_bytes_missing_rows": 134,
+    "resp_bytes_missing_rows": 134,
+    "selected_flows": 2755,
+    "service_labels": {
+      "-": 397,
+      "http": 2358
+    },
+    "total_orig_bytes": 885750,
+    "total_resp_bytes": 0
+  },
+  "plausible_next_events": [
+    {
+      "event": "new connection to 4.234.116.12:2567",
+      "evidence_ids": [
+        "E01"
+      ],
+      "preconditions": "new connection to 4.234.116.12:2567",
+      "telemetry_to_monitor": "new connection to 4.234.116.12:2567"
+    },
+    {
+      "event": "new connection to 4.234.116.12:2567",
+      "evidence_ids": [
+        "E01"
+      ],
+      "preconditions": "new connection to 4.234.116.12:2567",
+      "telemetry_to_monitor": "new connection to 4.234.116.12:2567"
+    }
+  ],
+  "response_actions": [
+    {
+      "action": "immediate triage",
+      "evidence_ids": [
+        "E01"
+      ],
+      "phase": "immediate",
+      "trigger_or_prerequisite": "new connection to 4.234.116.12:2567"
+    },
+    {
+      "action": "short-term corroboration",
+      "evidence_ids": [
+        "E01"
+      ],
+      "phase": "short_term",
+      "trigger_or_prerequisite": "new connection to 4.234.116.12:2567"
+    },
+    {
+      "action": "evidence preservation",
+      "evidence_ids": [
+        "E01"
+      ],
+      "phase": "evidence_preservation",
+      "trigger_or_prerequisite": "new connection to 4.234.116.12:2567"
+    }
+  ],
+  "unanswered_questions": [
+    "What is the purpose of the connection to 4.234.116.12:2567?",
+    "Is the connection to 4.234.116.12:2567 malicious?"
+  ]
+}

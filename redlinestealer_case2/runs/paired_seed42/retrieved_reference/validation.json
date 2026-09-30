@@ -1,0 +1,20 @@
+{
+  "valid_json": true,
+  "schema_valid": true,
+  "errors": [
+    "Technique set/order differs from supplied reference",
+    "Technique names differ from reference"
+  ],
+  "semantic_validation": "Pending independent human review; automated checks are structural and factual-copy checks only.",
+  "exact_observed_facts": true,
+  "exact_technique_coverage": false,
+  "exact_technique_names": false,
+  "three_action_phases": true,
+  "human_validation_required": true,
+  "done_reason": "stop",
+  "generation_complete": true,
+  "prompt_eval_count": 2412,
+  "eval_count": 1002,
+  "context_budget_ok": true,
+  "automated_checks_passed": false
+}

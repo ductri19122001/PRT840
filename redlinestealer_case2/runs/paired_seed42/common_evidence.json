@@ -1,0 +1,115 @@
+{
+  "case_id": "CTU-SME-11-VM2-case-002",
+  "evidence": [
+    {
+      "id": "E01",
+      "kind": "network_observation",
+      "value": {
+        "selected_flows": 2755,
+        "source_ip": "192.168.1.106",
+        "destination_ip": "4.234.116.12",
+        "destination_port": 2567,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "id": "E02",
+      "kind": "network_observation",
+      "value": {
+        "first_seen_utc": "2023-02-21 06:50:05.443686962+00:00",
+        "last_seen_utc": "2023-02-22 00:01:10.463027+00:00"
+      }
+    },
+    {
+      "id": "E03",
+      "kind": "network_observation",
+      "value": {
+        "RSTO": 2350,
+        "S1": 5,
+        "S0": 396,
+        "OTH": 4
+      }
+    },
+    {
+      "id": "E04",
+      "kind": "network_observation",
+      "value": {
+        "total_orig_bytes": 885750,
+        "total_resp_bytes": 0,
+        "orig_bytes_missing_rows": 134,
+        "resp_bytes_missing_rows": 134,
+        "total_orig_packets": 48257,
+        "total_resp_packets": 4709
+      },
+      "boundary": "Byte totals sum available values only; 134 rows in each byte column are missing and have not been imputed as zero."
+    },
+    {
+      "id": "E05",
+      "kind": "network_observation",
+      "value": {
+        "http": 2358,
+        "-": 397
+      },
+      "boundary": "Zeek service labels only. HTTP request/response fields, URIs, hosts and payload are not supplied. An http label does not establish command-and-control or exfiltration."
+    },
+    {
+      "id": "E06",
+      "kind": "evidence_availability",
+      "value": "Only these endpoint-selected conn.log-derived records and the team CTI register are supplied. No process, executable, credential-access, file-transfer, HTTP application content or wider host/service probing evidence is supplied. Absence from this input does not establish absence from the capture."
+    },
+    {
+      "id": "C01",
+      "kind": "retrospective_cti_context",
+      "value": {
+        "provider": "VirusTotal",
+        "source_url": "https://www.virustotal.com/gui/ip-address/4.234.116.12",
+        "relationship": "VirusTotal Relations lists a file communicating with 4.234.116.12.",
+        "related_file_name": "Netflix Checker New Api.zip",
+        "related_file_sha256": "83f7de31cf4fa2e65cf9a40143e45272515c7ddaaa47c4957034e636c5f6c0764",
+        "related_file_analysis_date": "2023-02-17",
+        "related_file_detection": "45 of 64 security vendors flagged the related file as malicious.",
+        "external_attribution": "Multiple VirusTotal security vendors classify the related file using RedLine or RedLineStealer naming."
+      },
+      "retrieved_utc_date": "2026-09-22",
+      "boundary": "Team-recorded historical file-to-IP association, not an independently reverified live CTI result. The 2023-02-17 date is the related-file analysis date in the source prompt, not a proven date of publication or observed connection. Family labels are external CTI context, not dataset ground truth."
+    },
+    {
+      "id": "C02",
+      "kind": "retrospective_cti_limit",
+      "value": {
+        "indicator": "4.234.116.12:2567",
+        "status": "NO_PORT_SPECIFIC_CTI_MATCH",
+        "finding": "The reviewed VirusTotal evidence establishes a historical relationship at the IP level but does not independently establish that TCP port 2567 was associated with the related file or malware activity."
+      },
+      "boundary": "Do not infer that the related file used port 2567, that these flows are RedLineStealer traffic, or that the host is compromised."
+    }
+  ],
+  "observed_facts_to_copy": {
+    "selected_flows": 2755,
+    "connection_states": {
+      "RSTO": 2350,
+      "S1": 5,
+      "S0": 396,
+      "OTH": 4
+    },
+    "service_labels": {
+      "http": 2358,
+      "-": 397
+    },
+    "total_orig_bytes": 885750,
+    "total_resp_bytes": 0,
+    "orig_bytes_missing_rows": 134,
+    "resp_bytes_missing_rows": 134
+  },
+  "controls": {
+    "dataset_labels": "withheld",
+    "detector_outcomes": "withheld",
+    "external_cti_family_names": "context only"
+  },
+  "interpretation_rules": [
+    "S0 indicates a connection attempt with no reply seen; RSTO means the originator reset an established connection. Neither proves malicious intent or successful C2.",
+    "Zero resp_bytes is the sum of available responder payload-byte values. It does not mean no responder packets or that missing values are zero: use E04.",
+    "Repeated traffic to one endpoint is not, by itself, evidence of scanning, beaconing, an attack stage, successful C2 or exfiltration.",
+    "The reference describes what adversaries may do; it is not observed case evidence."
+  ]
+}

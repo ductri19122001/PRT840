@@ -1,0 +1,46 @@
+{
+  "repository": "https://github.com/ductri19122001/PRT840",
+  "branch": "CTI--Remaining-Results",
+  "commit": "f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0",
+  "directory": "CTU-SME-11_Windows7full-2/outputs/case_studies/redline_cti",
+  "reviewed_utc_date": "2026-09-30",
+  "files": [
+    {
+      "name": "case002_llama31_8b_response_raw.txt",
+      "sha256": "e670f90bf0e1d07cb19cb82cb9ec936d157dbe78ce504d7652d2d5a786c9d579",
+      "bytes": 2940
+    },
+    {
+      "name": "case002_llama31_8b_run_info.txt",
+      "sha256": "82f64b3ba1a7a992b6dcee9be93c1ac4a10ff3cf30f22067823977bab313633a",
+      "bytes": 1541
+    },
+    {
+      "name": "case002_ollama_prompt_with_retrospective_cti.txt",
+      "sha256": "f4c9b3b38e84563ee8eb9b084633f4e991312c56a42e7f900c9ceaed9fc496f0",
+      "bytes": 8227
+    },
+    {
+      "name": "redline_cti_evidence_register.csv",
+      "sha256": "a19776f63b886d5d5aa4ae73fe70174cbe3a302759c7c04959eebf932a3c00df",
+      "bytes": 1480
+    },
+    {
+      "name": "redline_endpoint_evidence_only_flows.csv",
+      "sha256": "d1fd9cbe176f0e0e5ecfb479e68d66ef67793f489138ad3dc58c1f43c29fd12c",
+      "bytes": 426341
+    },
+    {
+      "name": "redline_endpoint_summary.json",
+      "sha256": "b59465cbc23508a4c617c0494534560c5599959b393c4fd76c805ae02c660490",
+      "bytes": 739
+    },
+    {
+      "name": "redline_endpoint_timeline.csv",
+      "sha256": "d1fd9cbe176f0e0e5ecfb479e68d66ef67793f489138ad3dc58c1f43c29fd12c",
+      "bytes": 426341
+    }
+  ],
+  "scope": "Supplied endpoint-selected CSV files and saved run; original Zeek capture was not independently re-extracted.",
+  "timeline_note": "The supplied endpoint_timeline.csv duplicates the 2755 evidence rows. The hourly_flow_starts.csv in analysis is a new aggregate."
+}

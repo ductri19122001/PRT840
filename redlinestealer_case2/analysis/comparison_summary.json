@@ -1,0 +1,29 @@
+{
+  "execution_completed": true,
+  "conditions": {
+    "fixed_reference": {
+      "valid_json": true,
+      "schema_valid": true,
+      "exact_numerical_facts": true,
+      "exact_technique_coverage": true,
+      "unique_returned_techniques": 5,
+      "prompt_tokens": 2300,
+      "output_tokens": 865,
+      "total_api_seconds": 173.221954231,
+      "semantic_validation": "unsupported C2 claim; independent review pending"
+    },
+    "retrieved_reference": {
+      "valid_json": true,
+      "schema_valid": true,
+      "exact_numerical_facts": true,
+      "exact_technique_coverage": false,
+      "unique_returned_techniques": 3,
+      "prompt_tokens": 2412,
+      "output_tokens": 1002,
+      "total_api_seconds": 150.821868508,
+      "semantic_validation": "unsupported C2 claim; independent review pending"
+    }
+  },
+  "substantive_result": "No semantic accuracy gain demonstrated; both outputs overclaim T1071.001. Retrieved output omits two candidates and duplicates T1048.001. Generated actions lack operational detail.",
+  "independent_human_validation": "pending"
+}

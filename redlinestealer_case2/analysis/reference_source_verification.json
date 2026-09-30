@@ -1,0 +1,7 @@
+{
+  "verified_utc_date": "2026-09-30",
+  "source_url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/6cda5ad8462c79e14fbb872f4e09059b18e0cfc4/enterprise-attack/enterprise-attack-19.2.json",
+  "original_bundle_sha256_verified": "dc1639caa5501d720e280cf1cbd8fbe009884a0c9b3e6e9ed9d0c25166c3d8f4",
+  "normalised_record_count": 697,
+  "all_records_equal_to_official_normalisation": true
+}

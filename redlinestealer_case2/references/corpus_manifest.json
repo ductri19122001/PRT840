@@ -1,0 +1,14 @@
+{
+  "attack_version": "19.2",
+  "domain": "enterprise-attack",
+  "stix_version": "2.1",
+  "commit": "6cda5ad8462c79e14fbb872f4e09059b18e0cfc4",
+  "source_url": "https://raw.githubusercontent.com/mitre-attack/attack-stix-data/6cda5ad8462c79e14fbb872f4e09059b18e0cfc4/enterprise-attack/enterprise-attack-19.2.json",
+  "retrieved_utc_date": "2026-09-26",
+  "original_bundle_sha256": "dc1639caa5501d720e280cf1cbd8fbe009884a0c9b3e6e9ed9d0c25166c3d8f4",
+  "normalised_sha256": "1b159c8c8791f6b5e03a237f4ed463532a0c74a47779f5af1abe38023b103a6c",
+  "active_techniques": 697,
+  "filter": "Exclude revoked and x_mitre_deprecated objects",
+  "normalisation": "Strip HTML/Markdown and citation markers; retain names, IDs, tactics, platforms, descriptions, source URLs and active linked mitigations. Exclude software/group procedure relationships.",
+  "retrospective_warning": "This 2026 reference version is used to interpret 2023 traffic retrospectively."
+}
