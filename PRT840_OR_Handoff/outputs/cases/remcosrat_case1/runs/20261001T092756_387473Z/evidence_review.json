@@ -1,0 +1,46 @@
+{
+  "case_id": "vm3_case_001",
+  "assessment_date_utc": "2026-10-01",
+  "assessment_method": "Assistant-assisted comparison of the saved model response with its exact network input, CTI boundaries and pinned official ATT&CK definitions.",
+  "independent_review_status": "pending",
+  "generation_result": "Completed local generation with valid required JSON fields and done_reason stop. This establishes execution, not semantic validation.",
+  "supported_technique_claims_in_this_assessment": [],
+  "rejected_technique_claims": [
+    {
+      "technique_id": "T1095",
+      "name": "Non-Application Layer Protocol",
+      "disposition": "unsupported_as_a_confirmed_technique",
+      "reason": "The supplied TCP flow records and retrospective endpoint CTI do not establish adversary command-and-control or use of a non-application-layer channel. An unset Zeek service does not prove the absence of an application protocol. More model alerts do not supply the missing application or host evidence.",
+      "source_url": "https://attack.mitre.org/techniques/T1095/"
+    }
+  ],
+  "other_findings": [
+    {
+      "kind": "accurate_scope_summary",
+      "finding": "The response reproduces the supplied source IP, destination IP, destination port, TCP protocol and 22 February 2023 UTC scope accurately."
+    },
+    {
+      "kind": "omitted_detection_and_context_evidence",
+      "finding": "The response omits all 6,765 OR triggers, their 6,759 DT-positive/IF-negative, two DT-negative/IF-positive and four IF-positive/DT-unavailable contributions, and the 33,744 context-flow total. It also omits timing, connection states, byte and packet aggregates, service counts and missing values. These were present in its exact input."
+    },
+    {
+      "kind": "appropriate_abstention_on_other_candidates",
+      "finding": "The model explicitly retains insufficient-evidence caveats for the four other retrieved candidates: password spraying, password guessing, OS exhaustion flood and credential stuffing."
+    },
+    {
+      "kind": "unconfirmed_cti_association",
+      "finding": "The model marks the possible C2 association as unconfirmed. Its wording C2 extraction refers imprecisely to the supplied public malware-configuration finding; no extraction activity is demonstrated in the network flows."
+    },
+    {
+      "kind": "response_guidance_incomplete",
+      "finding": "Collecting network and endpoint evidence, checking for malware or suspicious files and monitoring are reasonable triage suggestions. The output provides no concrete preservation procedure, conditional containment criteria or verified attack-stage stopping points, so it is not a validated response playbook."
+    }
+  ],
+  "reporting_conclusion": "The full original VM3 DT export now supports 6,765 traceable OR triggers for this declared endpoint/date case. The corrected input was submitted once to the same local model and settings. Its response correctly states the endpoint scope and abstains on four weak candidates, but omits the supplied trigger and traffic aggregates and still proposes an unsupported T1095 mapping. This run does not establish a confirmed attack chain or a validated response playbook.",
+  "generation_directory": "cases/remcosrat_case1/runs/20261001T092756_387473Z",
+  "input_sha256": "bf07801c58510e990a29cdb4ccbbd6b9765f020bb4857d7731da9123b5c218ad",
+  "model_response_sha256": "cb717746796235ac0145817cf025ef503db0a9bae1a952469b72421807a951d8",
+  "ml_trigger_count": 6765,
+  "context_flow_count": 33744,
+  "previous_input_change": "The historical six-trigger replay used only 11 recorded DT examples. The full original export adds 6,759 DT-positive/IF-negative triggers; context and retrospective CTI are unchanged."
+}

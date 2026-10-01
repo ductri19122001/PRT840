@@ -1,0 +1,26 @@
+{ 
+  "observed_facts": {
+    "id.orig_h": "192.168.1.107",
+    "id.resp_h": "66.63.168.35",
+    "id.resp_p": 5888,
+    "proto": "tcp",
+    "time_basis": "utc_flow_start_date",
+    "date": "2023-02-22"
+  },
+  "supported_attack_mappings": [
+    {
+      "technique_id": "T1095",
+      "name": "Non-Application Layer Protocol"
+    }
+  ],
+  "uncertainties": [
+    "Insufficient evidence to confirm the presence of password spraying, password guessing, OS exhaustion flood, or credential stuffing.",
+    "The observed TCP connection to port 5888 on 66.63.168.35 may be related to a C2 extraction, but this is not confirmed."
+  ],
+  "suggested_response_actions": [
+    "Collect additional network traffic and endpoint logs to corroborate the observed behavior.",
+    "Verify the presence of any malware or suspicious files on the endpoint.",
+    "Monitor the endpoint for any further suspicious activity."
+  ],
+  "human_review_required": true
+}

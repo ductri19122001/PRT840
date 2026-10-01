@@ -1,0 +1,38 @@
+{
+  "case_id": "vm3_case_001",
+  "study_name": "RemcosRAT endpoint, 22 February 2023",
+  "dataset": "VM3",
+  "scope": {
+    "id.orig_h": "192.168.1.107",
+    "id.resp_h": "66.63.168.35",
+    "id.resp_p": 5888,
+    "proto": "tcp",
+    "time_basis": "utc_flow_start_date",
+    "date": "2023-02-22"
+  },
+  "or_alert_count": 6,
+  "context_flow_count": 33744,
+  "trigger_flow_ids": [
+    97021,
+    97191,
+    97192,
+    98089,
+    98090,
+    102056
+  ],
+  "trigger_uids": [
+    "CYCW4D1fUfsKbvljzj",
+    "CFWsj94jYpQKNYWpc3",
+    "CGfI7o2mF1IlV3KvQe",
+    "CuUxn6JfCnFVQI0r4",
+    "CNfJd14aN2PdhHA49j",
+    "CAoayT3yBBsbEmH8dd"
+  ],
+  "context_rule": "All available processed records matching the same endpoint and declared date scope, irrespective of model outcomes or family labels.",
+  "input_sha256": "c9d2dbb8f73bb33e9f0c8f287540206b9aec77094d06bdb76fbb274b24dfbd58",
+  "prompt_sha256": "8d40aa1cc82b918b2caa98b99c8ffff72cac689ac9f2c7491b268509992cce25",
+  "context_csv_sha256": "98e901eeecd859f3a4af8e98a9100a2ad5139d22cba79df389f81fb170eacc0e",
+  "trigger_csv_sha256": "1e50139b3dfc2df0334189f035c0d0350ea5a336e3ba4bc0c9df3c98cf5f1647",
+  "historical_run_status": "Earlier LLM runs used preselected cases; these newly generated inputs have not been submitted to Ollama by this script.",
+  "status": "alert_led_input_prepared"
+}

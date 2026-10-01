@@ -1,0 +1,15 @@
+{
+  "algorithm": "BM25",
+  "k1": 1.5,
+  "b": 0.75,
+  "query": "tcp network protocol",
+  "query_source": "Network service facet only; lookup synonyms are not observed traffic.",
+  "selected_ids": [
+    "T1110.003",
+    "T1110.001",
+    "T1499.001",
+    "T1095",
+    "T1110.004"
+  ],
+  "limitation": "Retrieved definitions are reference material; retrieval does not establish observed ATT&CK behaviour."
+}

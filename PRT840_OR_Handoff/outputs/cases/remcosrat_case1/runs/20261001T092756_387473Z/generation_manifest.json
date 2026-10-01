@@ -1,0 +1,31 @@
+{
+  "case_id": "vm3_case_001",
+  "created_utc": "2026-10-01T09:27:56.394189+00:00",
+  "model": "llama3.1:8b",
+  "options": {
+    "seed": 42,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 8,
+    "num_batch": 64,
+    "num_gpu": 0
+  },
+  "input_sha256": "bf07801c58510e990a29cdb4ccbbd6b9765f020bb4857d7731da9123b5c218ad",
+  "prompt_sha256": "5287523732550bfaed350731e91a64100cef09785b608d3c568a7b199c83beef",
+  "client_script_sha256": "2f188f347b67e0b564693ff7e1bb8f19f753e7e0059a4f9289fbca13b21f325c",
+  "status": "generated_review_pending",
+  "semantic_validation": "not_performed",
+  "ollama_version": {
+    "version": "0.35.0"
+  },
+  "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+  "model_identity_sha256": "492564b68681f983b9883b0ca12e4e50a7f732d660f59683b20111c66abf5ab8",
+  "response_sha256": "cb717746796235ac0145817cf025ef503db0a9bae1a952469b72421807a951d8",
+  "done_reason": "stop",
+  "prompt_eval_count": 3205,
+  "eval_count": 247,
+  "completed_utc": "2026-10-01T09:31:55.862732+00:00",
+  "runtime_environment_file": "runtime_environment_full_vm3_update.json",
+  "runtime_environment_sha256": "1955ebd8f65210d3c8274b3693e1ff5108b633c3c5b96177b85309df69b624c0"
+}

@@ -1,0 +1,39 @@
+{
+  "case_id": "vm3_case_001",
+  "assessment_date_utc": "2026-10-01",
+  "assessment_method": "Assistant-assisted comparison of the saved model response with its exact network input, CTI boundaries and pinned official ATT&CK definitions.",
+  "independent_review_status": "pending",
+  "generation_result": "Completed local generation with valid required JSON fields; this is an execution result, not semantic validation.",
+  "supported_technique_claims_in_this_assessment": [],
+  "rejected_technique_claims": [
+    {
+      "technique_id": "T1095",
+      "name": "Non-Application Layer Protocol",
+      "disposition": "unsupported_as_a_confirmed_technique",
+      "reason": "The records establish TCP traffic to the declared endpoint, but not command-and-control behaviour or an adversary's use of a non-application-layer channel. An unset Zeek service label does not establish the absence of an application protocol. Retrospective CTI and traffic volume do not supply the missing behavioural evidence.",
+      "source_url": "https://attack.mitre.org/techniques/T1095/"
+    }
+  ],
+  "other_findings": [
+    {
+      "kind": "accurate_network_summary",
+      "finding": "The response reproduces the supplied endpoint, date, 33744 context-flow count, timing, service labels, connection states, byte totals, packet totals and missing-value counts accurately."
+    },
+    {
+      "kind": "appropriate_abstention_on_other_candidates",
+      "finding": "The response explicitly recognises insufficient evidence for password spraying, password guessing, credential stuffing and an OS exhaustion flood. None of those four retrieved candidates appears in its supported-mapping list."
+    },
+    {
+      "kind": "incomplete_detection_explanation",
+      "finding": "The response omits the six IF-positive trigger alerts and the distinction between two recorded DT negatives and four unavailable DT predictions. Its accurate 33744-flow context count must not be presented as a detected-attack count."
+    },
+    {
+      "kind": "response_guidance_incomplete",
+      "finding": "Further traffic collection and monitoring are reasonable triage ideas, but the goal needs to be corroborating suspicious behaviour rather than merely confirming TCP, which is already observed. The response lacks concrete evidence-preservation steps, host evidence collection and containment criteria, so it is not a validated incident-response playbook."
+    }
+  ],
+  "reporting_conclusion": "The six saved OR triggers have been linked to a real local model response. The response accurately summarises the supplied traffic and abstains on four weak retrieval candidates, but its one proposed T1095 mapping remains unsupported as a confirmed technique. The case demonstrates a reproducible handoff with limited interpretation quality, not confirmed command-and-control or a validated playbook.",
+  "generation_directory": "cases/remcosrat_case1/runs/20261001T054106_637034Z",
+  "input_sha256": "c9d2dbb8f73bb33e9f0c8f287540206b9aec77094d06bdb76fbb274b24dfbd58",
+  "model_response_sha256": "7dca749b029eb4f15161a1ce790de9663bb56d24a8d054e3b7e24db1332fbe65"
+}

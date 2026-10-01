@@ -1,0 +1,168 @@
+You assist a human analyst interpreting a network case opened by ML alerts.
+The alerts indicate suspicion, not confirmed malicious behaviour. Network records,
+retrospective CTI and ATT&CK definitions are separate kinds of evidence. Dataset
+labels are withheld. An endpoint association does not prove every connection is
+malicious, that a host is compromised, or that a particular technique occurred.
+TCP, a port number or a Zeek service label does not establish web C2, exfiltration,
+credential theft or an attack stage. Zero available responder payload bytes does
+not establish zero responder packets. Do not invent HTTP content or host events.
+Only map a technique when supplied behavioural evidence supports its defining
+behaviour. Otherwise say insufficient evidence; an empty mapping list is valid.
+References are definitions, not observations. Identify uncertainty and missing
+evidence. Suggest proportionate triage, corroboration and preservation actions,
+with prerequisites for any disruptive response. Do not report a complete attack
+chain or automatic containment. Do not recommend running suspicious files.
+Return one JSON object with: observed_facts, supported_attack_mappings,
+uncertainties, suggested_response_actions, human_review_required (true).
+
+INPUT
+{
+  "schema_version": "1.0",
+  "case_id": "vm3_case_001",
+  "scope": {
+    "id.orig_h": "192.168.1.107",
+    "id.resp_h": "66.63.168.35",
+    "id.resp_p": 5888,
+    "proto": "tcp",
+    "time_basis": "utc_flow_start_date",
+    "date": "2023-02-22"
+  },
+  "ml_trigger_summary": {
+    "or_alert_count": 6,
+    "jointly_evaluated_alert_count": 2,
+    "flag_categories": {
+      "dt_negative_if_positive": 2,
+      "dt_unavailable_if_positive": 4
+    }
+  },
+  "network_observations": {
+    "context_flow_count": 33744,
+    "first_seen_utc": "2023-02-22T00:00:00.088679+00:00",
+    "last_seen_utc": "2023-02-22T23:59:51.355073+00:00",
+    "protocol_counts": {
+      "tcp": 33744
+    },
+    "service_labels": {
+      "ssl": 8,
+      "unset": 33736
+    },
+    "connection_states": {
+      "REJ": 33630,
+      "RSTR": 8,
+      "S0": 106
+    },
+    "orig_bytes": {
+      "sum_available_values": 190672103,
+      "available_rows": 33699,
+      "missing_rows": 45
+    },
+    "resp_bytes": {
+      "sum_available_values": 435984,
+      "available_rows": 33699,
+      "missing_rows": 45
+    },
+    "orig_packets": {
+      "sum_available_values": 371446,
+      "available_rows": 33744,
+      "missing_rows": 0
+    },
+    "resp_packets": {
+      "sum_available_values": 257261,
+      "available_rows": 33744,
+      "missing_rows": 0
+    }
+  },
+  "retrospective_cti": {
+    "context": [
+      {
+        "id": "C001",
+        "value": {
+          "evidence_scope": "retrospective_context_only",
+          "indicator": "66.63.168.35:5888",
+          "indicator_type": "ip_port",
+          "status": "MATCH_PUBLIC_MALWARE_CONFIG",
+          "sources": [
+            {
+              "source": "MalwareBazaar",
+              "source_sample_sha256": "b121d9b4950ef1d71a99bbd8a0f93e71a150ec01f7986b1eebc1c557e9810819",
+              "finding": "Public sample report lists C2 Extraction: 66.63.168.35:5888",
+              "source_first_seen_utc": "2023-02-21 09:02:10 UTC"
+            },
+            {
+              "source": "MalwareBazaar (second sample)",
+              "source_sample_sha256": "08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371",
+              "finding": "Public executable sample report lists C2 Extraction: 66.63.168.35:5888",
+              "source_first_seen_utc": "2023-02-21 09:02:16 UTC"
+            }
+          ],
+          "limitations": [
+            "Treat this endpoint CTI as retrospective evidence only.",
+            "Historical sample-specific configuration does not prove the contents or purpose of an individual network flow.",
+            "It does not by itself prove successful command-and-control activity, data exfiltration, or host compromise.",
+            "The second sample is from the same sample chain and is not an independent corroborating intelligence provider.",
+            "This CTI must not be treated as independent validation of withheld dataset ground-truth labels."
+          ]
+        }
+      }
+    ],
+    "interpretation_limit": "Team-recorded retrospective public endpoint association; not independent proof of an individual flow or attack stage."
+  },
+  "attack_reference_material": [
+    {
+      "technique_id": "T1110.003",
+      "name": "Password Spraying",
+      "tactics": [
+        "credential-access"
+      ],
+      "description": "Adversaries may use a single or small list of commonly used passwords against many different accounts to attempt to acquire valid account credentials. Password spraying uses one password (e.g. 'Password01'), or a small list of commonly used passwords, that may match the complexity policy of the domain. Logins are attempted with that password against many different accounts on a network to avoid account lockouts that would normally occur when brute forcing a single account with many passwords. Typically, management services over commonly used ports are used when password spraying. Commonly targeted services include the following: * SSH (22/TCP) * Telnet (23/TCP) * FTP (21/TCP) * NetBIOS / SMB / Samba (139/TCP & 445/TCP) * LDAP (389/TCP) * Kerberos (88/TCP) * RDP / Terminal Services (3389/TCP) * HTTP/HTTP Management Services (80/TCP & 443/TCP) * MSSQL (1433/TCP) * Oracle (1521/TCP) * MySQL (3306/TCP) * VNC (5900/TCP) In addition to management services, adversaries may \"target single sign-on (SSO) and cloud-based applications utilizing federated authentication protocols,\" as well as externally facing email applications, such as Office 365. In order to avoid detection thresholds, adversaries may deliberately throttle password spraying attempts to avoid triggering security alerting. Additionally, adversaries may leverage LDAP and Kerberos authentication attempts, which are less likely to trigger high-visibility events such as Windows \"logon failure\" event ID 4625 that is commonly triggered by failed SMB connection attempts.",
+      "description_truncated": false,
+      "source_url": "https://attack.mitre.org/techniques/T1110/003"
+    },
+    {
+      "technique_id": "T1110.001",
+      "name": "Password Guessing",
+      "tactics": [
+        "credential-access"
+      ],
+      "description": "Adversaries with no prior knowledge of legitimate credentials within the system or environment may guess passwords to attempt access to accounts. Without knowledge of the password for an account, an adversary may opt to systematically guess the password using a repetitive or iterative mechanism. An adversary may guess login credentials without prior knowledge of system or environment passwords during an operation by using a list of common passwords. Password guessing may or may not take into account the target's policies on password complexity or use policies that may lock accounts out after a number of failed attempts. Guessing passwords can be a risky option because it could cause numerous authentication failures and account lockouts, depending on the organization's login failure policies. Typically, management services over commonly used ports are used when guessing passwords. Commonly targeted services include the following: * SSH (22/TCP) * Telnet (23/TCP) * FTP (21/TCP) * NetBIOS / SMB / Samba (139/TCP & 445/TCP) * LDAP (389/TCP) * Kerberos (88/TCP) * RDP / Terminal Services (3389/TCP) * HTTP/HTTP Management Services (80/TCP & 443/TCP) * MSSQL (1433/TCP) * Oracle (1521/TCP) * MySQL (3306/TCP) * VNC (5900/TCP) * SNMP (161/UDP and 162/TCP/UDP) In addition to management services, adversaries may \"target single sign-on (SSO) and cloud-based applications utilizing federated authentication protocols,\" as well as externally facing email applications, such as Office 365.. Further, adversaries may abuse network device interfaces (such as wlanAPI) to brute force accessible wifi",
+      "description_truncated": true,
+      "source_url": "https://attack.mitre.org/techniques/T1110/001"
+    },
+    {
+      "technique_id": "T1499.001",
+      "name": "OS Exhaustion Flood",
+      "tactics": [
+        "impact"
+      ],
+      "description": "Adversaries may launch a denial of service (DoS) attack targeting an endpoint's operating system (OS). A system's OS is responsible for managing the finite resources as well as preventing the entire system from being overwhelmed by excessive demands on its capacity. These attacks do not need to exhaust the actual resources on a system; the attacks may simply exhaust the limits and available resources that an OS self-imposes. Different ways to achieve this exist, including TCP state-exhaustion attacks such as SYN floods and ACK floods. With SYN floods, excessive amounts of SYN packets are sent, but the 3-way TCP handshake is never completed. Because each OS has a maximum number of concurrent TCP connections that it will allow, this can quickly exhaust the ability of the system to receive new requests for TCP connections, thus preventing access to any TCP service provided by the server. ACK floods leverage the stateful nature of the TCP protocol. A flood of ACK packets are sent to the target. This forces the OS to search its state table for a related TCP connection that has already been established. Because the ACK packets are for connections that do not exist, the OS will have to search the entire state table to confirm that no match exists. When it is necessary to do this for a large flood of packets, the computational requirements can cause the server to become sluggish and/or unresponsive, due to the work it must do to eliminate the rogue ACK packets. This greatly reduces the resources available for providing the targeted service.",
+      "description_truncated": false,
+      "source_url": "https://attack.mitre.org/techniques/T1499/001"
+    },
+    {
+      "technique_id": "T1095",
+      "name": "Non-Application Layer Protocol",
+      "tactics": [
+        "command-and-control"
+      ],
+      "description": "Adversaries may use an OSI non-application layer protocol for communication between host and C2 server or among infected hosts within a network. The list of possible protocols is extensive. Specific examples include use of network layer protocols, such as the Internet Control Message Protocol (ICMP), transport layer protocols, such as the User Datagram Protocol (UDP), session layer protocols, such as Socket Secure (SOCKS), as well as redirected/tunneled protocols, such as Serial over LAN (SOL). ICMP communication between hosts is one example. Because ICMP is part of the Internet Protocol Suite, it is required to be implemented by all IP-compatible hosts. However, it is not as commonly monitored as other Internet Protocols such as TCP or UDP and may be used by adversaries to hide communications. In ESXi environments, adversaries may leverage the Virtual Machine Communication Interface (VMCI) for communication between guest virtual machines and the ESXi host. This traffic is similar to client-server communications on traditional network sockets but is localized to the physical machine running the ESXi host, meaning it does not traverse external networks (routers, switches). This results in communications that are invisible to external monitoring and standard networking tools like tcpdump, netstat, nmap, and Wireshark. By adding a VMCI backdoor to a compromised ESXi host, adversaries may persistently regain access from any guest VM to the compromised ESXi host’s backdoor, regardless of network segmentation or firewall rules in place.",
+      "description_truncated": false,
+      "source_url": "https://attack.mitre.org/techniques/T1095"
+    },
+    {
+      "technique_id": "T1110.004",
+      "name": "Credential Stuffing",
+      "tactics": [
+        "credential-access"
+      ],
+      "description": "Adversaries may use credentials obtained from breach dumps of unrelated accounts to gain access to target accounts through credential overlap. Occasionally, large numbers of username and password pairs are dumped online when a website or service is compromised and the user account credentials accessed. The information may be useful to an adversary attempting to compromise accounts by taking advantage of the tendency for users to use the same passwords across personal and business accounts. Credential stuffing is a risky option because it could cause numerous authentication failures and account lockouts, depending on the organization's login failure policies. Typically, management services over commonly used ports are used when stuffing credentials. Commonly targeted services include the following: * SSH (22/TCP) * Telnet (23/TCP) * FTP (21/TCP) * NetBIOS / SMB / Samba (139/TCP & 445/TCP) * LDAP (389/TCP) * Kerberos (88/TCP) * RDP / Terminal Services (3389/TCP) * HTTP/HTTP Management Services (80/TCP & 443/TCP) * MSSQL (1433/TCP) * Oracle (1521/TCP) * MySQL (3306/TCP) * VNC (5900/TCP) In addition to management services, adversaries may \"target single sign-on (SSO) and cloud-based applications utilizing federated authentication protocols,\" as well as externally facing email applications, such as Office 365.",
+      "description_truncated": false,
+      "source_url": "https://attack.mitre.org/techniques/T1110/004"
+    }
+  ],
+  "evidence_limits": [
+    "Connection logs and saved detector decisions are supplied; no process, credential-access, file-content or HTTP request/response evidence is supplied.",
+    "The processed dataset includes only records with binary dataset labels. Unknown-labelled records are absent from these snapshots.",
+    "ML triggers and ATT&CK retrieval are not ground truth. Retrospective CTI is context, not proof of individual flow content.",
+    "This is a retrospective replay for predeclared study endpoints and dates; it does not establish a historical automatic handoff."
+  ]
+}

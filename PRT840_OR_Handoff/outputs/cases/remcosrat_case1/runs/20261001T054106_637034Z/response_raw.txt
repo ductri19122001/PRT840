@@ -1,0 +1,63 @@
+{ 
+  "observed_facts": {
+    "id.orig_h": "192.168.1.107",
+    "id.resp_h": "66.63.168.35",
+    "id.resp_p": 5888,
+    "proto": "tcp",
+    "time_basis": "utc_flow_start_date",
+    "date": "2023-02-22",
+    "context_flow_count": 33744,
+    "first_seen_utc": "2023-02-22T00:00:00.088679+00:00",
+    "last_seen_utc": "2023-02-22T23:59:51.355073+00:00",
+    "protocol_counts": {
+      "tcp": 33744
+    },
+    "service_labels": {
+      "ssl": 8,
+      "unset": 33736
+    },
+    "connection_states": {
+      "REJ": 33630,
+      "RSTR": 8,
+      "S0": 106
+    },
+    "orig_bytes": {
+      "sum_available_values": 190672103,
+      "available_rows": 33699,
+      "missing_rows": 45
+    },
+    "resp_bytes": {
+      "sum_available_values": 435984,
+      "available_rows": 33699,
+      "missing_rows": 45
+    },
+    "orig_packets": {
+      "sum_available_values": 371446,
+      "available_rows": 33744,
+      "missing_rows": 0
+    },
+    "resp_packets": {
+      "sum_available_values": 257261,
+      "available_rows": 33744,
+      "missing_rows": 0
+    }
+  },
+  "supported_attack_mappings": [
+    {
+      "technique_id": "T1095",
+      "name": "Non-Application Layer Protocol",
+      "tactics": [
+        "command-and-control"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Insufficient evidence to confirm the presence of password spraying, guessing, or credential stuffing.",
+    "No evidence of OS exhaustion flood."
+  ],
+  "suggested_response_actions": [
+    "Collect additional network traffic data to corroborate the presence of a non-application layer protocol.",
+    "Monitor the system for signs of command-and-control activity."
+  ],
+  "human_review_required": true
+}
