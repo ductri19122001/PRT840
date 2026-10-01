@@ -1,0 +1,12 @@
+flow_row_id,true_label,predicted_label,predicted_probability,evaluation_protocol
+11393,1,1,1.0,stratified_80_20
+11429,1,1,1.0,stratified_80_20
+11430,1,1,1.0,stratified_80_20
+11465,1,1,1.0,stratified_80_20
+12632,1,0,0.0,stratified_80_20
+13500,1,1,1.0,stratified_80_20
+97021,1,0,0.0,stratified_80_20
+97191,1,0,0.0,stratified_80_20
+105320,1,1,1.0,stratified_80_20
+106033,1,0,0.0,stratified_80_20
+106034,1,0,0.0,stratified_80_20

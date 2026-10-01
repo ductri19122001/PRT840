@@ -1,0 +1,5534 @@
+{
+  "schema_version": "1.0",
+  "content_type": "observed_flow_and_saved_model_evidence_only",
+  "label_origin": "provided dataset labels; not inferred attribution",
+  "features": [
+    "id.orig_p",
+    "id.resp_p",
+    "duration",
+    "orig_bytes",
+    "resp_bytes",
+    "missed_bytes",
+    "orig_pkts",
+    "orig_ip_bytes",
+    "resp_pkts",
+    "resp_ip_bytes",
+    "proto",
+    "service",
+    "conn_state",
+    "history"
+  ],
+  "selection_policy": {
+    "ordering": "dataset then integer flow_row_id",
+    "joint_cases_per_attack_pair_category": 3,
+    "if_only_cases_per_attack_pair_outcome": 2,
+    "benign_false_positives_per_experiment": 3,
+    "tie_break": "lowest integer flow_row_id",
+    "descriptive_cases": "all AgentTesla and LockBit flows",
+    "deduplication": "one case per dataset/flow_row_id; preserve all selection reasons",
+    "unavailable": "JSON null / CSV blank with explicit availability and reason; never substitute predictions",
+    "summary_denominator": "all saved evaluated records of each attack/benign group, not selected representatives",
+    "representativeness": "illustrative deterministic examples, not a random or exhaustive sample"
+  },
+  "joint_category_definitions": {
+    "A": "DT correct + IF correct",
+    "B": "DT correct + IF missed",
+    "C": "DT missed + IF correct",
+    "D": "DT missed + IF missed"
+  },
+  "experiment_registry": {
+    "vm3_dt": {
+      "dataset": "VM3",
+      "training_dataset": "VM3",
+      "model": "DT",
+      "protocol": "stratified_80_20",
+      "stem": "decision_tree_stratified",
+      "script": "04.1_decision_tree_visualisation.py",
+      "scope": "VM3_internal",
+      "random_state": 42,
+      "prediction_file": "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_predictions.csv",
+      "metrics_file": "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_metrics.csv",
+      "model_script": "D:\\CTU\\CTU-SME-11\\scripts\\04.1_decision_tree_visualisation.py",
+      "evaluated_records": 27953,
+      "evaluated_benign": 12159,
+      "evaluated_malicious": 15794,
+      "threshold": null,
+      "population_description": "Label-stratified 20% test; 80% supervised training"
+    },
+    "vm3_if": {
+      "dataset": "VM3",
+      "training_dataset": "VM3",
+      "model": "IF",
+      "protocol": "common_random_holdout_primary",
+      "stem": "isolation_forest_calibrated",
+      "script": "05_isolation_forest_calibrated.py",
+      "scope": "VM3_internal",
+      "random_state": 42,
+      "prediction_file": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_predictions.csv",
+      "metrics_file": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_metrics.csv",
+      "model_script": "D:\\CTU\\CTU-SME-11\\scripts\\05_isolation_forest_calibrated.py",
+      "evaluated_records": 88091,
+      "evaluated_benign": 9120,
+      "evaluated_malicious": 78971,
+      "threshold": 0.04653248926340765,
+      "population_description": "15% benign test plus all malicious; 70% benign fit and 15% benign calibration"
+    },
+    "vm2_dt": {
+      "dataset": "VM2",
+      "training_dataset": "VM2",
+      "model": "DT",
+      "protocol": "stratified_80_20",
+      "stem": "decision_tree_stratified",
+      "script": "04.1_decision_tree_visualisation.py",
+      "scope": "VM2_standalone",
+      "random_state": 42,
+      "prediction_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv",
+      "metrics_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_metrics.csv",
+      "model_script": "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\04.1_decision_tree_visualisation.py",
+      "evaluated_records": 16091,
+      "evaluated_benign": 14150,
+      "evaluated_malicious": 1941,
+      "threshold": null,
+      "population_description": "Label-stratified 20% test; 80% supervised training"
+    },
+    "vm2_if": {
+      "dataset": "VM2",
+      "training_dataset": "VM2",
+      "model": "IF",
+      "protocol": "common_random_holdout_primary",
+      "stem": "isolation_forest_calibrated",
+      "script": "05_isolation_forest_calibrated.py",
+      "scope": "VM2_standalone",
+      "random_state": 42,
+      "prediction_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv",
+      "metrics_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_metrics.csv",
+      "model_script": "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\05_isolation_forest_calibrated.py",
+      "evaluated_records": 20317,
+      "evaluated_benign": 10613,
+      "evaluated_malicious": 9704,
+      "threshold": 0.01485322703701662,
+      "population_description": "15% benign test plus all malicious; 70% benign fit and 15% benign calibration"
+    },
+    "vm2_external_if": {
+      "dataset": "VM2",
+      "training_dataset": "VM3",
+      "model": "IF",
+      "protocol": "vm3_to_vm2_external_frozen_if",
+      "stem": "isolation_forest_cross_vm_validation_vm2",
+      "script": "06_isolation_forest_cross_vm_validation.py",
+      "scope": "VM2_external",
+      "random_state": 42,
+      "prediction_file": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv",
+      "metrics_file": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_metrics.csv",
+      "model_script": "D:\\CTU\\CTU-SME-11\\scripts\\06_isolation_forest_cross_vm_validation.py",
+      "evaluated_records": 80454,
+      "evaluated_benign": 70750,
+      "evaluated_malicious": 9704,
+      "threshold": 0.04653248926340765,
+      "population_description": "All valid VM2 records; frozen VM3 preprocessing/model/99th-percentile threshold"
+    }
+  },
+  "input_sha256": {
+    "D:\\CTU\\CTU-SME-11\\outputs\\clean_network_flows.csv": "11d7c34c805ac88507db6422b72db3169baea7e93a82eccb54b0986e066ca6b3",
+    "D:\\CTU\\CTU-SME-11\\outputs\\cti_mapping_metadata.csv": "46a9ce88dc6f0826e149f4cb86696dd1bf35387f3c21a530b1cea4074470e2fc",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\clean_network_flows.csv": "58e4678c32cde3aa9a393d11c0a0d5dfda62cae74d391afcda79ed3e3523e7af",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\cti_mapping_metadata.csv": "b8e1b6ed26878376cecbaba8f5a6b8d39eef2f4a50a25219efd91d895120bd19",
+    "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_predictions.csv": "01ab07e4020d87542c4d276077f2dc82ab6e009d31c9d056a5e626a91679bc51",
+    "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_metrics.csv": "7809afdb1274c82c456f62402d30bc1167fe040de6a07417ee13be5169486f09",
+    "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_predictions.csv": "32addb0f557e2716b6ac2ab23cc1c77a3b636643cfb5d02bf9a5d15bceef76c5",
+    "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_metrics.csv": "651aab5745c71783bb3241104e5c0a343a4272b2b61f61e1c80f8e70eb7fc1bd",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv": "e54650bf45bf7c750cfc408112bd613d1215b582e0fd7737ec2459ab2265f5a3",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_metrics.csv": "14f683829dd8e8d723148d6eeb44418f82577393f9b62de473d8247a99fbd685",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv": "1fb9099fbbfadafd8288fe8dc810bad697af534aa80a0dc7a5c5d84e98959356",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_metrics.csv": "8f85fea190bb2c8f44759a35c653048b5dfa3bbd8edc5784775227800657ead5",
+    "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv": "c920bfe79381e7c44f6d16b14faf276bf9a4c0012ea182a4cde0b66a7fb1f32a",
+    "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_metrics.csv": "9cd8bdc1d5cbb4b7de21f1f80b465c02dbed5591edb854183d369a2f50f75cd4"
+  },
+  "protected_script_sha256": {
+    "D:\\CTU\\CTU-SME-11\\scripts\\01_data_profiling.py": "7d9f835108919fd4ad8eccdf420da4ad099cef9a6779a5a82d051a23993c71da",
+    "D:\\CTU\\CTU-SME-11\\scripts\\02_preprocessing.py": "90f379ace511b673818b1071201711e8588c8e0c59b30490017efa8c419b1f79",
+    "D:\\CTU\\CTU-SME-11\\scripts\\02_preprocessing1.py": "bbec3b08483d4901323e6c2b95ab058a747c338ee758eb523d373521f21da92c",
+    "D:\\CTU\\CTU-SME-11\\scripts\\03_feature_analysis.py": "df3c7794e6bb049af433f24af0822c486b9a6a636a0a9aa07b3a4051e3732348",
+    "D:\\CTU\\CTU-SME-11\\scripts\\04.1_decision_tree_visualisation.py": "a8ee2c2cd090c03f890c151456fe2bfec109a99c8ea3b99afb3d2cbe95a2e013",
+    "D:\\CTU\\CTU-SME-11\\scripts\\04_decision_tree_baseline.py": "418abd0ceb372074629dd1082eb913acf18a43d2c7ab4b6bba72b8eb841a57fc",
+    "D:\\CTU\\CTU-SME-11\\scripts\\05_isolation_forest_baseline.py": "47c01fc29fc91030c997f048982b9971798c5d43267c774d097b5f229b1e942a",
+    "D:\\CTU\\CTU-SME-11\\scripts\\05_isolation_forest_calibrated.py": "96e12c7fbacb7a1511367dac2881901e9304bc7d96c514cad14b9d83850a97d2",
+    "D:\\CTU\\CTU-SME-11\\scripts\\06_isolation_forest_cross_vm_validation.py": "ed919804728e0adac8cf020c571e42bb854a505ff08d8fea928cd212ccf17aac",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\01_data_profiling.py": "f91d0a32a1e081dbecbe778187162c156e2fe2b208e1e415d22de770ba5c254e",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\02_preprocessing.py": "84e52ed793906f89ac8851813ee6aef909ca1a39ba3c5a981e3a1a3fc7b95592",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\03_feature_analysis.py": "8b650c990dbb060dcad678c69ea8594c296fde912def8cadca87eb71e578128f",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\04.1_decision_tree_visualisation.py": "875a3a1d5186368fe4916de12cc40a0b8f1447bd7ff8034325fddbf505975725",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\04_decision_tree_baseline.py": "62d5d74fd8a013a21f680ccd8487c8816ba69f51b53451fb0b18aab730f965a1",
+    "D:\\CTU\\CTU-SME-11_Windows7full-2\\scripts\\05_isolation_forest_calibrated.py": "a4677bf9d3b2318df43d2e3bb2e2f5543f7968a7d9afd12c84db5269b6e4140f"
+  },
+  "selection_counts": {
+    "Benign": 10,
+    "RedLineStealer": 5,
+    "AgentTesla": 19,
+    "LockBit": 2,
+    "RemcosRAT": 15
+  },
+  "joint_category_coverage": [
+    {
+      "dataset": "VM3",
+      "attack": "RemcosRAT",
+      "pair": "vm3_dt_if",
+      "category": "A",
+      "eligible": 5,
+      "selected": 3
+    },
+    {
+      "dataset": "VM3",
+      "attack": "RemcosRAT",
+      "pair": "vm3_dt_if",
+      "category": "B",
+      "eligible": 15782,
+      "selected": 3
+    },
+    {
+      "dataset": "VM3",
+      "attack": "RemcosRAT",
+      "pair": "vm3_dt_if",
+      "category": "C",
+      "eligible": 3,
+      "selected": 3
+    },
+    {
+      "dataset": "VM3",
+      "attack": "RemcosRAT",
+      "pair": "vm3_dt_if",
+      "category": "D",
+      "eligible": 2,
+      "selected": 2
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_standalone_dt_if",
+      "category": "A",
+      "eligible": 0,
+      "selected": 0
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_standalone_dt_if",
+      "category": "B",
+      "eligible": 1938,
+      "selected": 3
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_standalone_dt_if",
+      "category": "C",
+      "eligible": 0,
+      "selected": 0
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_standalone_dt_if",
+      "category": "D",
+      "eligible": 0,
+      "selected": 0
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_dt_external_if",
+      "category": "A",
+      "eligible": 0,
+      "selected": 0
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_dt_external_if",
+      "category": "B",
+      "eligible": 1938,
+      "selected": 3
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_dt_external_if",
+      "category": "C",
+      "eligible": 0,
+      "selected": 0
+    },
+    {
+      "dataset": "VM2",
+      "attack": "RedLineStealer",
+      "pair": "vm2_dt_external_if",
+      "category": "D",
+      "eligible": 0,
+      "selected": 0
+    }
+  ],
+  "unavailable_predictions_in_selected_applicable_cases": {
+    "vm3_dt": 7,
+    "vm3_if": 0,
+    "vm2_dt": 24,
+    "vm2_if": 4,
+    "vm2_external_if": 0
+  },
+  "missing_observed_fields": {
+    "features.duration": 1,
+    "features.orig_bytes": 1,
+    "features.resp_bytes": 1
+  },
+  "attack_summary": [
+    {
+      "dataset": "VM3",
+      "case_label": "RemcosRAT",
+      "experiment_id": "vm3_dt",
+      "evaluation_scope": "VM3_internal",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM3",
+      "dataset_records": 78965,
+      "evaluated_records": 15792,
+      "unavailable_records": 63173,
+      "predicted_malicious_records": 15787,
+      "detected_attack_records": 15787,
+      "missed_attack_records": 5,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.9996833839918946,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 15,
+      "selected_cases_evaluated": 11,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM3",
+      "case_label": "RemcosRAT",
+      "experiment_id": "vm3_if",
+      "evaluation_scope": "VM3_internal",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM3",
+      "dataset_records": 78965,
+      "evaluated_records": 78965,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 23,
+      "detected_attack_records": 23,
+      "missed_attack_records": 78942,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0002912682834167036,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 15,
+      "selected_cases_evaluated": 15,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM3",
+      "case_label": "Benign",
+      "experiment_id": "vm3_dt",
+      "evaluation_scope": "VM3_internal",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM3",
+      "dataset_records": 60794,
+      "evaluated_records": 12159,
+      "unavailable_records": 48635,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": null,
+      "missed_attack_records": null,
+      "false_positive_records": 0,
+      "detection_rate_evaluated": null,
+      "false_positive_rate_evaluated": 0.0,
+      "selected_cases": 3,
+      "selected_cases_evaluated": 0,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM3",
+      "case_label": "Benign",
+      "experiment_id": "vm3_if",
+      "evaluation_scope": "VM3_internal",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM3",
+      "dataset_records": 60794,
+      "evaluated_records": 9120,
+      "unavailable_records": 51674,
+      "predicted_malicious_records": 109,
+      "detected_attack_records": null,
+      "missed_attack_records": null,
+      "false_positive_records": 109,
+      "detection_rate_evaluated": null,
+      "false_positive_rate_evaluated": 0.011951754385964913,
+      "selected_cases": 3,
+      "selected_cases_evaluated": 3,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "RedLineStealer",
+      "experiment_id": "vm2_dt",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM2",
+      "dataset_records": 9683,
+      "evaluated_records": 1938,
+      "unavailable_records": 7745,
+      "predicted_malicious_records": 1938,
+      "detected_attack_records": 1938,
+      "missed_attack_records": 0,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 1.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 5,
+      "selected_cases_evaluated": 3,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "RedLineStealer",
+      "experiment_id": "vm2_if",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM2",
+      "dataset_records": 9683,
+      "evaluated_records": 9683,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": 0,
+      "missed_attack_records": 9683,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 5,
+      "selected_cases_evaluated": 5,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "RedLineStealer",
+      "experiment_id": "vm2_external_if",
+      "evaluation_scope": "VM2_external",
+      "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+      "training_dataset": "VM3",
+      "dataset_records": 9683,
+      "evaluated_records": 9683,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": 0,
+      "missed_attack_records": 9683,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 5,
+      "selected_cases_evaluated": 5,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "AgentTesla",
+      "experiment_id": "vm2_dt",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM2",
+      "dataset_records": 19,
+      "evaluated_records": 2,
+      "unavailable_records": 17,
+      "predicted_malicious_records": 2,
+      "detected_attack_records": 2,
+      "missed_attack_records": 0,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 1.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 19,
+      "selected_cases_evaluated": 2,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "AgentTesla",
+      "experiment_id": "vm2_if",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM2",
+      "dataset_records": 19,
+      "evaluated_records": 19,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": 0,
+      "missed_attack_records": 19,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 19,
+      "selected_cases_evaluated": 19,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "AgentTesla",
+      "experiment_id": "vm2_external_if",
+      "evaluation_scope": "VM2_external",
+      "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+      "training_dataset": "VM3",
+      "dataset_records": 19,
+      "evaluated_records": 19,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": 0,
+      "missed_attack_records": 19,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 19,
+      "selected_cases_evaluated": 19,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "LockBit",
+      "experiment_id": "vm2_dt",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM2",
+      "dataset_records": 2,
+      "evaluated_records": 1,
+      "unavailable_records": 1,
+      "predicted_malicious_records": 0,
+      "detected_attack_records": 0,
+      "missed_attack_records": 1,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.0,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 2,
+      "selected_cases_evaluated": 1,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "LockBit",
+      "experiment_id": "vm2_if",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM2",
+      "dataset_records": 2,
+      "evaluated_records": 2,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 1,
+      "detected_attack_records": 1,
+      "missed_attack_records": 1,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.5,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 2,
+      "selected_cases_evaluated": 2,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "LockBit",
+      "experiment_id": "vm2_external_if",
+      "evaluation_scope": "VM2_external",
+      "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+      "training_dataset": "VM3",
+      "dataset_records": 2,
+      "evaluated_records": 2,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 1,
+      "detected_attack_records": 1,
+      "missed_attack_records": 1,
+      "false_positive_records": null,
+      "detection_rate_evaluated": 0.5,
+      "false_positive_rate_evaluated": null,
+      "selected_cases": 2,
+      "selected_cases_evaluated": 2,
+      "descriptive_only": true,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "Benign",
+      "experiment_id": "vm2_dt",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "stratified_80_20",
+      "training_dataset": "VM2",
+      "dataset_records": 70750,
+      "evaluated_records": 14150,
+      "unavailable_records": 56600,
+      "predicted_malicious_records": 1,
+      "detected_attack_records": null,
+      "missed_attack_records": null,
+      "false_positive_records": 1,
+      "detection_rate_evaluated": null,
+      "false_positive_rate_evaluated": 7.06713780918728e-05,
+      "selected_cases": 7,
+      "selected_cases_evaluated": 3,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\decision_tree_stratified_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "Benign",
+      "experiment_id": "vm2_if",
+      "evaluation_scope": "VM2_standalone",
+      "evaluation_protocol": "common_random_holdout_primary",
+      "training_dataset": "VM2",
+      "dataset_records": 70750,
+      "evaluated_records": 10613,
+      "unavailable_records": 60137,
+      "predicted_malicious_records": 120,
+      "detected_attack_records": null,
+      "missed_attack_records": null,
+      "false_positive_records": 120,
+      "detection_rate_evaluated": null,
+      "false_positive_rate_evaluated": 0.011306887779138792,
+      "selected_cases": 7,
+      "selected_cases_evaluated": 3,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11_Windows7full-2\\outputs\\isolation_forest_calibrated_predictions.csv"
+    },
+    {
+      "dataset": "VM2",
+      "case_label": "Benign",
+      "experiment_id": "vm2_external_if",
+      "evaluation_scope": "VM2_external",
+      "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+      "training_dataset": "VM3",
+      "dataset_records": 70750,
+      "evaluated_records": 70750,
+      "unavailable_records": 0,
+      "predicted_malicious_records": 1157,
+      "detected_attack_records": null,
+      "missed_attack_records": null,
+      "false_positive_records": 1157,
+      "detection_rate_evaluated": null,
+      "false_positive_rate_evaluated": 0.016353356890459365,
+      "selected_cases": 7,
+      "selected_cases_evaluated": 7,
+      "descriptive_only": false,
+      "prediction_source": "D:\\CTU\\CTU-SME-11\\outputs\\isolation_forest_cross_vm_validation_vm2_predictions.csv"
+    }
+  ],
+  "cases": [
+    {
+      "dataset": "VM2",
+      "flow_row_id": 540,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_external_if"
+      ],
+      "metadata": {
+        "ts": "1676878251.020366",
+        "uid": "CcO0MH3JD6W5XB9x6k",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "56388",
+        "id.resp_h": "151.101.130.49",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Fastly"
+      },
+      "features": {
+        "id.orig_p": 56388.0,
+        "id.resp_p": 443.0,
+        "duration": 873.87068,
+        "orig_bytes": 6190.0,
+        "resp_bytes": 3032734.0,
+        "missed_bytes": 273802.0,
+        "orig_pkts": 2253.0,
+        "orig_ip_bytes": 123138.0,
+        "resp_pkts": 2896.0,
+        "resp_ip_bytes": 3958734.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadttTtgWggtfF"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 540
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.09802185590268397,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 846,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_external_if"
+      ],
+      "metadata": {
+        "ts": "1676884629.484414",
+        "uid": "CER1M32ceX8U593XEk",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "64310",
+        "id.resp_h": "195.113.214.204",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Google"
+      },
+      "features": {
+        "id.orig_p": 64310.0,
+        "id.resp_p": 443.0,
+        "duration": 71.637753,
+        "orig_bytes": 169056.0,
+        "resp_bytes": 7005794.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 3097.0,
+        "orig_ip_bytes": 255772.0,
+        "resp_pkts": 6018.0,
+        "resp_ip_bytes": 7174298.0,
+        "proto": "udp",
+        "service": "missing",
+        "conn_state": "SF",
+        "history": "Dd"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 846
+            },
+            "true_label": 0,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 846
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.0999900771868556,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "not_applicable_benign"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 877,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_external_if"
+      ],
+      "metadata": {
+        "ts": "1676884701.127331",
+        "uid": "CX6gkV1AitThN9upo9",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "58690",
+        "id.resp_h": "195.113.214.204",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Google"
+      },
+      "features": {
+        "id.orig_p": 58690.0,
+        "id.resp_p": 443.0,
+        "duration": 119.971779,
+        "orig_bytes": 259983.0,
+        "resp_bytes": 11066900.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 5050.0,
+        "orig_ip_bytes": 401383.0,
+        "resp_pkts": 9549.0,
+        "resp_ip_bytes": 11334272.0,
+        "proto": "udp",
+        "service": "missing",
+        "conn_state": "SF",
+        "history": "Dd"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 877
+            },
+            "true_label": 0,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 877
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.1318670587683064,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "not_applicable_benign"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 1039,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_if"
+      ],
+      "metadata": {
+        "ts": "1676885903.091211",
+        "uid": "CnW0FV1H392yasNUCl",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62073",
+        "id.resp_h": "2.23.8.223",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Pinterest"
+      },
+      "features": {
+        "id.orig_p": 62073.0,
+        "id.resp_p": 443.0,
+        "duration": 162.210581,
+        "orig_bytes": 2600.0,
+        "resp_bytes": 6930974.0,
+        "missed_bytes": 1003067.0,
+        "orig_pkts": 4199.0,
+        "orig_ip_bytes": 206624.0,
+        "resp_pkts": 5665.0,
+        "resp_ip_bytes": 8223310.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtgtTWtggWtfF"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 1039
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.09022714945141941,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 1039
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.1151462954421919,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 1743,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_if"
+      ],
+      "metadata": {
+        "ts": "1676890792.548783",
+        "uid": "CPGiTy2UxNAcKjov9g",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "55966",
+        "id.resp_h": "185.152.65.27",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Cdn77"
+      },
+      "features": {
+        "id.orig_p": 55966.0,
+        "id.resp_p": 443.0,
+        "duration": 232.155248,
+        "orig_bytes": 21237.0,
+        "resp_bytes": 2428384.0,
+        "missed_bytes": 118205.0,
+        "orig_pkts": 2089.0,
+        "orig_ip_bytes": 139816.0,
+        "resp_pkts": 3188.0,
+        "resp_ip_bytes": 4195348.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadttTtgWgTGtfF"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 1743
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.07204123534079765,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 1743
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.0935565808005906,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 2437,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_if"
+      ],
+      "metadata": {
+        "ts": "1676894945.127221",
+        "uid": "CWtvGE2AW91C0FDpbj",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "52994",
+        "id.resp_h": "195.113.214.204",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Google"
+      },
+      "features": {
+        "id.orig_p": 52994.0,
+        "id.resp_p": 443.0,
+        "duration": 116.950146,
+        "orig_bytes": 49695.0,
+        "resp_bytes": 8219814.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 463.0,
+        "orig_ip_bytes": 62659.0,
+        "resp_pkts": 6152.0,
+        "resp_ip_bytes": 8392070.0,
+        "proto": "udp",
+        "service": "missing",
+        "conn_state": "SF",
+        "history": "Dd"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 2437
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.019709702796742223,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 2437
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.0694538791633228,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 5194,
+      "case_label": "RedLineStealer",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm2_dt_external_if:DT_unavailable_IF_missed",
+        "vm2_standalone_dt_if:DT_unavailable_IF_missed"
+      ],
+      "metadata": {
+        "ts": "1676962205.443687",
+        "uid": "Cuzgqs8o8TuYnsMOj",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "49709",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": "2567",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Redline_stealer"
+      },
+      "features": {
+        "id.orig_p": 49709.0,
+        "id.resp_p": 2567.0,
+        "duration": 21.372693,
+        "orig_bytes": 375.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 24.0,
+        "orig_ip_bytes": 6710.0,
+        "resp_pkts": 2.0,
+        "resp_ip_bytes": 104.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "RSTO",
+        "history": "ShADTTR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 5194
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05233023880499993,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 5194
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.018391347360299126,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 5207,
+      "case_label": "RedLineStealer",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm2_dt_external_if:DT_unavailable_IF_missed",
+        "vm2_standalone_dt_if:DT_unavailable_IF_missed"
+      ],
+      "metadata": {
+        "ts": "1676962232.146494",
+        "uid": "CUehkA2EiM1FbsfqWc",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "49728",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": "2567",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Redline_stealer"
+      },
+      "features": {
+        "id.orig_p": 49728.0,
+        "id.resp_p": 2567.0,
+        "duration": 18.982455,
+        "orig_bytes": 375.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 5050.0,
+        "resp_pkts": 2.0,
+        "resp_ip_bytes": 104.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "RSTO",
+        "history": "ShADTTR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 5207
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05346836885302986,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 5207
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.019543942225150657,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 5324,
+      "case_label": "RedLineStealer",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm2_dt_external_if:B",
+        "vm2_standalone_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676962378.778498",
+        "uid": "CxdpoivOaMlo0o5p2",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "54165",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": "2567",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Redline_stealer"
+      },
+      "features": {
+        "id.orig_p": 54165.0,
+        "id.resp_p": 2567.0,
+        "duration": 18.967685,
+        "orig_bytes": 375.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 5050.0,
+        "resp_pkts": 2.0,
+        "resp_ip_bytes": 104.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "RSTO",
+        "history": "ShADTTR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 5324
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 5324
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05469892840574281,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 5324
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.019495521231792767,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "B",
+        "vm2_dt_external_if": "B"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 5357,
+      "case_label": "RedLineStealer",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm2_dt_external_if:B",
+        "vm2_standalone_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676962426.716129",
+        "uid": "ClJ3K22ojoJhfMLrMd",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "54172",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": "2567",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Redline_stealer"
+      },
+      "features": {
+        "id.orig_p": 54172.0,
+        "id.resp_p": 2567.0,
+        "duration": 18.967008,
+        "orig_bytes": 375.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 5050.0,
+        "resp_pkts": 2.0,
+        "resp_ip_bytes": 104.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "RSTO",
+        "history": "ShADTTR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 5357
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 5357
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05469892840574281,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 5357
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.019495521231792767,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "B",
+        "vm2_dt_external_if": "B"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 5384,
+      "case_label": "RedLineStealer",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm2_dt_external_if:B",
+        "vm2_standalone_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676962522.559152",
+        "uid": "ChEyuh2VuYQOiw56p5",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "54186",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": "2567",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Redline_stealer"
+      },
+      "features": {
+        "id.orig_p": 54186.0,
+        "id.resp_p": 2567.0,
+        "duration": 18.983827,
+        "orig_bytes": 375.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 5050.0,
+        "resp_pkts": 2.0,
+        "resp_ip_bytes": 104.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "RSTO",
+        "history": "ShADTTR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 5384
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 5384
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05469892840574281,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 5384
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.019495521231792767,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "B",
+        "vm2_dt_external_if": "B"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37203,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142469.425752",
+        "uid": "CNE8cw4U8alfyh9z1c",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "61909",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 61909.0,
+        "id.resp_p": 443.0,
+        "duration": 2.999771,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37203
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37203
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.035394015956125624,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37204,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142477.554769",
+        "uid": "CpykDl1fDErStpBfda",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "61910",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 61910.0,
+        "id.resp_p": 443.0,
+        "duration": 3.00264,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37204
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37204
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.035394015956125624,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37205,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142485.704062",
+        "uid": "CqlSzl6XfpN5vBvR1",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "61911",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 61911.0,
+        "id.resp_p": 443.0,
+        "duration": 3.018312,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37205
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37205
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.0352368163424957,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37209,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142493.848108",
+        "uid": "CJABGe10PZmIsZ1nu9",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "61912",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 61912.0,
+        "id.resp_p": 443.0,
+        "duration": 10.539047,
+        "orig_bytes": 498.0,
+        "resp_bytes": 4996.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 1844.0,
+        "resp_pkts": 16.0,
+        "resp_ip_bytes": 10656.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37209
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07592858718852952,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37209
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.04009956790167102,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37211,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142505.370581",
+        "uid": "CKXeje4wyBlAtiPrOi",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "61915",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 61915.0,
+        "id.resp_p": 443.0,
+        "duration": 3.003972,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37211
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37211
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.035394015956125624,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37218,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142514.268718",
+        "uid": "CaOUwe1KhAD7UA3FL3",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62617",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62617.0,
+        "id.resp_p": 443.0,
+        "duration": 3.003364,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37218
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37218
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.03442744941914749,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37222,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142522.425811",
+        "uid": "CNNZdD4gGMIDCYHwld",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62619",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62619.0,
+        "id.resp_p": 443.0,
+        "duration": 3.161911,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 16.0,
+        "orig_ip_bytes": 1214.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37222
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37222
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042317299414118215,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37224,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142526.577456",
+        "uid": "CiM6XK8s6HurseQrk",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62620",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62620.0,
+        "id.resp_p": 443.0,
+        "duration": 3.15158,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 16.0,
+        "orig_ip_bytes": 1214.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37224
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37224
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042317299414118215,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37225,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142530.710463",
+        "uid": "CsJF711PPuALpBXzbk",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62621",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62621.0,
+        "id.resp_p": 443.0,
+        "duration": 0.117224,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37225
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37225
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37226,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142531.821287",
+        "uid": "CnQUIt1nYbLDN86GHf",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62622",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62622.0,
+        "id.resp_p": 443.0,
+        "duration": 0.116973,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37226
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37226
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37227,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142532.921074",
+        "uid": "C9r9881XTSIHRVM3O4",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62623",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62623.0,
+        "id.resp_p": 443.0,
+        "duration": 0.116165,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37227
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37227
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37228,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142534.022784",
+        "uid": "CT1ZSIzEPXst4PQ02",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62624",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62624.0,
+        "id.resp_p": 443.0,
+        "duration": 0.116254,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 37228
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37228
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37228
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "B",
+        "vm2_dt_external_if": "B"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37229,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142535.119898",
+        "uid": "CzJY6dyJITbGNzrKg",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62626",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62626.0,
+        "id.resp_p": 443.0,
+        "duration": 0.125101,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37229
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37229
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37230,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142536.227795",
+        "uid": "CIUALmAcb4ynVmB7e",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62627",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62627.0,
+        "id.resp_p": 443.0,
+        "duration": 0.115785,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 37230
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37230
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37230
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "B",
+        "vm2_dt_external_if": "B"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37231,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142537.328312",
+        "uid": "CRQXZh3Jcfr6KFLI63",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62628",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62628.0,
+        "id.resp_p": 443.0,
+        "duration": 0.116991,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37231
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37231
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37232,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142538.429776",
+        "uid": "C5Od2ZKjErdbKX6wh",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62629",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62629.0,
+        "id.resp_p": 443.0,
+        "duration": 0.117229,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37232
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37232
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37233,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142539.532518",
+        "uid": "CQLubj3dgkzuVpYL9",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62630",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62630.0,
+        "id.resp_p": 443.0,
+        "duration": 0.115731,
+        "orig_bytes": 263.0,
+        "resp_bytes": 137.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 14.0,
+        "orig_ip_bytes": 1110.0,
+        "resp_pkts": 8.0,
+        "resp_ip_bytes": 618.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37233
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.07745024091606278,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37233
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042345929762538426,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37234,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142540.637196",
+        "uid": "C5uqqB3GnVBrBzXFl9",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62631",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62631.0,
+        "id.resp_p": 443.0,
+        "duration": 2.999853,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37234
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06983512138826264,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37234
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.03442744941914749,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 37252,
+      "case_label": "AgentTesla",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:AgentTesla"
+      ],
+      "metadata": {
+        "ts": "1677142546.895366",
+        "uid": "COEAhy2YLyKbU9ti55",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62632",
+        "id.resp_h": "176.223.208.23",
+        "id.resp_p": "443",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-AgentTesla-TLS"
+      },
+      "features": {
+        "id.orig_p": 62632.0,
+        "id.resp_p": 443.0,
+        "duration": 132.741906,
+        "orig_bytes": 458.0,
+        "resp_bytes": 171362.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 240.0,
+        "orig_ip_bytes": 10988.0,
+        "resp_pkts": 250.0,
+        "resp_ip_bytes": 352748.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadtttfFR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 37252
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05701133829996391,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 37252
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.04404583076859808,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 43682,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm2_dt"
+      ],
+      "metadata": {
+        "ts": "1677201202.749250",
+        "uid": "CezY7p2HCNM6ooNgFc",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62937",
+        "id.resp_h": "192.168.1.108",
+        "id.resp_p": "139",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-24\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-24",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign"
+      },
+      "features": {
+        "id.orig_p": 62937.0,
+        "id.resp_p": 139.0,
+        "duration": 11.886805,
+        "orig_bytes": 1005.0,
+        "resp_bytes": 1208.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 13.0,
+        "orig_ip_bytes": 1537.0,
+        "resp_pkts": 10.0,
+        "resp_ip_bytes": 1620.0,
+        "proto": "tcp",
+        "service": "smb,gssapi,ntlm",
+        "conn_state": "SF",
+        "history": "ShDdAFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 43682
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 43682
+            },
+            "true_label": 0,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06736656701723681,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "not_applicable_benign"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 43683,
+      "case_label": "LockBit",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:LockBit"
+      ],
+      "metadata": {
+        "ts": "1677201202.759657",
+        "uid": "Cccr9N1ciWfpftpCY4",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62938",
+        "id.resp_h": "192.168.1.108",
+        "id.resp_p": "139",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-24\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-24",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_benign-Malware_Encryption-Lockbit_2.0-SMB2"
+      },
+      "features": {
+        "id.orig_p": 62938.0,
+        "id.resp_p": 139.0,
+        "duration": 11.877562,
+        "orig_bytes": 989.0,
+        "resp_bytes": 1301.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 13.0,
+        "orig_ip_bytes": 1521.0,
+        "resp_pkts": 11.0,
+        "resp_ip_bytes": 1753.0,
+        "proto": "tcp",
+        "service": "smb,gssapi,ntlm",
+        "conn_state": "SF",
+        "history": "ShDdAFf"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 43683
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.05678897175585479,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 43683
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.06631066695415644,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "unavailable",
+        "vm2_dt_external_if": "unavailable"
+      }
+    },
+    {
+      "dataset": "VM2",
+      "flow_row_id": 48824,
+      "case_label": "LockBit",
+      "true_label": 1,
+      "descriptive_only": true,
+      "selection_reasons": [
+        "descriptive_small_sample:LockBit"
+      ],
+      "metadata": {
+        "ts": "1677224926.054485",
+        "uid": "C3zCrp2avjFVmgEtNb",
+        "id.orig_h": "192.168.1.106",
+        "id.orig_p": "62938",
+        "id.resp_h": "192.168.1.108",
+        "id.resp_p": "445",
+        "source_file": "D:\\CTU\\CTU-SME-11_Windows7full-2\\CTU-SME-11\\Experiment-VM-Microsoft-Windows7full-2\\2023-02-24\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-24",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_benign-Malware_Encryption-Lockbit_2.0-SMB2"
+      },
+      "features": {
+        "id.orig_p": 62938.0,
+        "id.resp_p": 445.0,
+        "duration": 1383.298999,
+        "orig_bytes": 578236.0,
+        "resp_bytes": 791217.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 2404.0,
+        "orig_ip_bytes": 674504.0,
+        "resp_pkts": 2402.0,
+        "resp_ip_bytes": 887317.0,
+        "proto": "tcp",
+        "service": "smb,gssapi,krb,dce_rpc",
+        "conn_state": "RSTR",
+        "history": "ShADdatr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm2_dt",
+              "flow_row_id": 48824
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm2_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm2_if",
+              "flow_row_id": 48824
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.08380763964589633,
+            "threshold": 0.01485322703701662
+          }
+        },
+        "vm2_external_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM2",
+              "evaluation_protocol": "vm3_to_vm2_external_frozen_if",
+              "experiment_id": "vm2_external_if",
+              "flow_row_id": 48824
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.09469981316537057,
+            "threshold": 0.04653248926340765
+          }
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "not_applicable_dataset",
+        "vm2_standalone_dt_if": "C",
+        "vm2_dt_external_if": "C"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 1298,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm3_if"
+      ],
+      "metadata": {
+        "ts": "1676887148.930003",
+        "uid": "CUCjvq3zqnVh1Owa7b",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "60435",
+        "id.resp_h": "162.159.136.232",
+        "id.resp_p": "443",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Cloudflare"
+      },
+      "features": {
+        "id.orig_p": 60435.0,
+        "id.resp_p": 443.0,
+        "duration": 131.154299,
+        "orig_bytes": 1103378.0,
+        "resp_bytes": 2549344.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 3124.0,
+        "orig_ip_bytes": 1190850.0,
+        "resp_pkts": 4483.0,
+        "resp_ip_bytes": 2674868.0,
+        "proto": "udp",
+        "service": "missing",
+        "conn_state": "SF",
+        "history": "Dd"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 1298
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.11894065303641022,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 1444,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm3_if"
+      ],
+      "metadata": {
+        "ts": "1676888285.076453",
+        "uid": "CGlv4j4YWTJj3hzFo9",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "59503",
+        "id.resp_h": "157.240.30.27",
+        "id.resp_p": "443",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Facebook_CDN"
+      },
+      "features": {
+        "id.orig_p": 59503.0,
+        "id.resp_p": 443.0,
+        "duration": 114.651053,
+        "orig_bytes": 125424.0,
+        "resp_bytes": 3494350.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 2180.0,
+        "orig_ip_bytes": 186464.0,
+        "resp_pkts": 3487.0,
+        "resp_ip_bytes": 3591986.0,
+        "proto": "udp",
+        "service": "missing",
+        "conn_state": "SF",
+        "history": "Dd"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 1444
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.07166730661168907,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 1993,
+      "case_label": "Benign",
+      "true_label": 0,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "benign_false_positive:vm3_if"
+      ],
+      "metadata": {
+        "ts": "1676889966.671857",
+        "uid": "CfAhu61rvOJwsUg6uk",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "55598",
+        "id.resp_h": "151.101.1.140",
+        "id.resp_p": "443",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-20\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-20",
+        "label": "Benign",
+        "detailedlabel": "From_benign-To_benign-Fastly"
+      },
+      "features": {
+        "id.orig_p": 55598.0,
+        "id.resp_p": 443.0,
+        "duration": 6.422226,
+        "orig_bytes": 1529.0,
+        "resp_bytes": 1878967.0,
+        "missed_bytes": 108669.0,
+        "orig_pkts": 1144.0,
+        "orig_ip_bytes": 56854.0,
+        "resp_pkts": 1772.0,
+        "resp_ip_bytes": 2581400.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "SF",
+        "history": "ShADTadttTtgWgFfR"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 1993
+            },
+            "true_label": 0,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.0492843079628682,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11392,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:DT_unavailable_IF_missed"
+      ],
+      "metadata": {
+        "ts": "1676979690.599565",
+        "uid": "C7GoFu1MEc2X8Skbf8",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49507",
+        "id.resp_h": "178.237.33.50",
+        "id.resp_p": "80",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP"
+      },
+      "features": {
+        "id.orig_p": 49507.0,
+        "id.resp_p": 80.0,
+        "duration": 118.125854,
+        "orig_bytes": 71.0,
+        "resp_bytes": 1173.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 20.0,
+        "orig_ip_bytes": 966.0,
+        "resp_pkts": 6.0,
+        "resp_ip_bytes": 2602.0,
+        "proto": "tcp",
+        "service": "http",
+        "conn_state": "SF",
+        "history": "ShADTdtfF"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11392
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.03908622775154258,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11393,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676979818.068060",
+        "uid": "CjBwX5jwnosxbDx6g",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49507",
+        "id.resp_h": "178.237.33.50",
+        "id.resp_p": "80",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP"
+      },
+      "features": {
+        "id.orig_p": 49507.0,
+        "id.resp_p": 80.0,
+        "duration": 0.000243,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 2.0,
+        "orig_ip_bytes": 80.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "SH",
+        "history": "F"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 11393
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11393
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.09951619581327709,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "B",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11395,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:DT_unavailable_IF_missed"
+      ],
+      "metadata": {
+        "ts": "1676979827.677558",
+        "uid": "C3jMAG2D0qvyQvAjX2",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49507",
+        "id.resp_h": "178.237.33.50",
+        "id.resp_p": "80",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP"
+      },
+      "features": {
+        "id.orig_p": 49507.0,
+        "id.resp_p": 80.0,
+        "duration": 1e-06,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 2.0,
+        "orig_ip_bytes": 80.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "OTH",
+        "history": "R"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11395
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.0766948095622616,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11429,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676980028.477294",
+        "uid": "C33ZvP2FOs1944mz4",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49516",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49516.0,
+        "id.resp_p": 5888.0,
+        "duration": 54.096191,
+        "orig_bytes": 4334.0,
+        "resp_bytes": 651.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 118.0,
+        "orig_ip_bytes": 13412.0,
+        "resp_pkts": 118.0,
+        "resp_ip_bytes": 6046.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTdtaTr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 11429
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11429
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.028457287326531466,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "B",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11430,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:A"
+      ],
+      "metadata": {
+        "ts": "1676980028.973338",
+        "uid": "CK7TDD2gKLQq3cnlw6",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49517",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49517.0,
+        "id.resp_p": 5888.0,
+        "duration": 53.608926,
+        "orig_bytes": 1015979.0,
+        "resp_bytes": 2453.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 1520.0,
+        "orig_ip_bytes": 2089862.0,
+        "resp_pkts": 880.0,
+        "resp_ip_bytes": 40394.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTdtaTTtr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 11430
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11430
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.06440461503978501,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "A",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11465,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:B"
+      ],
+      "metadata": {
+        "ts": "1676980480.420380",
+        "uid": "C1wPHj1QIxeOEgcKY3",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49525",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49525.0,
+        "id.resp_p": 5888.0,
+        "duration": 17.124354,
+        "orig_bytes": 1782.0,
+        "resp_bytes": 651.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 44.0,
+        "orig_ip_bytes": 5348.0,
+        "resp_pkts": 44.0,
+        "resp_ip_bytes": 3086.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTdtaTr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 11465
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11465
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.042720421828605026,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "B",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11476,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:DT_unavailable_IF_detected"
+      ],
+      "metadata": {
+        "ts": "1676980484.573609",
+        "uid": "CYDmcv4fQZ2cZgr314",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49527",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49527.0,
+        "id.resp_p": 5888.0,
+        "duration": 77.165794,
+        "orig_bytes": 16223428.0,
+        "resp_bytes": 12469.0,
+        "missed_bytes": 64430.0,
+        "orig_pkts": 23549.0,
+        "orig_ip_bytes": 33197781.0,
+        "resp_pkts": 9945.0,
+        "resp_ip_bytes": 426062.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTadtTTtTtGGTr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11476
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.13586188028341917,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 11604,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:DT_unavailable_IF_detected"
+      ],
+      "metadata": {
+        "ts": "1676981379.596510",
+        "uid": "CekIFc6Za2gm2pDi2",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49689",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49689.0,
+        "id.resp_p": 5888.0,
+        "duration": 10.107128,
+        "orig_bytes": 3208845.0,
+        "resp_bytes": 2057.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4718.0,
+        "orig_ip_bytes": 6606434.0,
+        "resp_pkts": 1847.0,
+        "resp_ip_bytes": 78714.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTadtTTtTr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": false,
+          "unavailable_reason": "not_in_saved_evaluation_population",
+          "prediction": null
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 11604
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.0928944258824902,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "unavailable",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 12632,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:C"
+      ],
+      "metadata": {
+        "ts": "1676987049.252983",
+        "uid": "C2WR2hBsnvHNVaiCd",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49972",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49972.0,
+        "id.resp_p": 5888.0,
+        "duration": 11.732989,
+        "orig_bytes": 2907123.0,
+        "resp_bytes": 2020.0,
+        "missed_bytes": 30044.0,
+        "orig_pkts": 4040.0,
+        "orig_ip_bytes": 5707514.0,
+        "resp_pkts": 1899.0,
+        "resp_ip_bytes": 80704.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTadtTTgGtGTfr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 12632
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 12632
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.10071518096678256,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "C",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 13500,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:A"
+      ],
+      "metadata": {
+        "ts": "1676980498.968185",
+        "uid": "CfNi924BpewzKainPa",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "49529",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-21\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-21",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 49529.0,
+        "id.resp_p": 5888.0,
+        "duration": 12141.526261,
+        "orig_bytes": 229746863.0,
+        "resp_bytes": 395018.0,
+        "missed_bytes": 505804.0,
+        "orig_pkts": 342115.0,
+        "orig_ip_bytes": 470565753.0,
+        "resp_pkts": 196334.0,
+        "resp_ip_bytes": 8704594.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTadtTTtGTtgGTtgGTwwwtr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 13500
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 13500
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.19962261624855715,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "A",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 97021,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:C"
+      ],
+      "metadata": {
+        "ts": "1677050925.552272",
+        "uid": "CYCW4D1fUfsKbvljzj",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "60125",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-22\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-22",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 60125.0,
+        "id.resp_p": 5888.0,
+        "duration": 4.038221,
+        "orig_bytes": 703606.0,
+        "resp_bytes": 1146.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 1042.0,
+        "orig_ip_bytes": 1448916.0,
+        "resp_pkts": 502.0,
+        "resp_ip_bytes": 22516.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTadtTTtr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 97021
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 97021
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.053265178001296376,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "C",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 97191,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:C"
+      ],
+      "metadata": {
+        "ts": "1677050921.665268",
+        "uid": "CFWsj94jYpQKNYWpc3",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "60123",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-22\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-22",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 60123.0,
+        "id.resp_p": 5888.0,
+        "duration": 2161.558707,
+        "orig_bytes": 347794.0,
+        "resp_bytes": 652.0,
+        "missed_bytes": 161.0,
+        "orig_pkts": 4322.0,
+        "orig_ip_bytes": 868170.0,
+        "resp_pkts": 4324.0,
+        "resp_ip_bytes": 174288.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTdtaTTTGr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 97191
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 97191
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.10114870926699304,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "C",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 105320,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:A"
+      ],
+      "metadata": {
+        "ts": "1677114393.748143",
+        "uid": "CaAxcC2z93MewAoVIc",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "61030",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": "5888",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_data_exfiltration-RemcosRAT"
+      },
+      "features": {
+        "id.orig_p": 61030.0,
+        "id.resp_p": 5888.0,
+        "duration": 27899.250572,
+        "orig_bytes": 78167.0,
+        "resp_bytes": 39787.0,
+        "missed_bytes": 42.0,
+        "orig_pkts": 1876.0,
+        "orig_ip_bytes": 231398.0,
+        "resp_pkts": 3734.0,
+        "resp_ip_bytes": 228832.0,
+        "proto": "tcp",
+        "service": "ssl",
+        "conn_state": "RSTR",
+        "history": "ShADTdtaTtTtgr"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 105320
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": 1.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 105320
+            },
+            "true_label": 1,
+            "predicted_label": 1,
+            "predicted_probability": null,
+            "anomaly_score": 0.09252971667635679,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "A",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 106033,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:D"
+      ],
+      "metadata": {
+        "ts": "1677147141.222041",
+        "uid": "CWmcPa3nIKpx5HXZyk",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "61481",
+        "id.resp_h": "178.237.33.50",
+        "id.resp_p": "80",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP"
+      },
+      "features": {
+        "id.orig_p": 61481.0,
+        "id.resp_p": 80.0,
+        "duration": 3.011395,
+        "orig_bytes": 0.0,
+        "resp_bytes": 0.0,
+        "missed_bytes": 0.0,
+        "orig_pkts": 4.0,
+        "orig_ip_bytes": 208.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 106033
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 106033
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.0355126983668293,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "D",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    },
+    {
+      "dataset": "VM3",
+      "flow_row_id": 106034,
+      "case_label": "RemcosRAT",
+      "true_label": 1,
+      "descriptive_only": false,
+      "selection_reasons": [
+        "vm3_dt_if:D"
+      ],
+      "metadata": {
+        "ts": "1677147150.249365",
+        "uid": "Ckn0in8Sj5uJFMJbe",
+        "id.orig_h": "192.168.1.107",
+        "id.orig_p": "61481",
+        "id.resp_h": "178.237.33.50",
+        "id.resp_p": "80",
+        "source_file": "Experiment-VM-Microsoft-Windows7full-3\\2023-02-23\\zeek\\conn.log.labeled",
+        "capture_date": "2023-02-23",
+        "label": "Malicious",
+        "detailedlabel": "From_malicious-To_malicious-Malware_C2-Ingress_tool_access-RemcosRAT-HTTP"
+      },
+      "features": {
+        "id.orig_p": 61481.0,
+        "id.resp_p": 80.0,
+        "duration": null,
+        "orig_bytes": null,
+        "resp_bytes": null,
+        "missed_bytes": 0.0,
+        "orig_pkts": 2.0,
+        "orig_ip_bytes": 96.0,
+        "resp_pkts": 0.0,
+        "resp_ip_bytes": 0.0,
+        "proto": "tcp",
+        "service": "missing",
+        "conn_state": "S0",
+        "history": "S"
+      },
+      "model_evidence": {
+        "vm3_dt": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "stratified_80_20",
+              "experiment_id": "vm3_dt",
+              "flow_row_id": 106034
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": 0.0,
+            "anomaly_score": null,
+            "threshold": null
+          }
+        },
+        "vm3_if": {
+          "available": true,
+          "unavailable_reason": null,
+          "prediction": {
+            "identity": {
+              "dataset": "VM3",
+              "evaluation_protocol": "common_random_holdout_primary",
+              "experiment_id": "vm3_if",
+              "flow_row_id": 106034
+            },
+            "true_label": 1,
+            "predicted_label": 0,
+            "predicted_probability": null,
+            "anomaly_score": -0.03162960443720941,
+            "threshold": 0.04653248926340765
+          }
+        },
+        "vm2_dt": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        },
+        "vm2_external_if": {
+          "available": false,
+          "unavailable_reason": "different_dataset",
+          "prediction": null
+        }
+      },
+      "joint_categories": {
+        "vm3_dt_if": "D",
+        "vm2_standalone_dt_if": "not_applicable_dataset",
+        "vm2_dt_external_if": "not_applicable_dataset"
+      }
+    }
+  ],
+  "validations": [
+    {
+      "check": "VM3: unique cleaned/metadata IDs and identical populations",
+      "status": "PASS"
+    },
+    {
+      "check": "VM3: required features and metadata columns",
+      "status": "PASS"
+    },
+    {
+      "check": "VM3: binary labels agree with metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "VM2: unique cleaned/metadata IDs and identical populations",
+      "status": "PASS"
+    },
+    {
+      "check": "VM2: required features and metadata columns",
+      "status": "PASS"
+    },
+    {
+      "check": "VM2: binary labels agree with metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_dt: metrics protocol and random_state",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_dt: unique IDs, labels, metadata, provenance and prediction rules",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_dt: population and confusion matrix match saved metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_if: metrics protocol and random_state",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_if: unique IDs, labels, metadata, provenance and prediction rules",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_if: population and confusion matrix match saved metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_if: every malicious flow evaluated",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_dt: metrics protocol and random_state",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_dt: unique IDs, labels, metadata, provenance and prediction rules",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_dt: population and confusion matrix match saved metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_if: metrics protocol and random_state",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_if: unique IDs, labels, metadata, provenance and prediction rules",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_if: population and confusion matrix match saved metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_if: every malicious flow evaluated",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_external_if: unique IDs, labels, metadata, provenance and prediction rules",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_external_if: population and confusion matrix match saved metrics",
+      "status": "PASS"
+    },
+    {
+      "check": "vm2_external_if: every malicious flow evaluated",
+      "status": "PASS"
+    },
+    {
+      "check": "External IF covers all VM2 records",
+      "status": "PASS"
+    },
+    {
+      "check": "External IF threshold equals VM3 calibrated threshold",
+      "status": "PASS"
+    },
+    {
+      "check": "Primary attacks exist",
+      "status": "PASS"
+    },
+    {
+      "check": "Selected dataset/flow identities are unique",
+      "status": "PASS"
+    },
+    {
+      "check": "A-D categories require both exact experiment predictions",
+      "status": "PASS"
+    },
+    {
+      "check": "Unavailable predictions remain null; available evidence retains full identity",
+      "status": "PASS"
+    },
+    {
+      "check": "Every selected benign case is a saved false positive",
+      "status": "PASS"
+    },
+    {
+      "check": "Summary denominators reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "All input CSV hashes unchanged",
+      "status": "PASS"
+    },
+    {
+      "check": "Scripts 01-06 unchanged in both projects",
+      "status": "PASS"
+    },
+    {
+      "check": "Evidence JSON serializes without NaN/Infinity",
+      "status": "PASS"
+    }
+  ]
+}

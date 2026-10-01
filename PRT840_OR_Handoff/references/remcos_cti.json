@@ -1,0 +1,35 @@
+{
+  "context": [
+    {
+      "id": "C001",
+      "value": {
+        "evidence_scope": "retrospective_context_only",
+        "indicator": "66.63.168.35:5888",
+        "indicator_type": "ip_port",
+        "status": "MATCH_PUBLIC_MALWARE_CONFIG",
+        "sources": [
+          {
+            "source": "MalwareBazaar",
+            "source_sample_sha256": "b121d9b4950ef1d71a99bbd8a0f93e71a150ec01f7986b1eebc1c557e9810819",
+            "finding": "Public sample report lists C2 Extraction: 66.63.168.35:5888",
+            "source_first_seen_utc": "2023-02-21 09:02:10 UTC"
+          },
+          {
+            "source": "MalwareBazaar (second sample)",
+            "source_sample_sha256": "08c829e7056b8e022539076acbc962dea072e6506184d4036b785cb0e4592371",
+            "finding": "Public executable sample report lists C2 Extraction: 66.63.168.35:5888",
+            "source_first_seen_utc": "2023-02-21 09:02:16 UTC"
+          }
+        ],
+        "limitations": [
+          "Treat this endpoint CTI as retrospective evidence only.",
+          "Historical sample-specific configuration does not prove the contents or purpose of an individual network flow.",
+          "It does not by itself prove successful command-and-control activity, data exfiltration, or host compromise.",
+          "The second sample is from the same sample chain and is not an independent corroborating intelligence provider.",
+          "This CTI must not be treated as independent validation of withheld dataset ground-truth labels."
+        ]
+      }
+    }
+  ],
+  "interpretation_limit": "Team-recorded retrospective public endpoint association; not independent proof of an individual flow or attack stage."
+}

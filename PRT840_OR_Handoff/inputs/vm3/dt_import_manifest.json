@@ -1,0 +1,20 @@
+{
+  "source_file": "inputs/vm3/decision_tree_vm3_original_80_20_predictions.csv",
+  "source_sha256": "13e6d58cc8835cee1e15f94f6e313a00e35e755aa6ffadf76eb076b5bfa45fc7",
+  "source_columns": [
+    "flow_row_id",
+    "true_label",
+    "predicted_label",
+    "predicted_probability"
+  ],
+  "normalized_file": "inputs/vm3/dt_predictions.csv",
+  "normalized_sha256": "9b3262425640062cf5f9d386ec8e50501a36dc6c7ba2406ec40aadf4039e6464",
+  "records": 27953,
+  "matching_recorded_examples": 11,
+  "identity_and_label_validation": "all records match the pinned VM3 metadata population",
+  "evaluation_protocol": "stratified_80_20",
+  "protocol_provenance": "The supplied filename identifies the original 80/20 export. Its rows agree with all recorded stratified_80_20 examples. The evaluation_protocol column is added from this declared import context; it was absent from the supplied CSV.",
+  "unchanged_prediction_values": true,
+  "retrained_model": false,
+  "training_feature_provenance": "not established by a prediction CSV"
+}
