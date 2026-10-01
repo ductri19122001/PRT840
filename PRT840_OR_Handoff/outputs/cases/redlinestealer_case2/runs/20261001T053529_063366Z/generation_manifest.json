@@ -1,0 +1,30 @@
+{
+  "case_id": "CTU-SME-11-VM2-case-002",
+  "created_utc": "2026-10-01T05:35:29.069218+00:00",
+  "model": "llama3.1:8b",
+  "options": {
+    "seed": 42,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 8,
+    "num_batch": 64,
+    "num_gpu": 0
+  },
+  "input_sha256": "2352afa47616c4bb3a07b58f5ef9764bc6c169fe3369000e988062f9f3ebc9d0",
+  "prompt_sha256": "f558db4cdc001cb5b00aae044be325456b31781ca43694b18de914eb0b30ad38",
+  "status": "generated_review_pending",
+  "semantic_validation": "not_performed",
+  "ollama_version": {
+    "version": "0.35.0"
+  },
+  "response_sha256": "757aae844c7f5650dac3d8c9d0c9ea99e0e69933a951da19ecd1cebf9bfee59e",
+  "done_reason": "stop",
+  "prompt_eval_count": 2506,
+  "eval_count": 919,
+  "completed_utc": "2026-10-01T05:41:06.498874+00:00",
+  "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+  "runtime_environment_sha256": "ec9e9c7261f4cd71510dd70b71834836d57d6f13cea11a5e5b4020c2c5942e6c",
+  "model_identity_sha256": "703e95d9bb9edb759aa268da2adf27c2bc6d32a8d39f896e8c4b71b18eb09d46",
+  "client_script_sha256": "be0010c4b396ec2876d7d240f118fc134d91eff52f79dc73f7d615af834420cb"
+}

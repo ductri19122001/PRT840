@@ -1,0 +1,88 @@
+{
+  "VM2": {
+    "processed_dataset_records": 80454,
+    "dt_records_loaded": 16091,
+    "if_records_loaded": 20317,
+    "dt_source_coverage": "full_saved_prediction_export",
+    "jointly_evaluated_records": 1941,
+    "jointly_evaluated_malicious": 1941,
+    "jointly_evaluated_benign": 0,
+    "joint_flag_categories": {
+      "dt_positive_if_negative": 1940,
+      "dt_negative_if_positive": 1
+    },
+    "dt_only_available": 14150,
+    "if_only_available": 18376,
+    "neither_available": 45987,
+    "confirmed_positive_or_alerts": 2062,
+    "confirmed_negative_or_decisions": 0,
+    "undetermined_or_decisions": 78392,
+    "joint_counts_only": {
+      "dt": {
+        "tp": 1940,
+        "fp": 0,
+        "fn": 1,
+        "tn": 0
+      },
+      "if": {
+        "tp": 1,
+        "fp": 0,
+        "fn": 1940,
+        "tn": 0
+      },
+      "or": {
+        "tp": 1941,
+        "fp": 0,
+        "fn": 0,
+        "tn": 0
+      }
+    },
+    "overall_ensemble_accuracy": null,
+    "overall_ensemble_false_positive_rate": null,
+    "evaluation_limit": "Saved test populations differ. Joint counts concern their intersection, not a shared full test set. These counts cannot establish full-population ensemble accuracy or false-positive rates."
+  },
+  "VM3": {
+    "processed_dataset_records": 139765,
+    "dt_records_loaded": 27953,
+    "if_records_loaded": 88091,
+    "dt_source_coverage": "full_saved_prediction_export",
+    "jointly_evaluated_records": 15794,
+    "jointly_evaluated_malicious": 15794,
+    "jointly_evaluated_benign": 0,
+    "joint_flag_categories": {
+      "dt_positive_if_negative": 15782,
+      "both_positive": 6,
+      "dt_negative_if_positive": 3,
+      "both_negative": 3
+    },
+    "dt_only_available": 12159,
+    "if_only_available": 72297,
+    "neither_available": 39515,
+    "confirmed_positive_or_alerts": 15921,
+    "confirmed_negative_or_decisions": 3,
+    "undetermined_or_decisions": 123841,
+    "joint_counts_only": {
+      "dt": {
+        "tp": 15788,
+        "fp": 0,
+        "fn": 6,
+        "tn": 0
+      },
+      "if": {
+        "tp": 9,
+        "fp": 0,
+        "fn": 15785,
+        "tn": 0
+      },
+      "or": {
+        "tp": 15791,
+        "fp": 0,
+        "fn": 3,
+        "tn": 0
+      }
+    },
+    "overall_ensemble_accuracy": null,
+    "overall_ensemble_false_positive_rate": null,
+    "evaluation_limit": "Saved test populations differ. Joint counts concern their intersection, not a shared full test set. These counts cannot establish full-population ensemble accuracy or false-positive rates."
+  }
+}

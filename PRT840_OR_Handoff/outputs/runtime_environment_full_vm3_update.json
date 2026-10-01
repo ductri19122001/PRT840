@@ -1,0 +1,74 @@
+{
+  "recorded_utc": "2026-10-01T09:27:56.293835+00:00",
+  "ollama_version": {
+    "version": "0.35.0"
+  },
+  "model": {
+    "name": "llama3.1:8b",
+    "model": "llama3.1:8b",
+    "modified_at": "2026-10-01T17:22:37.708944637+08:00",
+    "size": 4920753328,
+    "digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "llama",
+      "families": [
+        "llama"
+      ],
+      "parameter_size": "8.0B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 131072,
+      "embedding_length": 4096
+    },
+    "capabilities": [
+      "completion",
+      "tools"
+    ]
+  },
+  "execution_device": "CPU",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "restoration_verification": {
+    "archive_source": "https://github.com/ollama/ollama/releases/download/v0.35.0/ollama-linux-amd64.tar.zst",
+    "archive_sha256": "1c114a6b220c5efca2ef2b1e5f01d1e535e26f6cd6d1678c8489325d2835e525",
+    "manifest_source": "https://registry.ollama.ai/v2/library/llama3.1/manifests/8b",
+    "manifest_sha256": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+    "verified_downloads": [
+      {
+        "name": "ollama-linux-amd64.tar.zst",
+        "bytes": 1427765407,
+        "sha256": "1c114a6b220c5efca2ef2b1e5f01d1e535e26f6cd6d1678c8489325d2835e525"
+      },
+      {
+        "name": "sha256-455f34728c9b5dd3376378bfb809ee166c145b0b4c1f1a6feca069055066ef9a",
+        "bytes": 487,
+        "sha256": "455f34728c9b5dd3376378bfb809ee166c145b0b4c1f1a6feca069055066ef9a"
+      },
+      {
+        "name": "sha256-667b0c1932bc6ffc593ed1d03f895bf2dc8dc6df21db3042284a6f4416b06a29",
+        "bytes": 4920738944,
+        "sha256": "667b0c1932bc6ffc593ed1d03f895bf2dc8dc6df21db3042284a6f4416b06a29"
+      },
+      {
+        "name": "sha256-948af2743fc78a328dcb3b0f5a31b3d75f415840fdb699e8b1235978392ecf85",
+        "bytes": 1481,
+        "sha256": "948af2743fc78a328dcb3b0f5a31b3d75f415840fdb699e8b1235978392ecf85"
+      },
+      {
+        "name": "sha256-0ba8f0e314b4264dfd19df045cde9d4c394a52474bf92ed6a3de22a4ca31a177",
+        "bytes": 12320,
+        "sha256": "0ba8f0e314b4264dfd19df045cde9d4c394a52474bf92ed6a3de22a4ca31a177"
+      },
+      {
+        "name": "sha256-56bb8bd477a519ffa694fc449c2413c6f0e1d3b1c88fa7e3c9d88d3ae49d4dcb",
+        "bytes": 96,
+        "sha256": "56bb8bd477a519ffa694fc449c2413c6f0e1d3b1c88fa7e3c9d88d3ae49d4dcb"
+      }
+    ]
+  },
+  "model_download_verification": {
+    "manifest_sha256": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+    "all_layer_checksums_verified": true,
+    "verification_source": "restoration_verification.verified_downloads"
+  }
+}

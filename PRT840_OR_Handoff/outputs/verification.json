@@ -1,0 +1,475 @@
+{
+  "status": "PASS",
+  "source_and_output_checks_passed": 108,
+  "processed_rows": 220219,
+  "positive_or_alerts_from_available_predictions": 17983,
+  "cases": [
+    {
+      "case_id": "vm3_case_001",
+      "triggers": 6765,
+      "context": 33744
+    },
+    {
+      "case_id": "CTU-SME-11-VM2-case-002",
+      "triggers": 590,
+      "context": 2755
+    }
+  ],
+  "boundary_test_command": "python -m unittest -v test_handoff.py",
+  "boundary_tests_passed_at_package_creation": 21,
+  "llm_client_check": "The client boundary test uses a simulated API. Actual local generation records are listed separately; artifact checks do not validate their interpretations.",
+  "recorded_local_generations": [
+    {
+      "case_id": "CTU-SME-11-VM2-case-002",
+      "run": "cases/redlinestealer_case2/runs/20261001T053529_063366Z",
+      "status": "generated_review_pending",
+      "matches_current_prepared_input": true
+    },
+    {
+      "case_id": "vm3_case_001",
+      "run": "cases/remcosrat_case1/runs/20261001T054106_637034Z",
+      "status": "generated_review_pending",
+      "matches_current_prepared_input": false
+    },
+    {
+      "case_id": "vm3_case_001",
+      "run": "cases/remcosrat_case1/runs/20261001T092756_387473Z",
+      "status": "generated_review_pending",
+      "matches_current_prepared_input": true
+    }
+  ],
+  "checks": [
+    {
+      "check": "Source checksum: inputs/vm2/metadata.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm2/network_features.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm2/dt_predictions.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm2/if_predictions.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/metadata.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/network_features.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/if_predictions.csv.gz",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/original_case_study_consolidation.json",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/redline_endpoint_evidence.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/dt_sample_predictions.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: references/remcos_cti.json",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: references/redline_cti.json",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: references/enterprise_techniques.json",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: references/corpus_manifest.json",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: references/MITRE_LICENSE.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/decision_tree_vm3_original_80_20_predictions.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/dt_predictions.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "Source checksum: inputs/vm3/dt_import_manifest.json",
+      "status": "PASS"
+    },
+    {
+      "check": "One merged row per dataset/flow identity",
+      "status": "PASS"
+    },
+    {
+      "check": "Alert export contains positive decisions only",
+      "status": "PASS"
+    },
+    {
+      "check": "VM2 loaded DT/IF decisions agree with source CSVs",
+      "status": "PASS"
+    },
+    {
+      "check": "VM2 merged identities agree with metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "VM3 loaded DT/IF decisions agree with source CSVs",
+      "status": "PASS"
+    },
+    {
+      "check": "VM3 merged identities agree with metadata",
+      "status": "PASS"
+    },
+    {
+      "check": "Merged population exactly matches the available processed datasets",
+      "status": "PASS"
+    },
+    {
+      "check": "Alert IDs exactly equal the union of source-model positive IDs",
+      "status": "PASS"
+    },
+    {
+      "check": "Negative OR decisions exactly equal the intersection of source-model negative IDs",
+      "status": "PASS"
+    },
+    {
+      "check": "All other merged decisions remain undetermined",
+      "status": "PASS"
+    },
+    {
+      "check": "VM3 DT examples exactly reproduce the recorded sample, without invented rows",
+      "status": "PASS"
+    },
+    {
+      "check": "Original supplied VM3 export checksum agrees",
+      "status": "PASS"
+    },
+    {
+      "check": "Normalized VM3 export checksum agrees",
+      "status": "PASS"
+    },
+    {
+      "check": "Full VM3 export retains all 27,953 original prediction rows",
+      "status": "PASS"
+    },
+    {
+      "check": "Normalization changes no original prediction values",
+      "status": "PASS"
+    },
+    {
+      "check": "Full VM3 export agrees with every previously recorded example",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 context uses the complete declared endpoint/date scope",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 trigger set equals source positive IDs within its context",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 trace retains exact trigger flow identities",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 context does not contain dataset annotations",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 prepared checksum: llm_input.json",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 prepared checksum: llm_prompt.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 prepared checksum: context_flows.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 prepared checksum: trigger_alerts.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 input and trace counts reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 connection-state counts reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 byte totals and missing values reconcile: orig_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 byte totals and missing values reconcile: resp_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 prompt contains the exact prepared input",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 payload contains no dataset-family annotation",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 reference IDs are unique official definitions",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 context uses the complete declared endpoint/date scope",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 trigger set equals source positive IDs within its context",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 trace retains exact trigger flow identities",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 context does not contain dataset annotations",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 prepared checksum: llm_input.json",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 prepared checksum: llm_prompt.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 prepared checksum: context_flows.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 prepared checksum: trigger_alerts.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 input and trace counts reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 connection-state counts reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 byte totals and missing values reconcile: orig_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 byte totals and missing values reconcile: resp_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 prompt contains the exact prepared input",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 payload contains no dataset-family annotation",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 reference IDs are unique official definitions",
+      "status": "PASS"
+    },
+    {
+      "check": "New RedLine context exactly matches every UID in the prior supplied evidence CSV",
+      "status": "PASS"
+    },
+    {
+      "check": "RedLine endpoint/connection evidence agrees with the prior supplied CSV",
+      "status": "PASS"
+    },
+    {
+      "check": "RedLine per-flow numeric evidence agrees: orig_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "RedLine per-flow numeric evidence agrees: resp_bytes",
+      "status": "PASS"
+    },
+    {
+      "check": "RedLine per-flow numeric evidence agrees: orig_pkts",
+      "status": "PASS"
+    },
+    {
+      "check": "RedLine per-flow numeric evidence agrees: resp_pkts",
+      "status": "PASS"
+    },
+    {
+      "check": "Preparation itself performs no training, ML inference or LLM generation",
+      "status": "PASS"
+    },
+    {
+      "check": "Manifest population and alert counts reconcile",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z generation snapshot checksum: llm_input.json",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z generation snapshot checksum: llm_prompt.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z generation flow snapshot checksum: trigger_alerts.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z generation flow snapshot checksum: context_flows.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z exact saved prompt was submitted",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z client source snapshot checksum agrees",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z raw and parsed model responses agree",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z generation is complete and not token-truncated",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z captured runtime and model digest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2/20261001T053529_063366Z runtime and official registry manifest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z generation snapshot checksum: llm_input.json",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z generation snapshot checksum: llm_prompt.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z generation flow snapshot checksum: trigger_alerts.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z generation flow snapshot checksum: context_flows.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z exact saved prompt was submitted",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z client source snapshot checksum agrees",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z raw and parsed model responses agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z generation is complete and not token-truncated",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z captured runtime and model digest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T054106_637034Z runtime and official registry manifest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z generation snapshot checksum: llm_input.json",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z generation snapshot checksum: llm_prompt.txt",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z generation flow snapshot checksum: trigger_alerts.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z generation flow snapshot checksum: context_flows.csv",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z exact saved prompt was submitted",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z client source snapshot checksum agrees",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z raw and parsed model responses agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z generation is complete and not token-truncated",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z captured runtime and model digest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1/20261001T092756_387473Z runtime and official registry manifest agree",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 selected generation matches the current case input",
+      "status": "PASS"
+    },
+    {
+      "check": "remcosrat_case1 current review is bound to the selected input and raw response",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 selected generation matches the current case input",
+      "status": "PASS"
+    },
+    {
+      "check": "redlinestealer_case2 current review is bound to the selected input and raw response",
+      "status": "PASS"
+    },
+    {
+      "check": "vm3_case_001 assessment checksum agrees with the execution manifest",
+      "status": "PASS"
+    },
+    {
+      "check": "CTU-SME-11-VM2-case-002 assessment checksum agrees with the execution manifest",
+      "status": "PASS"
+    }
+  ]
+}

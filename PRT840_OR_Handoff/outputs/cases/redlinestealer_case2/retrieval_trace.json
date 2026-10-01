@@ -1,0 +1,15 @@
+{
+  "algorithm": "BM25",
+  "k1": 1.5,
+  "b": 0.75,
+  "query": "http https web protocols",
+  "query_source": "Network service facet only; lookup synonyms are not observed traffic.",
+  "selected_ids": [
+    "T1071.001",
+    "T1001.003",
+    "T1048.001",
+    "T1090.004",
+    "T1048"
+  ],
+  "limitation": "Retrieved definitions are reference material; retrieval does not establish observed ATT&CK behaviour."
+}

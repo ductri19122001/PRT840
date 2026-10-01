@@ -1,0 +1,27 @@
+{
+  "reviewed_utc": "2026-10-01T05:48:32.591575+00:00",
+  "source_git_blob": "d96f48a1553622a6d0480424f8b4831699855935",
+  "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/notebooks/02_baseline_models.ipynb",
+  "recorded_feature_lists": {
+    "numeric_features": [
+      "id.orig_p",
+      "id.resp_p",
+      "duration",
+      "orig_bytes",
+      "resp_bytes",
+      "missed_bytes",
+      "orig_pkts",
+      "orig_ip_bytes",
+      "resp_pkts",
+      "resp_ip_bytes"
+    ],
+    "categorical_features": [
+      "proto",
+      "service",
+      "conn_state",
+      "history"
+    ]
+  },
+  "finding": "The saved baseline notebook includes id.orig_p and id.resp_p as numerical model features. Its saved importance output assigns importance to both port fields.",
+  "reporting_limit": "The Week 9 statement that ports were removed is not reconciled to this saved baseline. No models have been retrained or prediction exports changed by the handoff replay; the final report needs to identify the exact model version behind its results."
+}

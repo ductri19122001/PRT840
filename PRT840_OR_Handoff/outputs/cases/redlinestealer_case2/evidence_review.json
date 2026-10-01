@@ -1,0 +1,67 @@
+{
+  "case_id": "CTU-SME-11-VM2-case-002",
+  "assessment_date_utc": "2026-10-01",
+  "assessment_method": "Assistant-assisted comparison of the saved model response with its exact network input, CTI boundaries and pinned official ATT&CK definitions.",
+  "independent_review_status": "pending",
+  "generation_result": "Completed local generation with valid required JSON fields; this is an execution result, not semantic validation.",
+  "supported_technique_claims_in_this_assessment": [],
+  "rejected_technique_claims": [
+    {
+      "technique_id": "T1071.001",
+      "name": "Web Protocols",
+      "disposition": "unsupported_by_supplied_evidence",
+      "reason": "The input includes TCP flows and a Zeek HTTP service label but no HTTP request/response content, command exchange or corroborating host evidence establishing web command-and-control. Retrospective IP-level CTI does not supply that missing behaviour.",
+      "source_url": "https://attack.mitre.org/techniques/T1071/001/"
+    },
+    {
+      "technique_id": "T1001.003",
+      "name": "Protocol or Service Impersonation",
+      "disposition": "unsupported_by_supplied_evidence",
+      "reason": "No supplied headers, payloads, certificate anomalies or host-process evidence demonstrate that adversary communications impersonated a legitimate service or protocol.",
+      "source_url": "https://attack.mitre.org/techniques/T1001/003/"
+    },
+    {
+      "technique_id": "T1048.001",
+      "name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol",
+      "disposition": "unsupported_by_supplied_evidence",
+      "reason": "No supplied evidence establishes stolen data, symmetric encryption, or transfer using a protocol distinct from a demonstrated command-and-control channel. Outbound byte counts alone do not establish exfiltration.",
+      "source_url": "https://attack.mitre.org/techniques/T1048/001/"
+    },
+    {
+      "technique_id": "T1090.004",
+      "name": "Domain Fronting",
+      "disposition": "unsupported_by_supplied_evidence",
+      "reason": "No supplied domain, DNS, TLS server-name or HTTP Host evidence demonstrates domain fronting or a fronted routing relationship.",
+      "source_url": "https://attack.mitre.org/techniques/T1090/004/"
+    },
+    {
+      "technique_id": "T1048",
+      "name": "Exfiltration Over Alternative Protocol",
+      "disposition": "unsupported_by_supplied_evidence",
+      "reason": "No supplied evidence identifies stolen data or establishes that it was transferred over a protocol distinct from an established command-and-control channel.",
+      "source_url": "https://attack.mitre.org/techniques/T1048/"
+    }
+  ],
+  "other_findings": [
+    {
+      "kind": "reference_list_repeated_as_supported",
+      "finding": "The five model technique IDs exactly match the five retrieved definitions. The response supplies no flow-level behavioural justification for any mapping. This single run demonstrates that retrieval did not prevent unsupported mapping claims; it does not estimate a general error rate."
+    },
+    {
+      "kind": "accurate_but_incomplete_facts",
+      "finding": "The endpoint and declared capture date match the input, and the response retains the supplied retrospective CTI limitations. It omits the 590 alert / 2755 context distinction, state counts, byte totals, missing-value counts and responder packet count from its factual summary."
+    },
+    {
+      "kind": "uncertainty_wording_requires_correction",
+      "finding": "The response says the use of port 2567 is uncertain. The flow records establish the observed destination port. The unresolved point is malware association with that port and these connections, not which destination port was observed."
+    },
+    {
+      "kind": "response_guidance_incomplete",
+      "finding": "Corroboration and monitoring are reasonable triage proposals. The phrase affected host should be replaced with candidate host because compromise is not established. The short action list lacks evidence-preservation steps, concrete collection instructions and decision criteria for containment, so it is not a validated incident-response playbook."
+    }
+  ],
+  "reporting_conclusion": "The saved OR alerts have been linked to a real local model response. Five technique proposals were generated; none is accepted as supported in this assessment. The case demonstrates a reproducible handoff and a remaining evidence-grounding limitation, not successful malware confirmation or validated technique mapping.",
+  "generation_directory": "cases/redlinestealer_case2/runs/20261001T053529_063366Z",
+  "input_sha256": "2352afa47616c4bb3a07b58f5ef9764bc6c169fe3369000e988062f9f3ebc9d0",
+  "model_response_sha256": "757aae844c7f5650dac3d8c9d0c9ea99e0e69933a951da19ecd1cebf9bfee59e"
+}

@@ -1,0 +1,91 @@
+{ 
+  "observed_facts": {
+    "connection": {
+      "id.orig_h": "192.168.1.106",
+      "id.resp_h": "4.234.116.12",
+      "id.resp_p": 2567,
+      "proto": "tcp",
+      "time_basis": "capture_date",
+      "date": "2023-02-21"
+    },
+    "retrospective_cti": {
+      "context": [
+        {
+          "id": "C01",
+          "kind": "retrospective_cti_context",
+          "value": {
+            "provider": "VirusTotal",
+            "source_url": "https://www.virustotal.com/gui/ip-address/4.234.116.12",
+            "relationship": "VirusTotal Relations lists a file communicating with 4.234.116.12.",
+            "related_file_name": "Netflix Checker New Api.zip",
+            "related_file_sha256": "83f7de31cf4fa2e65cf9a40143e45272515c7ddaaa47c4957034e636c5f6c0764",
+            "related_file_analysis_date": "2023-02-17",
+            "related_file_detection": "45 of 64 security vendors flagged the related file as malicious.",
+            "external_attribution": "Multiple VirusTotal security vendors classify the related file using RedLine or RedLineStealer naming."
+          },
+          "retrieved_utc_date": "2026-09-22",
+          "boundary": "Team-recorded historical file-to-IP association, not an independently reverified live CTI result. The 2023-02-17 date is the related-file analysis date in the source prompt, not a proven date of publication or observed connection. Family labels are external CTI context, not dataset ground truth."
+        },
+        {
+          "id": "C02",
+          "kind": "retrospective_cti_limit",
+          "value": {
+            "indicator": "4.234.116.12:2567",
+            "status": "NO_PORT_SPECIFIC_CTI_MATCH",
+            "finding": "The reviewed VirusTotal evidence establishes a historical relationship at the IP level but does not independently establish that TCP port 2567 was associated with the related file or malware activity."
+          },
+          "boundary": "Do not infer that the related file used port 2567, that these flows are RedLineStealer traffic, or that the host is compromised."
+        }
+      ],
+      "interpretation_limit": "Retrospective IP-level association; no supplied port-specific or HTTP/HTTPS content evidence."
+    }
+  },
+  "supported_attack_mappings": [
+    {
+      "technique_id": "T1071.001",
+      "name": "Web Protocols",
+      "tactics": [
+        "command-and-control"
+      ]
+    },
+    {
+      "technique_id": "T1001.003",
+      "name": "Protocol or Service Impersonation",
+      "tactics": [
+        "command-and-control"
+      ]
+    },
+    {
+      "technique_id": "T1048.001",
+      "name": "Exfiltration Over Symmetric Encrypted Non-C2 Protocol",
+      "tactics": [
+        "exfiltration"
+      ]
+    },
+    {
+      "technique_id": "T1090.004",
+      "name": "Domain Fronting",
+      "tactics": [
+        "command-and-control"
+      ]
+    },
+    {
+      "technique_id": "T1048",
+      "name": "Exfiltration Over Alternative Protocol",
+      "tactics": [
+        "exfiltration"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "Insufficient evidence to confirm the presence of RedLineStealer malware or the use of port 2567.",
+    "The retrospective CTI context does not independently establish the relationship between the related file and the observed flows.",
+    "The dataset labels are withheld, and the ML triggers and ATT&CK retrieval are not ground truth."
+  ],
+  "suggested_response_actions": [
+    "Corroborate the retrospective CTI context with additional evidence.",
+    "Verify the presence of RedLineStealer malware on the affected host.",
+    "Monitor the network traffic for further suspicious activity."
+  ],
+  "human_review_required": true
+}

@@ -1,0 +1,54 @@
+{
+  "operation": "full_VM3_DT_import_and_corrected_Remcos_generation",
+  "status": "generated_review_pending",
+  "model_digest": "46e0c10c039e019119339687c3c1757cc81b9da49709a3b3924863ba87ca666e",
+  "ollama_version": {
+    "version": "0.35.0"
+  },
+  "new_completed_model_generations": 1,
+  "semantic_tuning_retries": 0,
+  "update_reason": "Duc supplied the full original VM3 test export. Remcos trigger evidence changed; a new response was generated for the corrected input.",
+  "cases": [
+    {
+      "case_directory": "remcosrat_case1",
+      "status": "generated_review_pending",
+      "generation_manifest": "outputs/cases/remcosrat_case1/runs/20261001T092756_387473Z/generation_manifest.json",
+      "input_revision": "full_VM3_DT_export",
+      "successful_generations_retained": 2
+    },
+    {
+      "case_directory": "redlinestealer_case2",
+      "status": "generated_review_pending",
+      "generation_manifest": "outputs/cases/redlinestealer_case2/runs/20261001T053529_063366Z/generation_manifest.json",
+      "input_revision": "unchanged_VM2_input",
+      "successful_generations_retained": 1
+    }
+  ],
+  "historical_remcos_generation": "outputs/cases/remcosrat_case1/runs/20261001T054106_637034Z/generation_manifest.json",
+  "startup_connection_attempt": {
+    "generation_manifest": "history/startup_attempt/generation_manifest.json",
+    "status": "generation_failed",
+    "reason": "The first client attempt preceded local server readiness; it failed before model metadata capture or a generation API call.",
+    "model_generation_executed": false
+  },
+  "assistant_evidence_assessment_completed": true,
+  "independent_review_status": "pending",
+  "evidence_assessments": [
+    {
+      "case_id": "vm3_case_001",
+      "path": "cases/remcosrat_case1/evidence_review.json",
+      "sha256": "9841cd4fd50a95c184b5aa81d1dff6f727ceec67e258fe84b71d3ce3c8aecef4",
+      "proposed_techniques": 1,
+      "accepted_supported_techniques": 0,
+      "independent_review_status": "pending"
+    },
+    {
+      "case_id": "CTU-SME-11-VM2-case-002",
+      "path": "cases/redlinestealer_case2/evidence_review.json",
+      "sha256": "f57ab90ca6c57eacbdb7561c9b3a4dad5bad1d26dcbb9ad741fc722221e60483",
+      "proposed_techniques": 5,
+      "accepted_supported_techniques": 0,
+      "independent_review_status": "pending"
+    }
+  ]
+}
