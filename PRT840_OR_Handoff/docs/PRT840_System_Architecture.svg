@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1160" viewBox="0 0 1800 1160">
+<title>PRT840 network detection and LLM assisted evidence interpretation architecture</title>
+<desc>Saved Decision Tree and Isolation Forest predictions are joined by dataset and flow identifier using a three-state OR rule. Positive alerts open a declared endpoint and date scope. Trigger alerts and wider processed flow context are kept separate. Network evidence, retrospective CTI and official ATTACK references enter a local Ollama request. Generated drafts require evidence review. The full saved VM3 Decision Tree test export is included; detector test populations differ.</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" refX="14" refY="7.5" orient="auto"><path d="M0 0 L15 7.5 L0 15 Z" fill="#536879"/></marker><marker id="dasharrow" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" refX="14" refY="7.5" orient="auto"><path d="M0 0 L15 7.5 L0 15 Z" fill="#A15D16"/></marker></defs>
+<rect width="1800" height="1160" fill="white"/>
+<text x="55" y="34" font-family="DejaVu Sans, Arial, sans-serif" font-size="29" font-weight="600" fill="#19232B" text-anchor="start">1  Saved behavioural detection evidence</text>
+<rect x="55" y="90" width="260" height="150" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="185.0" y="129" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Zeek logs</text>
+<text x="185.0" y="166" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">VM2 / VM3 records</text>
+<text x="185.0" y="195" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Connection records</text>
+<rect x="370" y="90" width="300" height="150" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="520.0" y="129" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Data preparation</text>
+<text x="520.0" y="166" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Behavioural feature table</text>
+<text x="520.0" y="195" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Separate flow metadata</text>
+<rect x="730" y="65" width="320" height="110" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="890.0" y="104" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Decision Tree</text>
+<text x="890.0" y="141" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Saved test predictions</text>
+<rect x="730" y="230" width="320" height="110" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="890.0" y="269" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Isolation Forest</text>
+<text x="890.0" y="306" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Saved anomaly decisions</text>
+<rect x="1115" y="110" width="260" height="180" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1245.0" y="149" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">OR rule</text>
+<text x="1245.0" y="180" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Either flags: alert</text>
+<text x="1245.0" y="209" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Both normal: no alert</text>
+<text x="1245.0" y="238" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Otherwise: unknown</text>
+<rect x="1450" y="120" width="295" height="150" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1597.5" y="159" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Positive alerts</text>
+<text x="1597.5" y="196" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Flow identifiers</text>
+<text x="1597.5" y="225" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Model decisions retained</text>
+<polyline points="315,165 370,165" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="670,165 700,165 700,120 730,120" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="670,165 700,165 700,285 730,285" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1050,120 1080,120 1080,153 1115,153" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1050,285 1080,285 1080,247 1115,247" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1375,195 1450,195" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="510,240 510,262 350,262 350,352 25,352 25,517 55,517" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="55" y="333" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">Context flow records</text>
+<text x="380" y="302" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">Saved model exports</text>
+<text x="380" y="333" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">No model refitting</text>
+<text x="55" y="410" font-family="DejaVu Sans, Arial, sans-serif" font-size="29" font-weight="600" fill="#19232B" text-anchor="start">2  Evidence and LLM interpretation</text>
+<rect x="55" y="445" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="215.0" y="484" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Case preparation</text>
+<text x="215.0" y="521" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Endpoint and date scope</text>
+<text x="215.0" y="550" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Positive alert required</text>
+<rect x="470" y="445" width="330" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="635.0" y="484" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Network evidence</text>
+<text x="635.0" y="521" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Triggers and wider context</text>
+<text x="635.0" y="550" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Counts, states and traffic</text>
+<rect x="935" y="445" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1095.0" y="484" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">CTI assessment</text>
+<text x="1095.0" y="521" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Endpoint relationships</text>
+<text x="1095.0" y="550" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Sources and limitations</text>
+<rect x="1430" y="445" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1590.0" y="484" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Public CTI sources</text>
+<text x="1590.0" y="515" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">MalwareBazaar</text>
+<text x="1590.0" y="544" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">VirusTotal</text>
+<text x="1590.0" y="573" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Retrospective findings</text>
+<polyline points="375,517 470,517" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="800,517 935,517" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1430,517 1255,517" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1598,270 1598,424 215,424 215,445" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="850" y="400" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">Positive alerts open the declared case scope</text>
+<rect x="55" y="650" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="215.0" y="689" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Official ATT&amp;CK</text>
+<text x="215.0" y="726" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Pinned MITRE definitions</text>
+<text x="215.0" y="755" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Reference collection</text>
+<rect x="470" y="650" width="330" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="635.0" y="689" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Reference selection</text>
+<text x="635.0" y="726" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">BM25 keyword retrieval</text>
+<text x="635.0" y="755" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Candidate definitions</text>
+<rect x="935" y="650" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1095.0" y="689" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Prompt assembly</text>
+<text x="1095.0" y="720" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Network evidence and CTI</text>
+<text x="1095.0" y="749" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">ATT&amp;CK references</text>
+<text x="1095.0" y="778" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Instructions and schema</text>
+<rect x="1430" y="650" width="320" height="145" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1590.0" y="689" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Local LLM</text>
+<text x="1590.0" y="726" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Llama 3.1 8B via Ollama</text>
+<text x="1590.0" y="755" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Python calls the local API</text>
+<polyline points="375,722 470,722" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="800,722 935,722" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1095,590 1095,650" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="1255,722 1430,722" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="55" y="852" font-family="DejaVu Sans, Arial, sans-serif" font-size="29" font-weight="600" fill="#19232B" text-anchor="start">3  Human review and reporting</text>
+<rect x="1430" y="895" width="320" height="135" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1590.0" y="934" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Human review</text>
+<text x="1590.0" y="971" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Check facts and mappings</text>
+<text x="1590.0" y="1000" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Review response guidance</text>
+<rect x="935" y="895" width="320" height="135" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="1095.0" y="934" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Assessment record</text>
+<text x="1095.0" y="971" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Supported / unsupported /</text>
+<text x="1095.0" y="1000" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">uncertain claims</text>
+<rect x="470" y="895" width="330" height="135" rx="9" fill="#F3F6F8" stroke="#889AA7" stroke-width="1.7"/>
+<text x="635.0" y="934" font-family="DejaVu Sans, Arial, sans-serif" font-size="28" font-weight="600" fill="#19232B" text-anchor="middle">Case study report</text>
+<text x="635.0" y="971" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Evidence and findings</text>
+<text x="635.0" y="1000" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="middle">Errors and limitations</text>
+<polyline points="1590,795 1590,895" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="1610" y="851" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="start">Draft answer</text>
+<polyline points="1430,962 1255,962" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="935,962 800,962" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<polyline points="60,925 150,925" fill="none" stroke="#536879" stroke-width="3" stroke-linejoin="round"  marker-end="url(#arrow)"/>
+<text x="170" y="933" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">Architecture data flow</text>
+<text x="55" y="982" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">VM3 DT coverage:</text>
+<text x="55" y="1014" font-family="DejaVu Sans, Arial, sans-serif" font-size="22" font-weight="400" fill="#19232B" text-anchor="start">27,953 saved test rows</text>
+<text x="55" y="1088" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="start">Retrospective replay: dataset labels are withheld; alert counts and endpoint context enter the prompt.</text>
+<text x="55" y="1128" font-family="DejaVu Sans, Arial, sans-serif" font-size="23" font-weight="400" fill="#19232B" text-anchor="start">Historical preselected-case experiments remain separate. Generated interpretations require evidence review.</text>
+</svg>

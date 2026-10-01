@@ -1,0 +1,186 @@
+{
+  "repository": "https://github.com/ductri19122001/PRT840",
+  "reviewed_branch": "yoana-notebooks",
+  "reviewed_branch_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+  "reviewed_utc_date": "2026-10-01",
+  "files": [
+    {
+      "local_path": "inputs/vm2/metadata.csv.gz",
+      "sha256": "e99310f775de31d4d846af2e18669903f3d38006aeeda3b4203276bc42da4180",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0",
+      "source_path": "CTU-SME-11_Windows7full-2/outputs/cti_mapping_metadata.csv",
+      "git_blob_oid": "a4fc3abf9a39b5ae1dc6561f91e0c655ea5dcca4",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0/CTU-SME-11_Windows7full-2/outputs/cti_mapping_metadata.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "bdd755e909114b16119002b375a1bb55824ad9702e116bad547918eeae12d7c7"
+    },
+    {
+      "local_path": "inputs/vm2/network_features.csv.gz",
+      "sha256": "a3128a87562c9281258070154f79373571d5457817743caf7da44df97c3e457b",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0",
+      "source_path": "CTU-SME-11_Windows7full-2/outputs/clean_network_flows.csv",
+      "git_blob_oid": "4ba1cf01febd48ceea9ae4bd363bac163ace8aa3",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0/CTU-SME-11_Windows7full-2/outputs/clean_network_flows.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "a7cdf3bdef6fbbf6c7ee39f6a98209b4529283a16e20a1aa26ec70b9300f630d"
+    },
+    {
+      "local_path": "inputs/vm2/dt_predictions.csv.gz",
+      "sha256": "754a58980cc442a70c9ea9b34469a9d62f86cbf73c79e92224819183e5fadc79",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0",
+      "source_path": "CTU-SME-11_Windows7full-2/outputs/decision_tree_stratified_predictions.csv",
+      "git_blob_oid": "1f378d1e9bafaa8aa67f67f6f314f2ccc9eabd66",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0/CTU-SME-11_Windows7full-2/outputs/decision_tree_stratified_predictions.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "4792754dab73a6cb60fdcb170d715d65a61435110cba311aab8d20ae8f362194"
+    },
+    {
+      "local_path": "inputs/vm2/if_predictions.csv.gz",
+      "sha256": "983ca5a7e41115fec4159934fb41dc444031e691802219e50c12c82b04396fa3",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0",
+      "source_path": "CTU-SME-11_Windows7full-2/outputs/isolation_forest_calibrated_predictions.csv",
+      "git_blob_oid": "32684b2dbccaa62db43c76051377e6314b240926",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/f0fe547ba4d67e2ec5de6b900abc39ac9560f5c0/CTU-SME-11_Windows7full-2/outputs/isolation_forest_calibrated_predictions.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "56d4b0b5fa7e17d6b0cd728e84465cf8686da4dd461f790cac6560e6061670bb"
+    },
+    {
+      "local_path": "inputs/vm3/metadata.csv.gz",
+      "sha256": "89ee9e0365775a330e5dcb21270a99ed0a6d95fd210fad4cb7215f66db692ee8",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "outputs/cti_mapping_metadata.csv",
+      "git_blob_oid": "3393bdf954d347e488e27163d1fb75a6ead7628a",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/outputs/cti_mapping_metadata.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "91e6970db153475f3c5283901344f0e09fbeab74d515aa0759b59d0f4380b3a6"
+    },
+    {
+      "local_path": "inputs/vm3/network_features.csv.gz",
+      "sha256": "3a2b260188b564a7c0daf12ec2304ddcc7cb0428ffe5eb204626c39cff547000",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "91f682a9510c2e5a79972afb99da9731e42c01e6",
+      "source_path": "outputs/clean_network_flows.csv",
+      "git_blob_oid": "fea063bd76a4aa726a1d40e7234e8bea85bf69bb",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/91f682a9510c2e5a79972afb99da9731e42c01e6/outputs/clean_network_flows.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "f5126a9f79caf44d2e9b84c65cc7e97840e23a01fd8a10f64949b7921408b1ca"
+    },
+    {
+      "local_path": "inputs/vm3/if_predictions.csv.gz",
+      "sha256": "6523330f5c2b3903c0ebb4f41c550ad3da2aa2c93af01ab8063e72c6527ec8e1",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "outputs/isolation_forest_calibrated_predictions.csv",
+      "git_blob_oid": "0e2b7b92997fc7e15ae4c93304cc3c7b9f79f61c",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/outputs/isolation_forest_calibrated_predictions.csv",
+      "kind": "gzip_source_snapshot",
+      "uncompressed_sha256": "222ab027ca2eae09c39574f553eb172d3715f602f7b4f858452d65808f80e876"
+    },
+    {
+      "local_path": "inputs/original_case_study_consolidation.json",
+      "sha256": "509bfc8d4b1240f5c6c2d3cce749a1532c61bee9080f4bbe7360657e5034103f",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "outputs/case_studies/case_study_llm_input.json",
+      "git_blob_oid": "b56987b420ae7964b0b1b4fc20dfa74124e27122",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/outputs/case_studies/case_study_llm_input.json",
+      "kind": "unchanged_source_snapshot"
+    },
+    {
+      "local_path": "inputs/redline_endpoint_evidence.csv",
+      "sha256": "d1fd9cbe176f0e0e5ecfb479e68d66ef67793f489138ad3dc58c1f43c29fd12c",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "redlinestealer_case2/source/duc_baseline/redline_endpoint_evidence_only_flows.csv",
+      "git_blob_oid": "f9d0392cd637aca5dd499a39641bb84be6cc2346",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/redlinestealer_case2/source/duc_baseline/redline_endpoint_evidence_only_flows.csv",
+      "kind": "unchanged_source_snapshot"
+    },
+    {
+      "local_path": "inputs/vm3/dt_sample_predictions.csv",
+      "sha256": "622f4466c4e1dd1fd7266dca70b7369110f9bbfee4bf5e5adf648550e3335db8",
+      "kind": "extracted_selected_examples",
+      "source_snapshot": "inputs/original_case_study_consolidation.json",
+      "source_experiment_id": "vm3_dt",
+      "records": 11,
+      "recorded_full_export_records": 27953,
+      "coverage": "selected_sample_only"
+    },
+    {
+      "local_path": "references/remcos_cti.json",
+      "sha256": "e5e40d4aa14ee6c236ec783a56b1cc1cd265e0e5ef39c504762758f2f4158b58",
+      "kind": "extracted_retrospective_cti_context",
+      "source": "Existing case evidence, with network observations replaced by the new alert-led case summary.",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "remcosrat_case1/llm_legacy/Run2/remcosrat_ollama_prompt_blind_with_retrospective_cti.txt",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/remcosrat_case1/llm_legacy/Run2/remcosrat_ollama_prompt_blind_with_retrospective_cti.txt",
+      "transformation": "The C001 retrospective endpoint context is retained from the existing Remcos case evidence; network observations are rebuilt separately."
+    },
+    {
+      "local_path": "references/redline_cti.json",
+      "sha256": "7682b0d6c61f84bd8a4e3380800b50e2c5dd06d117e669634c8947ea580bf94a",
+      "kind": "extracted_retrospective_cti_context",
+      "source": "Existing case evidence, with network observations replaced by the new alert-led case summary.",
+      "source_repository": "https://github.com/ductri19122001/PRT840",
+      "source_commit": "a74b6276569eb68dc9769ebc33fd25c29d5bd3e3",
+      "source_path": "redlinestealer_case2/inputs/common_evidence.json",
+      "source_url": "https://github.com/ductri19122001/PRT840/blob/a74b6276569eb68dc9769ebc33fd25c29d5bd3e3/redlinestealer_case2/inputs/common_evidence.json",
+      "transformation": "Retain only the existing retrospective CTI context records and their limitations."
+    },
+    {
+      "local_path": "references/enterprise_techniques.json",
+      "sha256": "1b159c8c8791f6b5e03a237f4ed463532a0c74a47779f5af1abe38023b103a6c",
+      "kind": "existing_pinned_mitre_reference",
+      "source_manifest": "references/corpus_manifest.json"
+    },
+    {
+      "local_path": "references/corpus_manifest.json",
+      "sha256": "cfbd5a002b7c417dea942486719b8c400d4e948c2d782a8d72eb8180519836fc",
+      "kind": "existing_pinned_mitre_reference",
+      "source_manifest": "references/corpus_manifest.json"
+    },
+    {
+      "local_path": "references/MITRE_LICENSE.txt",
+      "sha256": "738144f7fb054722a4ef9d3367c51710341dc12fc574c6ac3a41daaaecd8bf5e",
+      "kind": "existing_pinned_mitre_reference",
+      "source_manifest": "references/corpus_manifest.json"
+    },
+    {
+      "local_path": "inputs/vm3/decision_tree_vm3_original_80_20_predictions.csv",
+      "sha256": "13e6d58cc8835cee1e15f94f6e313a00e35e755aa6ffadf76eb076b5bfa45fc7",
+      "kind": "unaltered_Duc_supplied_prediction_export",
+      "source_received_date": "2026-10-01",
+      "source_file": "decision_tree_vm3_original_80_20_predictions (1).csv"
+    },
+    {
+      "local_path": "inputs/vm3/dt_predictions.csv",
+      "sha256": "9b3262425640062cf5f9d386ec8e50501a36dc6c7ba2406ec40aadf4039e6464",
+      "kind": "normalized_prediction_export",
+      "source_received_date": "2026-10-01",
+      "source_file": "decision_tree_vm3_original_80_20_predictions (1).csv"
+    },
+    {
+      "local_path": "inputs/vm3/dt_import_manifest.json",
+      "sha256": "8b30fafc5c2acc4f802a0df795ce3d8543c8042bc86d60c09be60be5ce2e7e48",
+      "kind": "import_provenance",
+      "source_received_date": "2026-10-01",
+      "source_file": "decision_tree_vm3_original_80_20_predictions (1).csv"
+    }
+  ],
+  "missing_source": null,
+  "historical_missing_source": {
+    "dataset": "VM3",
+    "file_name": "decision_tree_stratified_predictions.csv",
+    "recorded_evaluation_records": 27953,
+    "available_selected_predictions": 11,
+    "note": "The original full VM3 DT prediction export is not included in the reviewed GitHub branch heads."
+  },
+  "vm3_full_export_received_utc_date": "2026-10-01",
+  "vm3_full_export_origin": "Duc supplied the original 80/20 prediction CSV through the project conversation. Repository commit and exact training-feature provenance are not established by that CSV."
+}

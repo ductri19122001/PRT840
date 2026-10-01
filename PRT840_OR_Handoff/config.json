@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "datasets": {
+    "VM2": {
+      "metadata": "inputs/vm2/metadata.csv.gz",
+      "features": "inputs/vm2/network_features.csv.gz",
+      "dt_predictions": "inputs/vm2/dt_predictions.csv.gz",
+      "if_predictions": "inputs/vm2/if_predictions.csv.gz",
+      "dt_protocol": "stratified_80_20",
+      "if_protocol": "common_random_holdout_primary",
+      "dt_coverage": "full_saved_prediction_export",
+      "recorded_dt_evaluation_count": 16091
+    },
+    "VM3": {
+      "metadata": "inputs/vm3/metadata.csv.gz",
+      "features": "inputs/vm3/network_features.csv.gz",
+      "dt_predictions": "inputs/vm3/dt_predictions.csv",
+      "dt_recorded_samples": "inputs/vm3/dt_sample_predictions.csv",
+      "if_predictions": "inputs/vm3/if_predictions.csv.gz",
+      "dt_protocol": "stratified_80_20",
+      "if_protocol": "common_random_holdout_primary",
+      "dt_coverage": "full_saved_prediction_export",
+      "recorded_dt_evaluation_count": 27953
+    }
+  },
+  "attack_corpus": "references/enterprise_techniques.json",
+  "attack_corpus_manifest": "references/corpus_manifest.json",
+  "case_selection": "Retrospective study endpoints and dates declared in advance. A case input is generated only if a saved positive OR alert exists within its scope. Dataset family labels are not selection criteria.",
+  "cases": [
+    {
+      "case_id": "vm3_case_001",
+      "study_name": "RemcosRAT endpoint, 22 February 2023",
+      "dataset": "VM3",
+      "folder": "remcosrat_case1",
+      "scope": {
+        "id.orig_h": "192.168.1.107",
+        "id.resp_h": "66.63.168.35",
+        "id.resp_p": 5888,
+        "proto": "tcp",
+        "time_basis": "utc_flow_start_date",
+        "date": "2023-02-22"
+      },
+      "cti_context": "references/remcos_cti.json"
+    },
+    {
+      "case_id": "CTU-SME-11-VM2-case-002",
+      "study_name": "RedLineStealer endpoint, 21 February 2023 capture",
+      "dataset": "VM2",
+      "folder": "redlinestealer_case2",
+      "scope": {
+        "id.orig_h": "192.168.1.106",
+        "id.resp_h": "4.234.116.12",
+        "id.resp_p": 2567,
+        "proto": "tcp",
+        "time_basis": "capture_date",
+        "date": "2023-02-21"
+      },
+      "cti_context": "references/redline_cti.json"
+    }
+  ]
+}

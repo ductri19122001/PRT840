@@ -1,0 +1,21 @@
+{
+  "case_id": "vm3_case_001",
+  "created_utc": "2026-10-01T09:25:30.472548+00:00",
+  "model": "llama3.1:8b",
+  "options": {
+    "seed": 42,
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 2048,
+    "num_thread": 8,
+    "num_batch": 64,
+    "num_gpu": 0
+  },
+  "input_sha256": "bf07801c58510e990a29cdb4ccbbd6b9765f020bb4857d7731da9123b5c218ad",
+  "prompt_sha256": "5287523732550bfaed350731e91a64100cef09785b608d3c568a7b199c83beef",
+  "client_script_sha256": "2f188f347b67e0b564693ff7e1bb8f19f753e7e0059a4f9289fbca13b21f325c",
+  "status": "generation_failed",
+  "semantic_validation": "not_performed",
+  "error": "<urlopen error [Errno 111] Connection refused>",
+  "completed_utc": "2026-10-01T09:25:30.478378+00:00"
+}
